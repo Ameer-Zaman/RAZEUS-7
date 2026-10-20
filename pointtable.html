@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<meta name="google-site-verification" content="lanhqeeNyvmNjhHICCvNTTFmaTNVcV1rIjGWmRSItxk" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAZEUS 7 — War Point Table | RZ7 Gang Wars</title>
+  <meta name="description" content="RAZEUS 7 (RZ7) war record and point table — track every gang war, kills, deaths, and victories in GTA RP. Live updated war stats.">
+  <meta name="keywords" content="RAZEUS 7 war, RZ7 point table, razeus 7 wars, RZ7 gang war, RZ7 GTA RP wars, RAZEUS 7 kills, rz7 war record">
+  <meta name="author" content="RAZEUS 7">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://razeus7.com/pointtable.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="RAZEUS 7 — War Point Table">
+  <meta property="og:description" content="RZ7 gang war records — kills, deaths, and victories. Live updated.">
+  <meta property="og:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+  <meta property="og:url" content="https://razeus7.com/pointtable.html">
+  <meta property="og:site_name" content="RAZEUS 7">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="RAZEUS 7 — War Point Table">
+  <meta name="twitter:description" content="RZ7 gang war records — track every war live.">
+  <meta name="twitter:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+  <link rel="icon" type="image/png" href="images/logo/rz7_logo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+
+    :root {
+      --gold: #7a1a24;
+      --gold-light: #ffffff;
+      --win: #ffffff;
+      --loss: #a6293a;
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(255,255,255,0.1);
+      --dark: #07060a;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #07060a;
+      color: #fff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── BACKGROUND GLOW ORBS ── */
+    .bg-orb {
+      position: fixed; border-radius: 50%;
+      pointer-events: none; z-index: 0;
+      filter: blur(80px);
+    }
+    /* top-right — gold siren */
+    .bg-orb-1 {
+      width: 600px; height: 600px;
+      top: -200px; right: -180px;
+      background: radial-gradient(circle, rgba(122,26,36,0.22), transparent 70%);
+      animation: sirenA 6s ease-in-out infinite;
+    }
+    /* bottom-left — deep amber */
+    .bg-orb-2 {
+      width: 500px; height: 500px;
+      bottom: -160px; left: -160px;
+      background: radial-gradient(circle, rgba(122,26,36,0.18), transparent 70%);
+      animation: sirenB 8s ease-in-out infinite;
+    }
+    /* center drift — faint warm white */
+    .bg-orb-3 {
+      width: 700px; height: 700px;
+      top: 30%; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(255,255,255,0.06), transparent 65%);
+      animation: sirenC 12s ease-in-out infinite;
+    }
+    /* accent — subtle red on loss side */
+    .bg-orb-4 {
+      width: 350px; height: 350px;
+      top: 60%; right: -100px;
+      background: radial-gradient(circle, rgba(122,26,36,0.08), transparent 70%);
+      animation: sirenD 9s ease-in-out infinite;
+    }
+
+    @keyframes sirenA {
+      0%,100% { opacity:.6; transform: scale(1)   translateY(0px);   }
+      50%      { opacity:1;  transform: scale(1.18) translateY(30px);  }
+    }
+    @keyframes sirenB {
+      0%,100% { opacity:.5; transform: scale(1)   translateY(0px);   }
+      50%      { opacity:.9; transform: scale(1.22) translateY(-25px); }
+    }
+    @keyframes sirenC {
+      0%,100% { opacity:.4; transform: translateX(-50%) scale(1);    }
+      33%      { opacity:.7; transform: translateX(-48%) scale(1.1);  }
+      66%      { opacity:.5; transform: translateX(-52%) scale(0.95); }
+    }
+    @keyframes sirenD {
+      0%,100% { opacity:.3; transform: scale(1)    translateY(0px);  }
+      50%      { opacity:.7; transform: scale(1.3)  translateY(-20px);}
+    }
+
+    /* ── NAVBAR ── */
+    .navbar {
+      height: 72px; width: 100%; position: fixed; top: 0; left: 0;
+      padding: 0 5%; display: flex; justify-content: space-between; align-items: center;
+      background: rgba(8,5,2,0.38);
+      backdrop-filter: blur(32px) saturate(200%) brightness(1.1);
+      -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.1);
+      border-bottom: 1px solid rgba(122,26,36,0.22);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 40px rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo img { width:42px; height:42px; object-fit:cover; border-radius:10px; filter:drop-shadow(0 0 8px rgba(122,26,36,0.5)); }
+    .logo-text { display:flex; flex-direction:column; line-height:1.1; }
+    .logo-name { font-family:'Orbitron',sans-serif; font-size:1.05rem; font-weight:800; color:var(--gold-light); letter-spacing:2px; }
+    .logo-sub { font-size:0.62rem; font-weight:500; color:rgba(255,255,255,0.4); letter-spacing:3px; text-transform:uppercase; }
+    .nav-links { display:flex; align-items:center; gap:4px; }
+    .nav-links a { color:rgba(255,255,255,0.6); text-decoration:none; font-weight:600; font-size:0.75rem; padding:8px 14px; border-radius:8px; letter-spacing:1.5px; transition:all .25s ease; border:1px solid transparent; }
+    .nav-links a:hover, .nav-links a.nav-active { color:var(--gold-light); background:rgba(122,26,36,0.08); border-color:rgba(122,26,36,0.18); }
+    .menu-toggle { display:none!important; }
+    @media(max-width:900px){
+      .nav-links{display:none!important;}
+      .bottom-nav{display:flex;}
+      body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+    }
+
+    /* ── LAYOUT ── */
+    .page-wrap { position:relative; z-index:2; padding: 100px 5% 60px; max-width:1300px; margin:0 auto; }
+
+    /* ── LIVE BAR ── */
+    .live-bar { display:flex; align-items:center; gap:8px; justify-content:flex-end; margin-bottom:24px; }
+    .live-dot { width:9px; height:9px; border-radius:50%; background:var(--win); animation:livePulse 1.8s ease-in-out infinite; }
+    @keyframes livePulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.35;transform:scale(.65);} }
+    .live-label { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.35); }
+    .last-updated { font-size:0.62rem; color:rgba(255,255,255,0.2); margin-left:4px; }
+
+    /* ── PAGE HEADER ── */
+    .page-header { text-align:center; margin-bottom:48px; }
+    .page-header .eyebrow { font-size:0.7rem; letter-spacing:4px; color:var(--gold-light); text-transform:uppercase; margin-bottom:12px; opacity:.8; }
+    .page-header h1 { font-family:'Orbitron',sans-serif; font-size:clamp(2rem,5vw,3.2rem); font-weight:800; background:linear-gradient(135deg,#fff 0%,#ffffff 45%,#7a1a24 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; line-height:1.1; margin-bottom:14px; }
+    .page-header p { color:rgba(255,255,255,0.5); font-size:0.95rem; }
+
+    /* ── STAT CARDS ── */
+    .stat-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:48px; }
+    .stat-card {
+      background: linear-gradient(160deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 22px 24px;
+      backdrop-filter: blur(20px);
+      position: relative; overflow: hidden;
+      transition: border-color .25s, transform .25s;
+    }
+    .stat-card:hover { border-color: rgba(122,26,36,0.25); transform: translateY(-2px); }
+    .stat-card::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(circle at 80% 20%, rgba(122,26,36,0.07), transparent 60%);
+      pointer-events:none;
+    }
+    .stat-card-label { font-size:0.6rem; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:10px; }
+    .stat-card-value { font-family:'Orbitron',sans-serif; font-size:2rem; font-weight:800; color:#fff; line-height:1; }
+    .stat-card-value span { font-size:0.85rem; color:rgba(255,255,255,0.35); font-family:'Poppins',sans-serif; font-weight:400; margin-left:4px; }
+    .stat-card.wins .stat-card-value { color: var(--win); }
+    .stat-card.rate .stat-card-value { color: var(--gold-light); }
+    .stat-streak { display:inline-flex; align-items:center; gap:6px; margin-top:8px; font-size:0.72rem; font-weight:600; }
+    @media(max-width:600px){ .stat-cards { grid-template-columns:1fr; } }
+
+    /* ── SECTION LABEL ── */
+    .section-label { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+    .section-label h2 { font-family:'Orbitron',sans-serif; font-size:1.05rem; font-weight:700; color:#fff; letter-spacing:2px; text-transform:uppercase; }
+    .section-label .sl-line { flex:1; height:1px; background:linear-gradient(90deg,rgba(122,26,36,0.4),transparent); }
+    .section-label .sl-tag { font-size:0.65rem; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.35); }
+
+    /* ── FILTER TABS ── */
+    .filter-tabs { display:flex; gap:8px; margin-bottom:20px; }
+    .filter-tab {
+      padding: 7px 18px; border-radius: 99px; font-size:0.72rem; font-weight:600;
+      letter-spacing:1.5px; text-transform:uppercase; cursor:pointer;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04); color:rgba(255,255,255,0.45);
+      transition: all .2s ease;
+    }
+    .filter-tab:hover { color:#fff; border-color:rgba(255,255,255,0.2); }
+    .filter-tab.active { background:rgba(122,26,36,0.12); border-color:rgba(122,26,36,0.35); color:var(--gold-light); }
+    .filter-tab.active-win { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.3); color:var(--win); }
+    .filter-tab.active-loss { background:rgba(122,26,36,0.1); border-color:rgba(122,26,36,0.3); color:var(--loss); }
+
+    /* ── WAR TABLE ── */
+    /* ── WAR TABLE WRAP ── */
+    .war-table-wrap {
+      background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+      margin-bottom: 52px;
+    }
+
+    /* ── TABLE COLUMN DEFINITION ── */
+    /* Columns: # | Enemy Gang | Pre-War | War Result */
+    .war-table-head,
+    .war-row {
+      display: grid;
+      grid-template-columns: 48px 1fr 140px 140px;
+      align-items: center;
+    }
+
+    /* ── HEADER ── */
+    .war-table-head {
+      padding: 0 8px;
+      background: linear-gradient(90deg, rgba(122,26,36,0.10), rgba(122,26,36,0.04));
+      border-bottom: 1px solid rgba(122,26,36,0.18);
+      position: sticky; top: 0; z-index: 2;
+      backdrop-filter: blur(24px);
+    }
+    .war-table-head > div {
+      padding: 14px 12px;
+      font-size: 0.6rem; letter-spacing: 2.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); font-weight: 700;
+    }
+    .war-table-head > div:first-child { text-align: center; }
+    .war-table-head > div:nth-child(3),
+    .war-table-head > div:nth-child(4) { text-align: center; }
+
+    /* ── WAR ENTRY BLOCK ── */
+    .war-entry {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-left: 3px solid transparent;
+      opacity: 1;
+      animation: rowReveal 0.35s ease both;
+      transition: background 0.2s ease;
+    }
+    .war-entry:last-child { border-bottom: none; }
+    .war-entry.win-row  { border-left-color: rgba(255,255,255,0.3); }
+    .war-entry.loss-row { border-left-color: rgba(122,26,36,0.25); }
+    .war-entry:hover { background: rgba(255,255,255,0.025); }
+    .war-entry.new-flash .war-row { animation: rowFlash 1.8s ease; }
+    @keyframes rowFlash { 0%{background:rgba(122,26,36,0.2);} 100%{background:transparent;} }
+    @keyframes rowReveal { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+
+    /* war row */
+    .war-row {
+      padding: 0 8px;
+      cursor: default;
+    }
+    .war-row > div {
+      padding: 14px 12px;
+      display: flex; align-items: center;
+    }
+    /* # column */
+    .war-row-num {
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 1px;
+    }
+    /* badge columns centered */
+    .war-row > div:nth-child(3),
+    .war-row > div:nth-child(4) { justify-content: center; }
+
+    .war-enemy { font-weight:600; font-size:0.88rem; color:rgba(255,255,255,0.9); display:flex; align-items:center; }
+    .war-enemy-name { display:flex; flex-direction:column; gap:5px; }
+    .war-enemy small { display:block; font-size:0.68rem; color:rgba(255,255,255,0.3); font-weight:400; }
+
+    /* ── STREAK BADGE ── */
+    .streak-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px 2px 6px;
+      border-radius: 99px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      line-height: 1;
+      width: fit-content;
+    }
+    .streak-badge .streak-emoji {
+      font-size: 0.7rem;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .streak-badge.s-win  { background:rgba(255,255,255,0.1); color:var(--win); border:1px solid rgba(255,255,255,0.18); }
+    .streak-badge.s-loss { background:rgba(122,26,36,0.1); color:var(--loss); border:1px solid rgba(122,26,36,0.18); }
+
+    .war-result { display:inline-flex; align-items:center; justify-content:center; min-width:88px; height:28px; padding:0 12px; border-radius:99px; font-size:0.6rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; white-space:nowrap; }
+    .war-result.win           { background:rgba(255,255,255,0.12);  color:var(--win);  border:1px solid rgba(255,255,255,0.22); }
+    .war-result.loss          { background:rgba(122,26,36,0.16);   color:var(--loss); border:1px solid rgba(122,26,36,0.35); }
+    .war-result.server-ended  { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.45); border:1px solid rgba(255,255,255,0.15); }
+    .war-result.not-happened  { background:rgba(255,255,255,0.08);  color:rgba(255,255,255,0.6);  border:1px solid rgba(255,255,255,0.18); }
+
+    .empty-state { text-align:center; padding:60px 20px; color:rgba(255,255,255,0.25); }
+    .empty-state i { font-size:2.5rem; margin-bottom:12px; display:block; opacity:.4; }
+
+    /* ── FOOTER ── */
+    .site-footer { position:relative; z-index:2; text-align:center; padding:28px 5%; border-top:1px solid rgba(255,255,255,0.06); color:rgba(255,255,255,0.25); font-size:0.78rem; }
+
+    /* ── TOAST ── */
+    .toast { position:fixed; bottom:28px; right:28px; z-index:3000; background:rgba(20,16,8,0.95); border:1px solid rgba(122,26,36,0.3); border-radius:12px; padding:14px 20px; display:flex; align-items:center; gap:12px; font-size:0.85rem; color:#fff; box-shadow:0 8px 32px rgba(0,0,0,0.5); transform:translateY(80px); opacity:0; transition:.4s cubic-bezier(.23,1,.32,1); pointer-events:none; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast i { color:var(--gold-light); font-size:1rem; }
+    .toast.err i { color:var(--loss); }
+
+    ::-webkit-scrollbar { width:6px; }
+    ::-webkit-scrollbar-track { background:rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb { background:rgba(122,26,36,0.25); border-radius:99px; }
+
+    @media(max-width:900px){
+      .war-table-head, .war-row { grid-template-columns: 40px 1fr 120px 120px; }
+    }
+    @media(max-width:600px){
+      .war-table-head, .war-row { grid-template-columns: 36px 1fr 80px 80px; }
+      .war-table-head > div, .war-row > div { padding: 12px 8px; }
+      .war-result { min-width: 68px; font-size: 0.55rem; padding: 0 7px; }
+      .field-row { grid-template-columns:1fr; }
+      .modal-box { padding:24px 18px; margin:16px; }
+      .war-enemy { font-size: 0.78rem; }
+    }
+
+    /* ── ENTRY ANIMATION OVERLAY ── */
+    #entryOverlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #07060a;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    #entryOverlay.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .entry-content {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 0;
+      animation: entryFadeIn 0.5s ease both;
+    }
+    @keyframes entryFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .entry-logo-img { width:56px; height:56px; object-fit:cover; border-radius:12px; opacity:0.9; margin-bottom:22px; }
+    .entry-title { font-family:'Orbitron',sans-serif; font-size:1.6rem; font-weight:800; letter-spacing:8px; color:var(--gold-light); text-align:center; margin-bottom:6px; }
+    .entry-sub { font-size:0.62rem; letter-spacing:5px; color:rgba(255,255,255,0.25); text-transform:uppercase; margin-bottom:28px; }
+    .entry-loader-track { width:160px; height:1px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; }
+    .entry-loader-fill { height:100%; background:linear-gradient(90deg,#7a1a24,#ffffff); border-radius:99px; animation:loaderFill 4.5s cubic-bezier(.4,0,.2,1) 0.2s both; }
+    @keyframes loaderFill { from{width:0%} to{width:100%} }
+    .entry-loading-text { font-size:0.58rem; letter-spacing:3px; color:rgba(255,255,255,0.18); text-transform:uppercase; margin-top:12px; }
+  
+/* ══════════════════════════════════════
+   BOTTOM NAV — mobile app-style tab bar
+══════════════════════════════════════ */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:1001;
+  background:rgba(8,7,6,0.92);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border-top:1px solid rgba(122,26,36,0.35);
+  padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+  justify-content:space-around;
+  align-items:center;
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;flex:1;min-width:0;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  font-size:0.52rem;letter-spacing:0.4px;text-transform:uppercase;
+  padding:7px 2px 5px;border-radius:12px;
+  transition:color 0.2s ease,background 0.2s ease,transform 0.2s ease;
+}
+.bn-item i{font-size:1.08rem;line-height:1;transition:transform 0.2s ease;}
+.bn-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.bn-item:active{transform:scale(0.94);}
+.bn-item.active,.bn-item:hover{color:#fff;background:rgba(122,26,36,0.16);}
+.bn-item.active i{transform:translateY(-1px);}
+@media(max-width:600px){
+  .toast{bottom:calc(76px + env(safe-area-inset-bottom));right:16px;}
+}
+
+/* ── WAR KILLS POPUP ── */
+.kills-overlay{
+  position:fixed;inset:0;z-index:9998;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(6px);
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+.kills-overlay.show{display:flex;}
+.kills-popup{
+  background:linear-gradient(160deg,rgba(18,14,18,0.98),rgba(10,8,12,0.99));
+  border:1px solid rgba(122,26,36,0.3);border-radius:18px;
+  width:100%;max-width:700px;max-height:80vh;
+  display:flex;flex-direction:column;
+  box-shadow:0 16px 56px rgba(0,0,0,.7),0 0 0 1px rgba(122,26,36,.12);
+  animation:killsIn .22s ease-out;
+}
+@keyframes killsIn{from{opacity:0;transform:scale(.95) translateY(10px);}}
+.kills-popup-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 24px;border-bottom:1px solid rgba(255,255,255,.07);
+}
+.kills-popup-header h3{
+  font-family:'Orbitron',sans-serif;font-size:.82rem;font-weight:700;
+  color:var(--gold-light);margin:0;display:flex;align-items:center;gap:10px;
+  letter-spacing:1px;
+}
+.kills-popup-header .kp-enemy{
+  color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:.95rem;
+}
+.kills-popup-header .kp-result{font-family:'Poppins',sans-serif;font-size:.68rem;}
+.kills-popup-close{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;
+  font-size:.85rem;display:flex;align-items:center;justify-content:center;transition:.2s;
+}
+.kills-popup-close:hover{background:rgba(122,26,36,.4);border-color:rgba(122,26,36,.5);}
+.kills-popup-body{padding:16px 24px 20px;overflow-y:auto;flex:1;}
+.kills-empty{text-align:center;padding:36px 16px;color:rgba(255,255,255,.3);font-size:.85rem;}
+.kills-empty i{font-size:1.8rem;display:block;margin-bottom:10px;opacity:.35;}
+.kills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;}
+.kill-player-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:10px 14px;border-radius:10px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+}
+.kill-player-row .kp-name{font-size:.82rem;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.kill-player-row .kp-count{
+  font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:700;
+  color:var(--loss);min-width:28px;text-align:right;
+}
+.kills-popup-footer{
+  padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.kills-total{font-family:'Orbitron',sans-serif;font-size:.85rem;color:var(--loss);font-weight:700;}
+.kills-total span{color:rgba(255,255,255,.4);font-family:'Poppins',sans-serif;font-weight:400;font-size:.75rem;}
+.war-entry{cursor:pointer;}
+@media(max-width:600px){
+  .kills-popup{max-width:100%;border-radius:12px;}
+  .kills-grid{grid-template-columns:1fr;}
+  .kills-popup-header,.kills-popup-body,.kills-popup-footer{padding-left:16px;padding-right:16px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ BACKGROUND GLOW ORBS ══ -->
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<div class="bg-orb bg-orb-4"></div>
+
+<!-- ══ ENTRY ANIMATION OVERLAY ══ -->
+<div id="entryOverlay">
+  <div class="entry-content">
+    <img class="entry-logo-img" src="images/logo/rz7_logo.jpeg" alt="RZ7">
+    <div class="entry-title">RZ7</div>
+    <div class="entry-sub">GTA Official</div>
+    <div class="entry-loader-track"><div class="entry-loader-fill"></div></div>
+    <div class="entry-loading-text">Loading…</div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <a href="index.html" class="logo">
+    <img src="images/logo/rz7_logo.jpeg" alt="RZ7 Logo">
+    <div class="logo-text">
+      <span class="logo-name">RZ7</span>
+      <span class="logo-sub">GTA OFFICIAL</span>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">HOME</a>
+    <a href="players.html">PLAYERS</a>
+    <a href="pointtable.html" class="nav-active">POINT TABLE</a>
+    <a href="community.html">COMMUNITY</a>
+    <a href="contact.html">EVENTS</a>
+  </div>
+</nav>
+
+<nav class="bottom-nav" id="bottomNav">
+  <a href="index.html" class="bn-item">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </a>
+  <a href="players.html" class="bn-item">
+    <i class="fa-solid fa-users"></i>
+    <span>Players</span>
+  </a>
+  <a href="pointtable.html" class="bn-item active">
+    <i class="fa-solid fa-ranking-star"></i>
+    <span>Points</span>
+  </a>
+  <a href="community.html" class="bn-item">
+    <i class="fa-solid fa-comments"></i>
+    <span>Chat</span>
+  </a>
+  <a href="contact.html" class="bn-item">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>Events</span>
+  </a>
+</nav>
+
+
+<div class="page-wrap">
+
+  <!-- LIVE BAR -->
+  <div class="live-bar">
+    <div class="live-dot"></div>
+    <span class="live-label">Live</span>
+    <span class="last-updated" id="lastUpdated"></span>
+  </div>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="eyebrow">⚔️ RZ7 War Records</div>
+    <h1>WAR POINT TABLE</h1>
+    <p>Tracking every battle. Every victory. Every lesson.</p>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="stat-cards">
+    <div class="stat-card">
+      <div class="stat-card-label">Total Wars</div>
+      <div class="stat-card-value" id="statTotal">—</div>
+      <div class="stat-streak" id="statStreakBadge"></div>
+    </div>
+    <div class="stat-card wins">
+      <div class="stat-card-label">Wins</div>
+      <div class="stat-card-value" id="statWins">—</div>
+    </div>
+    <div class="stat-card rate">
+      <div class="stat-card-label">Win Rate</div>
+      <div class="stat-card-value" id="statRate">—<span>%</span></div>
+    </div>
+  </div>
+
+  <!-- WAR HISTORY TABLE -->
+  <div class="section-label">
+    <h2>War History</h2>
+    <div class="sl-line"></div>
+    <div class="sl-tag" id="warCountLabel">0 Records</div>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="filter-tab active" onclick="setFilter('all',this)">All</button>
+    <button class="filter-tab" onclick="setFilter('win',this)">Wins</button>
+    <button class="filter-tab" onclick="setFilter('loss',this)">Losses</button>
+  </div>
+
+  <div class="war-table-wrap">
+    <div class="war-table-head">
+      <div>#</div>
+      <div>Enemy Gang</div>
+      <div>Pre War</div>
+      <div>War Result</div>
+    </div>
+    <div id="warTableBody"></div>
+  </div>
+
+</div><!-- end page-wrap -->
+
+<!-- War Kills Popup (read-only) -->
+<div class="kills-overlay" id="killsOverlay" onclick="if(event.target===this)closeKillsPopup()">
+  <div class="kills-popup">
+    <div class="kills-popup-header">
+      <h3><i class="fas fa-crosshairs"></i>&nbsp; KILLS — <span class="kp-enemy" id="kpEnemy"></span> <span class="kp-result" id="kpResult"></span></h3>
+      <button class="kills-popup-close" onclick="closeKillsPopup()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="kills-popup-body" id="kpBody"></div>
+    <div class="kills-popup-footer">
+      <div class="kills-total"><span>Total Kills:</span> <span id="kpTotal">0</span></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 RZ7 GTA RP Gang — Vex Parker</p>
+</footer>
+
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyB3E3vdJvjB88p-aTWLIw9Z6_HhYVA9EQM",
+    authDomain: "mrz-war-table.firebaseapp.com",
+    databaseURL: "https://mrz-war-table-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mrz-war-table",
+    storageBucket: "mrz-war-table.firebasestorage.app",
+    messagingSenderId: "427955707558",
+    appId: "1:427955707558:web:fbb9eff081478179881e67",
+    measurementId: "G-V7MGXXSCZX"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const warsRef = db.ref('wars');
+
+  /* ── LIVE VISITOR PRESENCE (powers the "concurrent users" count in the admin panel) ──
+     Each open tab gets its own presence entry that Firebase auto-removes the
+     instant the tab closes or the connection drops, via onDisconnect(). */
+  (function trackPresence(){
+    try{
+      const presenceRef = db.ref('presence').push();
+      db.ref('.info/connected').on('value', snap => {
+        if (snap.val() === true) {
+          presenceRef.onDisconnect().remove();
+          presenceRef.set({
+            page: 'pointtable',
+            ts: firebase.database.ServerValue.TIMESTAMP
+          });
+        }
+      });
+      // Heartbeat: refresh the timestamp periodically so the admin panel can
+      // tell a genuinely stale/ghost entry (crashed tab, lost network) apart
+      // from someone still on the page, even if onDisconnect never fires.
+      setInterval(() => {
+        presenceRef.update({ ts: firebase.database.ServerValue.TIMESTAMP }).catch(() => {});
+      }, 25000);
+    }catch(err){ console.warn('Presence tracking failed to start.', err); }
+  })();
+
+  const warKillsRef = db.ref('war_kills');
+  let wars = [];
+  let activeFilter = 'all';
+  let allWarKills = {}; // { warId: { playerName: count } }
+
+  /* War kills real-time listener */
+  warKillsRef.on('value', snap => {
+    allWarKills = snap.val() || {};
+  }, err => { console.warn('war_kills read error', err); });
+
+  /* ── OVERLAY TIMING ── */
+  let overlayDismissed = false;
+  const overlayReadyAt = Date.now() + 5000;
+  function dismissOverlay() {
+    if (overlayDismissed) return;
+    const delay = Math.max(0, overlayReadyAt - Date.now());
+    setTimeout(() => {
+      if (overlayDismissed) return;
+      overlayDismissed = true;
+      const overlay = document.getElementById('entryOverlay');
+      overlay.classList.add('hide');
+      setTimeout(() => { overlay.style.display = 'none'; }, 700);
+    }, delay);
+  }
+
+  /* ── CONNECTION STATE MONITOR ── */
+  db.ref('.info/connected').on('value', (snap) => {
+    const connected = snap.val();
+    const dot   = document.querySelector('.live-dot');
+    const label = document.querySelector('.live-label');
+    if (dot)   dot.style.background   = connected ? '' : '#ff4d4d';
+    if (label) label.textContent      = connected ? 'Live' : 'Disconnected';
+  });
+
+  /* ── WARS REAL-TIME LISTENER (with error callback) ── */
+  warsRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    wars = data ? Object.values(data) : [];
+    renderAll();
+    updateTimestamp();
+    dismissOverlay();
+  }, (error) => {
+    /* Firebase read was denied — most likely a Database Rules issue.
+       Full detail goes to the console for you to debug; the public-facing
+       message stays generic so visitors don't see internal error text or
+       get told to loosen your database rules. */
+    console.error('[RZ7 Point Table] Firebase read error:', error.code, error.message);
+    console.error('[RZ7 Point Table] If this is unexpected, check Firebase Console → Realtime Database → Rules — make sure the "wars" path allows read access for this app, ideally scoped rather than fully public.');
+    const body = document.getElementById('warTableBody');
+    if (body) {
+      body.innerHTML = `
+        <div class="empty-state">
+          <i class="fas fa-exclamation-triangle" style="color:#ff4d4d;"></i>
+          <p style="color:rgba(255,255,255,0.5);margin-top:10px;">Couldn't load war data right now.</p>
+          <p style="font-size:0.68rem;color:rgba(255,255,255,0.25);margin-top:8px;">Please try again shortly.</p>
+        </div>`;
+    }
+    dismissOverlay();
+  });
+
+  // Fallback dismiss after 10s
+  setTimeout(dismissOverlay, 10000);
+  document.getElementById('entryOverlay').addEventListener('click', dismissOverlay);
+
+  /* ── HELPERS ── */
+  function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2); }
+  function fmtDate(d) {
+    if (!d) return '—';
+    return new Date(d + 'T00:00:00').toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+  }
+  function fmtTime(ts) {
+    if (!ts) return '';
+    return 'Updated ' + new Date(ts).toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  }
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function updateTimestamp() {
+    document.getElementById('lastUpdated').textContent = fmtTime(Date.now());
+  }
+
+  /* ── STATS ── */
+  function calcStats() {
+    const total = wars.length;
+    const wins  = wars.filter(w => w.result === 'win').length;
+    const rate  = total ? Math.round((wins / total) * 100) : 0;
+
+    // current streak from most-recent war
+    const sorted = [...wars].sort((a,b) => (b.createdAt||0)-(a.createdAt||0));
+    let streak = 0, streakType = null;
+    for (const w of sorted) {
+      if (streakType === null) { streakType = w.result; streak = 1; }
+      else if (w.result === streakType) streak++;
+      else break;
+    }
+    return { total, wins, rate, streak, streakType };
+  }
+
+  function renderStats() {
+    const { total, wins, rate, streak, streakType } = calcStats();
+    document.getElementById('statTotal').textContent = total || '0';
+    document.getElementById('statWins').textContent  = wins  || '0';
+    document.getElementById('statRate').innerHTML    = (total ? rate : '—') + '<span>%</span>';
+
+    const badge = document.getElementById('statStreakBadge');
+    if (streak > 0 && streakType) {
+      const icon = streakType === 'win' ? '🔥' : '❄️';
+      const cls  = streakType === 'win' ? 's-win' : 's-loss';
+      const lbl  = streakType === 'win' ? 'Win Streak' : 'Loss Streak';
+      badge.innerHTML = `<span class="streak-badge ${cls}">${icon} ${streak} ${lbl}</span>`;
+    } else {
+      badge.innerHTML = '';
+    }
+  }
+
+  /* ── FILTER ── */
+  function setFilter(f, btn) {
+    activeFilter = f;
+    document.querySelectorAll('.filter-tab').forEach(t => {
+      t.classList.remove('active','active-win','active-loss');
+    });
+    if (f === 'win')  btn.classList.add('active-win');
+    else if (f === 'loss') btn.classList.add('active-loss');
+    else btn.classList.add('active');
+    renderWarTable();
+  }
+
+  /* ── STREAK PER ROW ── */
+  function buildRowStreaks(sorted) {
+    // For each war (newest first), compute what the streak was AT that point
+    const streakMap = {};
+    // work backwards through sorted (oldest to newest) to build streaks
+    const chrono = [...sorted].reverse();
+    let cur = 0, curType = null;
+    const streakAtIndex = {}; // keyed by war id
+    for (const w of chrono) {
+      if (curType === null || w.result !== curType) { curType = w.result; cur = 1; }
+      else cur++;
+      streakAtIndex[w.id] = { n: cur, type: curType };
+    }
+    return streakAtIndex;
+  }
+
+  /* ── RENDER WAR TABLE ── */
+  function renderAll(flash = false) {
+    renderStats();
+    renderWarTable(flash);
+  }
+
+  function renderWarTable(flash = false) {
+    const body = document.getElementById('warTableBody');
+    document.getElementById('warCountLabel').textContent = wars.length + ' Records';
+
+    if (!wars.length) {
+      body.innerHTML = `<div class="empty-state"><i class="fas fa-shield-alt"></i>No war records yet.</div>`;
+      return;
+    }
+
+    const sorted = [...wars].sort((a,b) => (b.createdAt||0)-(a.createdAt||0) || new Date(b.date)-new Date(a.date));
+    const streakMap = buildRowStreaks(sorted);
+
+    const filtered = activeFilter === 'all' ? sorted : sorted.filter(w => w.result === activeFilter);
+
+    if (!filtered.length) {
+      body.innerHTML = `<div class="empty-state"><i class="fas fa-shield-alt"></i>No ${activeFilter} records.</div>`;
+      return;
+    }
+
+    body.innerHTML = filtered.map((w, i) => {
+      const prewarResult = w.prewar || 'loss';
+      const rowClass = w.result === 'win' ? 'win-row' : 'loss-row';
+      const sk = streakMap[w.id];
+      const streakHTML = (sk && sk.n >= 2)
+        ? `<span class="streak-badge ${sk.type==='win'?'s-win':'s-loss'}"><span class="streak-emoji">${sk.type==='win'?'🔥':'❄️'}</span>${sk.n} ${sk.type==='win'?'WIN STK':'LOSS STK'}</span>`
+        : '';
+      // Cap delay at first 6 rows max so 25+ rows never sit invisible
+      const delay = Math.min(i, 6) * 0.05;
+      return `
+      <div class="war-entry ${rowClass}${flash && i === 0 ? ' new-flash' : ''}" style="animation-delay:${delay}s" onclick="openKillsPopup('${w.id}')">
+        <div class="war-row">
+          <div class="war-row-num">${i + 1}</div>
+          <div class="war-enemy">
+            <div class="war-enemy-name">
+              ${escHtml(w.enemy)}
+              ${streakHTML}
+            </div>
+          </div>
+          <div>${statusBadge(prewarResult)}</div>
+          <div>${statusBadge(w.result)}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  /* ── STATUS LABEL HELPER ── */
+  const STATUS_MAP = {
+    win:           { label:'🏆 WIN',          cls:'win' },
+    loss:          { label:'❌ LOSS',          cls:'loss' },
+    server_ended:  { label:'🔌 SERVER ENDED', cls:'server-ended' },
+    not_happened:  { label:'⏳ NOT HAPPENED', cls:'not-happened' }
+  };
+  function statusBadge(val) {
+    const s = STATUS_MAP[val] || { label: escHtml(val), cls:'loss' };
+    return `<span class="war-result ${s.cls}">${s.label}</span>`;
+  }
+
+  /* ── WAR KILLS POPUP ── */
+  function openKillsPopup(warId) {
+    const war = wars.find(w => w.id === warId);
+    if (!war) return;
+    const kills = allWarKills[warId] || {};
+    const entries = Object.entries(kills).filter(([,c]) => c > 0).sort((a,b) => b[1] - a[1]);
+
+    document.getElementById('kpEnemy').textContent = war.enemy;
+    const s = STATUS_MAP[war.result] || { label: war.result, cls: 'loss' };
+    const el = document.getElementById('kpResult');
+    el.textContent = s.label;
+    el.className = 'kp-result war-result ' + s.cls;
+
+    const body = document.getElementById('kpBody');
+    if (!entries.length) {
+      body.innerHTML = '<div class="kills-empty"><i class="fas fa-crosshairs"></i>No kill data recorded for this war yet.</div>';
+      document.getElementById('kpTotal').textContent = '0';
+    } else {
+      let total = 0;
+      body.innerHTML = '<div class="kills-grid">' + entries.map(([name, count]) => {
+        total += count;
+        return `<div class="kill-player-row"><span class="kp-name">${escHtml(name)}</span><span class="kp-count">${count}</span></div>`;
+      }).join('') + '</div>';
+      document.getElementById('kpTotal').textContent = total;
+    }
+
+    document.getElementById('killsOverlay').classList.add('show');
+  }
+
+  function closeKillsPopup() {
+    document.getElementById('killsOverlay').classList.remove('show');
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && document.getElementById('killsOverlay').classList.contains('show')) closeKillsPopup();
+  });
+
+  document.getElementById('menuToggle').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('active');
+  });
+</script>
+<script src="shield.js"></script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="lanhqeeNyvmNjhHICCvNTTFmaTNVcV1rIjGWmRSItxk" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAZEUS 7 — Events | RZ7 Gang Events & Announcements</title>
+<meta name="description" content="RAZEUS 7 (RZ7) events and announcements — upcoming gang events, community meetups, and special occasions in GTA RP. Stay updated with the RZ7 family.">
+<meta name="keywords" content="RAZEUS 7 events, RZ7 announcements, razeus 7 community, RZ7 GTA RP events, RAZEUS 7 meetups, rz7 gang events">
+<meta name="author" content="RAZEUS 7">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://razeus7.com/contact.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="RAZEUS 7 — Events & Announcements">
+<meta property="og:description" content="Upcoming RZ7 events, community meetups, and gang announcements.">
+<meta property="og:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<meta property="og:url" content="https://razeus7.com/contact.html">
+<meta property="og:site_name" content="RAZEUS 7">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RAZEUS 7 — Events">
+<meta name="twitter:description" content="Upcoming RZ7 events and gang announcements.">
+<meta name="twitter:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<link rel="icon" type="image/png" href="images/logo/rz7_logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07060a;
+  --burgundy:#7a1a24;
+  --burgundy-light:#a81f2b;
+  --border:rgba(255,255,255,0.07);
+  --border-burg:rgba(122,26,36,0.35);
+  --text:rgba(255,255,255,0.9);
+  --text-muted:rgba(255,255,255,0.42);
+}
+html,body{height:100%;overflow-x:hidden;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:#0a0809;}
+::-webkit-scrollbar-thumb{background:#7a1a24;border-radius:10px;}
+
+/* ══ NAVBAR ══ */
+.navbar{
+  height:72px;width:100%;position:fixed;top:0;left:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  background:rgba(8,7,6,0.9);
+  backdrop-filter:blur(32px) saturate(180%);
+  border-bottom:1px solid var(--border-burg);
+  z-index:9999;animation:navIn 0.6s ease both;
+}
+@keyframes navIn{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{width:38px;height:38px;border-radius:10px;object-fit:cover;border:1.5px solid var(--border-burg);}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:5px;color:#fff;display:block;}
+.nav-tagline{font-size:.55rem;letter-spacing:4px;color:var(--burgundy-light);text-transform:uppercase;display:block;line-height:1;margin-top:-2px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{color:rgba(255,255,255,.5);text-decoration:none;font-size:.72rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;border-radius:8px;transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(122,26,36,.1);}
+
+/* ══ BOTTOM NAV (mobile) ══ */
+.bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:1001;
+  background:rgba(8,7,6,0.92);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border-top:1px solid var(--border-burg);
+  padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+  justify-content:space-around;align-items:center;
+}
+.bn-item{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;flex:1;min-width:0;text-decoration:none;
+  color:rgba(255,255,255,.5);font-size:.52rem;letter-spacing:.4px;text-transform:uppercase;
+  padding:7px 2px 5px;border-radius:12px;
+  transition:color .2s ease,background .2s ease,transform .2s ease;}
+.bn-item i{font-size:1.08rem;line-height:1;transition:transform .2s ease;}
+.bn-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.bn-item:active{transform:scale(0.94);}
+.bn-item.active,.bn-item:hover{color:#fff;background:rgba(122,26,36,.16);}
+.bn-item.active i{transform:translateY(-1px);}
+
+/* ══ PAGE LAYOUT ══ */
+.page{padding:88px 0 0;min-height:100vh;}
+
+/* ══ PAGE HEADER ══ */
+.events-header{
+  position:relative;
+  padding:52px 6% 34px;
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.events-header-watermark{
+  position:absolute;right:4%;top:50%;transform:translateY(-50%);
+  font-family:'Bebas Neue',sans-serif;font-size:9rem;line-height:1;
+  color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.04);
+  letter-spacing:4px;pointer-events:none;user-select:none;white-space:nowrap;
+}
+.events-header-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;z-index:1;}
+.events-title{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;color:#fff;letter-spacing:1px;line-height:.95;}
+.events-title em{font-style:normal;color:var(--burgundy-light);}
+.events-sub{font-size:.8rem;color:var(--text-muted);margin-top:10px;line-height:1.6;max-width:400px;}
+.events-stats{display:flex;gap:28px;flex-shrink:0;}
+.events-stat{text-align:right;}
+.events-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;color:#fff;line-height:1;}
+.events-stat-label{font-size:.6rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);margin-top:4px;}
+
+/* filter tabs — folder-divider style */
+.filter-tabs{display:flex;gap:2px;padding:0 6%;border-bottom:1px solid var(--border);}
+.ftab{
+  padding:13px 20px 11px;cursor:pointer;font-size:.72rem;
+  font-weight:600;letter-spacing:.5px;
+  color:rgba(255,255,255,.38);border-bottom:2px solid transparent;
+  transition:color .2s,border-color .2s;margin-bottom:-1px;
+}
+.ftab:hover{color:rgba(255,255,255,.7);}
+.ftab.active{color:#fff;border-color:var(--burgundy-light);}
+
+/* ══ EVENTS LIST — poster grid ══ */
+.events-list-col{padding:24px 6% 60px;}
+.events-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:22px;
+}
+
+/* ── EVENT CARD (poster-box) ── */
+.event-card{
+  position:relative;
+  aspect-ratio:3/4;
+  border-radius:14px;
+  overflow:hidden;
+  cursor:pointer;
+  background:linear-gradient(150deg,rgba(122,26,36,.4),rgba(0,0,0,.85));
+  border:1px solid var(--border);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.05) inset,
+    0 10px 24px rgba(0,0,0,.35),
+    0 2px 6px rgba(0,0,0,.3);
+  transition:transform .4s cubic-bezier(.23,1,.32,1),box-shadow .4s cubic-bezier(.23,1,.32,1),border-color .4s ease,opacity .5s ease;
+  /* Entry animation — starts invisible, animated in by JS */
+  opacity:0;
+  transform:translateY(30px) scale(.96);
+  animation:cardEnter .6s cubic-bezier(.23,1,.32,1) forwards;
+  animation-delay:var(--delay,0s);
+}
+@keyframes cardEnter{
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+.event-card::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  padding:1px;
+  background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,0) 30%,rgba(255,255,255,0) 70%,rgba(122,26,36,.3));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.9;transition:opacity .4s ease;z-index:3;
+}
+.event-card:hover{
+  transform:translateY(-8px) scale(1.015);
+  border-color:var(--border-burg);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.08) inset,
+    0 30px 60px rgba(0,0,0,.6),
+    0 8px 20px rgba(0,0,0,.4),
+    0 0 0 1px rgba(122,26,36,.3),
+    0 0 32px rgba(168,31,43,.18);
+}
+.event-card.hidden{display:none;}
+
+.card-poster-img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.8;filter:saturate(1.05) contrast(1.03);
+  transition:transform .6s cubic-bezier(.23,1,.32,1),opacity .4s ease,filter .4s ease;
+}
+.event-card:hover .card-poster-img{transform:scale(1.08);opacity:.95;filter:saturate(1.15) contrast(1.05);}
+
+.card-poster-icon{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:4.2rem;opacity:.45;filter:drop-shadow(0 4px 16px rgba(0,0,0,.6));
+}
+
+.card-poster-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(4,3,4,.97) 0%,rgba(4,3,4,.72) 32%,rgba(4,3,4,.22) 62%,rgba(4,3,4,.02) 82%),
+              linear-gradient(to bottom,rgba(4,3,4,.35) 0%,rgba(4,3,4,0) 22%);
+}
+
+/* top row: type chip + status stamp */
+.card-top-row{
+  position:absolute;top:12px;left:12px;right:12px;z-index:2;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+}
+.card-type{
+  font-size:.58rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:rgba(255,255,255,.85);background:rgba(0,0,0,.55);
+  border:1px solid rgba(255,255,255,.15);border-radius:20px;
+  padding:4px 10px;white-space:nowrap;backdrop-filter:blur(4px);
+}
+.card-stamp{
+  flex-shrink:0;
+  font-family:'Bebas Neue',sans-serif;font-size:.68rem;letter-spacing:2px;
+  padding:3px 9px;border:1.5px solid;border-radius:3px;
+  background:rgba(0,0,0,.5);backdrop-filter:blur(4px);
+  transform:rotate(-4deg);
+}
+.card-stamp.upcoming{color:#4ade80;border-color:#4ade80;}
+.card-stamp.completed{color:rgba(255,255,255,.5);border-color:rgba(255,255,255,.3);}
+.card-stamp.cancelled{color:#ff6b6b;border-color:#ff6b6b;}
+
+/* bottom info block: date/time badge + title */
+.card-poster-body{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:16px 14px 15px;
+}
+.card-visit-time{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--burgundy-light);margin-bottom:7px;
+}
+.card-visit-time i{font-size:.68rem;}
+.card-title{
+  font-family:'Bebas Neue',sans-serif;font-size:1.32rem;letter-spacing:.3px;
+  color:#fff;line-height:1.08;margin-bottom:5px;
+}
+.card-sub-meta{
+  display:flex;flex-wrap:wrap;gap:2px 10px;
+  font-size:.66rem;color:rgba(255,255,255,.5);
+}
+.card-sub-meta i{margin-right:3px;color:rgba(255,255,255,.35);}
+
+/* no results */
+.no-results{text-align:center;padding:60px 20px;color:rgba(255,255,255,.22);display:none;}
+.no-results i{font-size:2rem;margin-bottom:10px;display:block;opacity:.3;}
+
+/* ══════════════════════════════════════
+   EVENT DETAIL — wide centered popup
+══════════════════════════════════════ */
+.event-modal-overlay{
+  display:none;position:fixed;inset:0;z-index:10000;
+  background:rgba(4,3,4,.8);backdrop-filter:blur(8px);
+  align-items:flex-start;justify-content:center;
+  padding:60px 20px;overflow-y:auto;
+}
+.event-modal-overlay.open{display:flex;animation:overlayFade .25s ease both;}
+@keyframes overlayFade{from{opacity:0}to{opacity:1}}
+
+.event-modal{
+  width:100%;max-width:900px;
+  max-height:calc(100vh - 120px);
+  background:var(--bg);
+  border:1px solid var(--border);
+  border-radius:6px;
+  position:relative;
+  display:flex;
+  overflow:hidden;
+  animation:modalIn .3s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.ed-close{
+  position:absolute;top:16px;right:16px;z-index:5;
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);cursor:pointer;transition:.2s;
+}
+.ed-close:hover{background:rgba(0,0,0,.75);color:#fff;}
+
+.ed-inner{display:flex;width:100%;min-height:0;}
+
+/* Detail Banner — straight vertical panel on the left */
+.ed-banner{
+  width:320px;flex-shrink:0;align-self:stretch;overflow:hidden;
+  background:linear-gradient(135deg,rgba(122,26,36,.3),rgba(0,0,0,.6));
+  display:flex;align-items:center;justify-content:center;
+  font-size:4rem;position:relative;
+  box-shadow:inset -1px 0 0 rgba(255,255,255,.06);
+}
+.ed-banner img{
+  position:absolute;inset:1;width:100%;height:100%;object-fit:cover;
+  opacity:.9;filter:saturate(1.08) contrast(1.04);
+  transform:scale(1.02);
+}
+.ed-banner-icon{position:relative;z-index:2;filter:drop-shadow(0 4px 20px rgba(0,0,0,.7));}
+.ed-banner-overlay{
+  position:absolute;inset:1;z-index:1;
+  background:linear-gradient(to right,transparent 55%,var(--bg) 100%),
+              linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 35%),
+              linear-gradient(to bottom,rgba(0,0,0,.35) 0%,transparent 30%);
+}
+
+.ed-content{flex:1;min-width:0;min-height:0;padding:36px 40px;overflow-y:auto;}
+
+/* Type + status row */
+.ed-tags{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px;}
+.ed-type{font-size:.72rem;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.5px;}
+.ed-type::before{content:'// ';color:rgba(255,255,255,.25);}
+.ed-status{
+  font-family:'Bebas Neue',sans-serif;font-size:.74rem;letter-spacing:2px;
+  padding:3px 11px;border:1.5px solid;border-radius:3px;
+  transform:rotate(-3deg);display:inline-block;
+}
+.ed-status.upcoming{color:#4ade80;border-color:#4ade80;}
+.ed-status.completed{color:rgba(255,255,255,.4);border-color:rgba(255,255,255,.25);}
+.ed-status.cancelled{color:#ff6b6b;border-color:#ff6b6b;}
+
+/* Title */
+.ed-title{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:.5px;color:#fff;line-height:1.05;margin-bottom:2px;}
+.ed-tagline{font-size:.76rem;color:var(--text-muted);margin-bottom:22px;}
+
+.ed-divider{height:1px;background:var(--border);margin-bottom:22px;}
+
+/* Info ledger */
+.ed-info-grid{margin-bottom:26px;}
+.ed-info-box{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--border);}
+.ed-info-label{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);flex-shrink:0;}
+.ed-info-val{font-size:.86rem;font-weight:500;color:#fff;text-align:right;}
+
+/* Description */
+.ed-desc-section{margin-bottom:26px;}
+.ed-section-label{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:10px;}
+.ed-desc-text{font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.75;border-left:2px solid var(--border-burg);padding-left:16px;}
+
+/* Action buttons */
+.ed-btns{display:flex;gap:10px;flex-wrap:wrap;}
+.ed-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 22px;flex:1;min-width:160px;
+  font-family:'Poppins',sans-serif;font-weight:700;font-size:.82rem;
+  letter-spacing:1px;text-decoration:none;cursor:pointer;transition:.2s;border:1px solid;
+}
+.ed-btn-primary{background:var(--burgundy);border-color:var(--burgundy-light);color:#fff;}
+.ed-btn-primary:hover{background:var(--burgundy-light);}
+.ed-btn-secondary{background:transparent;border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.75);}
+.ed-btn-secondary:hover{border-color:rgba(255,255,255,.35);color:#fff;}
+.ed-no-btns{text-align:center;font-size:.74rem;color:rgba(255,255,255,.25);padding:16px 0;}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .nav-links{display:none!important;}
+  .bottom-nav{display:flex;}
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+  .page{padding-bottom:72px;}
+
+  .events-header{padding:32px 5% 24px;}
+  .events-header-watermark{display:none;}
+  .events-title{font-size:2.3rem;}
+  .events-stats{gap:18px;}
+  .events-stat-num{font-size:1.6rem;}
+  .filter-tabs{padding:0 5%;}
+  .events-list-col{padding:14px 5% 40px;}
+  .events-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .card-title{font-size:1.08rem;}
+  .card-poster-body{padding:12px 10px 12px;}
+  .card-poster-icon{font-size:3rem;}
+
+  .event-modal-overlay{padding:0;align-items:flex-end;}
+  .event-modal{max-width:100%;border-radius:16px 16px 0 0;max-height:92vh;overflow-y:auto;display:block;}
+  .ed-inner{flex-direction:column;}
+  .ed-banner{width:100%;height:200px;}
+  .ed-banner-overlay{background:linear-gradient(to top,var(--bg) 0%,transparent 60%);}
+  .ed-content{padding:24px 20px 30px;overflow-y:visible;}
+  .ed-title{font-size:1.9rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo/rz7_logo.jpeg" alt="RZ7">
+    <div><span class="nav-brand">RZ7</span><span class="nav-tagline">GTA Official</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="players.html">Players</a>
+    <a href="about.html">Storyline</a>
+    <a href="pointtable.html">Point Table</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html" class="active">Events</a>
+  </div>
+</nav>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottomNav">
+  <a href="index.html" class="bn-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+  <a href="players.html" class="bn-item"><i class="fa-solid fa-users"></i><span>Players</span></a>
+  <a href="pointtable.html" class="bn-item"><i class="fa-solid fa-ranking-star"></i><span>Points</span></a>
+  <a href="community.html" class="bn-item"><i class="fa-solid fa-comments"></i><span>Chat</span></a>
+  <a href="contact.html" class="bn-item active"><i class="fa-solid fa-calendar-days"></i><span>Events</span></a>
+</nav>
+
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="events-header">
+    <div class="events-header-watermark">EVENTS</div>
+    <div class="events-header-row">
+      <div>
+        <div class="events-title" style="opacity:0;animation:fadeSlideUp .6s .15s cubic-bezier(.23,1,.32,1) forwards;">GANG <em>EVENTS</em></div>
+        <div class="events-sub" style="opacity:0;animation:fadeSlideUp .6s .3s cubic-bezier(.23,1,.32,1) forwards;">Wars, tournaments, street races and meetups — tap any event to see full details.</div>
+      </div>
+      <div class="events-stats" style="opacity:0;animation:fadeSlideUp .6s .45s cubic-bezier(.23,1,.32,1) forwards;">
+        <div class="events-stat">
+          <div class="events-stat-num" id="statUpcoming">0</div>
+          <div class="events-stat-label">Upcoming</div>
+        </div>
+        <div class="events-stat">
+          <div class="events-stat-num" id="statCompleted">0</div>
+          <div class="events-stat-label">Logged</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs" id="filterTabs" style="opacity:0;animation:fadeSlideUp .6s .55s cubic-bezier(.23,1,.32,1) forwards;">
+    <div class="ftab active" data-filter="all">All Events</div>
+    <div class="ftab" data-filter="upcoming">Upcoming</div>
+    <div class="ftab" data-filter="completed">Completed</div>
+  </div>
+
+  <!-- EVENTS LIST -->
+  <div class="events-list-col">
+    <div class="events-grid" id="eventsGrid">
+      <div class="no-results" id="noResults">
+        <i class="fas fa-calendar-xmark"></i>
+        <p>No events found</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<!-- EVENT DETAIL — wide popup -->
+<div class="event-modal-overlay" id="eventModalOverlay">
+  <div class="event-modal">
+    <button class="ed-close" onclick="closeEventDetail()"><i class="fas fa-times"></i></button>
+    <div class="ed-inner" id="edInner">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+let events = [
+  // {
+  //   title:'RZ7 Turf War — Vinewood',
+  //   type:'Gang War',
+  //   date:'2026-09-20',
+  //   time:'9:00 PM',
+  //   location:'Vinewood Hills',
+  //   description:'RZ7 defends its Vinewood turf against a rival crew challenge. Pull up and back the gang.',
+  //   banner:'',
+  // },
+  // {
+  //   title:'Street Race Night',
+  //   type:'Street Race',
+  //   date:'2026-08-15',
+  //   time:'11:00 PM',
+  //   location:'Los Santos Freeway',
+  //   description:'Open street race, top 3 finishers get bragging rights and a cut of the pool.',
+  //   banner:'',
+  //   cancelled:false
+  // },
+];
+
+let activeFilter = 'all';
+let selectedEventId = null;
+const grid = document.getElementById('eventsGrid');
+const noResults = document.getElementById('noResults');
+
+function esc(s){
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+function computeStatus(ev){
+  // Manual 'cancelled' always wins; otherwise derive from the date.
+  if (ev.cancelled) return 'cancelled';
+  if (!ev.date) return 'upcoming';
+  const eventDate = new Date(ev.date + 'T23:59:59');
+  return eventDate.getTime() >= Date.now() ? 'upcoming' : 'completed';
+}
+
+function formatDate(d){
+  if (!d) return 'TBA';
+  const dt = new Date(d + 'T00:00:00');
+  if (isNaN(dt.getTime())) return d;
+  return dt.toLocaleDateString('en-US', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function formatDateParts(d){
+  if (!d) return null;
+  const dt = new Date(d + 'T00:00:00');
+  if (isNaN(dt.getTime())) return null;
+  return { day: dt.getDate(), mon: dt.toLocaleDateString('en-US', { month: 'short' }) };
+}
+
+function getEventEmoji(type){
+  if (!type) return '📅';
+  const t = String(type).toLowerCase();
+  if (t.includes('war')) return '⚔️';
+  if (t.includes('race')) return '🏁';
+  if (t.includes('heist')) return '🎭';
+  if (t.includes('meet') || t.includes('gather')) return '👥';
+  if (t.includes('tournament')) return '🏆';
+  if (t.includes('party') || t.includes('celebr')) return '🎉';
+  return '📅';
+}
+
+function renderEvents(){
+  // upcoming events first (soonest first), completed events below (most recent first)
+  const sorted = [...events].sort((a,b) => {
+    const sa = computeStatus(a), sb = computeStatus(b);
+    if (sa === 'upcoming' && sb !== 'upcoming') return -1;
+    if (sb === 'upcoming' && sa !== 'upcoming') return 1;
+    const da = a.date || '', db = b.date || '';
+    return sa === 'upcoming' ? da.localeCompare(db) : db.localeCompare(da);
+  });
+
+  const filtered = sorted.filter(ev => activeFilter === 'all' || computeStatus(ev) === activeFilter);
+
+  document.getElementById('statUpcoming').textContent = events.filter(ev => computeStatus(ev) === 'upcoming').length;
+  document.getElementById('statCompleted').textContent = events.filter(ev => computeStatus(ev) === 'completed').length;
+
+  if (!filtered.length){
+    grid.innerHTML = '';
+    grid.appendChild(noResults);
+    noResults.style.display = 'block';
+    return;
+  }
+  noResults.style.display = 'none';
+
+  const cards = filtered.map(ev => {
+    const status = computeStatus(ev);
+    const dateStr = ev.date ? formatDate(ev.date) : 'Date TBA';
+    const visitTime = [dateStr, ev.time].filter(Boolean).join(' · ');
+    const posterHTML = ev.banner
+      ? `<img class="card-poster-img" src="${esc(ev.banner)}" alt="${esc(ev.title)}">`
+      : `<div class="card-poster-icon">${getEventEmoji(ev.type)}</div>`;
+    const div = document.createElement('div');
+    div.className = 'event-card';
+    div.innerHTML = `
+      ${posterHTML}
+      <div class="card-poster-overlay"></div>
+      <div class="card-top-row">
+        ${ev.type ? `<span class="card-type">${esc(ev.type)}</span>` : '<span></span>'}
+        <span class="card-stamp ${status}">${status}</span>
+      </div>
+      <div class="card-poster-body">
+        <div class="card-visit-time"><i class="fas fa-clock"></i>${esc(visitTime)}</div>
+        <div class="card-title">${esc(ev.title || 'Untitled')}</div>
+        ${ev.location ? `<div class="card-sub-meta"><span><i class="fas fa-location-dot"></i>${esc(ev.location)}</span></div>` : ''}
+      </div>`;
+    div.addEventListener('click', () => openEventDetail(ev));
+    return div;
+  });
+
+  grid.innerHTML = '';
+  cards.forEach((c, i) => {
+    c.style.setProperty('--delay', (i * 0.08) + 's');
+    grid.appendChild(c);
+  });
+}
+
+document.getElementById('filterTabs').addEventListener('click', e => {
+  const tab = e.target.closest('.ftab');
+  if (!tab) return;
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+  tab.classList.add('active');
+  activeFilter = tab.dataset.filter;
+  renderEvents();
+});
+
+renderEvents();
+
+/* ══════════════════════════════════════
+   EVENT DETAIL — wide popup
+══════════════════════════════════════ */
+function openEventDetail(ev){
+  const status = computeStatus(ev);
+  const panel  = document.getElementById('edInner');
+  selectedEventId = ev.id || ev.title;
+
+  const bannerHTML = ev.banner
+    ? `<img src="${esc(ev.banner)}" alt="${esc(ev.title)}"><div class="ed-banner-overlay"></div>`
+    : `<span class="ed-banner-icon">${getEventEmoji(ev.type)}</span><div class="ed-banner-overlay"></div>`;
+
+  const infoItems = [
+    ev.date     ? { label:'Date',     val: formatDate(ev.date) } : null,
+    ev.time     ? { label:'Time',     val: ev.time }             : null,
+    ev.location ? { label:'Location', val: ev.location }         : null,
+    ev.type     ? { label:'Type',     val: ev.type }             : null,
+  ].filter(Boolean);
+
+  const infoGridHTML = infoItems.length ? `
+    <div class="ed-info-grid">
+      ${infoItems.map(m => `
+        <div class="ed-info-box">
+          <div class="ed-info-label">${m.label}</div>
+          <div class="ed-info-val">${esc(m.val)}</div>
+        </div>`).join('')}
+    </div>` : '';
+
+  const descHTML = ev.description ? `
+    <div class="ed-desc-section">
+      <div class="ed-section-label">About this event</div>
+      <div class="ed-desc-text">${esc(ev.description)}</div>
+    </div>` : '';
+
+  const btns = [];
+  if (ev.registerLink && status === 'upcoming') {
+    btns.push(`<a class="ed-btn ed-btn-primary" href="${esc(ev.registerLink)}" target="_blank" rel="noopener">
+      <i class="fas fa-pen-to-square"></i> Register Now
+    </a>`);
+  }
+  if (ev.watchLink) {
+    btns.push(`<a class="ed-btn ed-btn-secondary" href="${esc(ev.watchLink)}" target="_blank" rel="noopener">
+      <i class="fas fa-play"></i> Watch / Stream
+    </a>`);
+  }
+  const btnsHTML = btns.length
+    ? `<div class="ed-btns">${btns.join('')}</div>`
+    : `<div class="ed-no-btns"><i class="fas fa-clock"></i> &nbsp;No links added yet — check back soon</div>`;
+
+  panel.innerHTML = `
+    <div class="ed-banner">${bannerHTML}</div>
+    <div class="ed-content">
+      <div class="ed-tags">
+        <span class="ed-status ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+      </div>
+      <div class="ed-title">${esc(ev.title || 'Untitled Event')}</div>
+      <div class="ed-tagline">RZ7 Official Event</div>
+      <div class="ed-divider"></div>
+      ${infoGridHTML}
+      ${descHTML}
+      ${btnsHTML}
+    </div>
+  `;
+
+  document.getElementById('eventModalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEventDetail(){
+  document.getElementById('eventModalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  selectedEventId = null;
+}
+
+document.getElementById('eventModalOverlay').addEventListener('click', e => {
+  if (e.target.id === 'eventModalOverlay') closeEventDetail();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeEventDetail();
+});
+
+/* ── FIREBASE SYNC (falls back to the static list above if unavailable) ── */
+try{
+  const firebaseConfig = {
+    apiKey: "AIzaSyB3E3vdJvjB88p-aTWLIw9Z6_HhYVA9EQM",
+    authDomain: "mrz-war-table.firebaseapp.com",
+    databaseURL: "https://mrz-war-table-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mrz-war-table",
+    storageBucket: "mrz-war-table.firebasestorage.app",
+    messagingSenderId: "427955707558",
+    appId: "1:427955707558:web:fbb9eff081478179881e67"
+  };
+  if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const eventsRef = db.ref('events');
+  eventsRef.on('value', snap => {
+    const raw = snap.val();
+    if (raw && Object.keys(raw).length > 0){
+      events = Object.values(raw);
+    }
+    renderEvents();
+  }, err => {
+    console.warn('Events Firebase error:', err.message, '— using static list.');
+  });
+
+  /* ── LIVE VISITOR PRESENCE (powers the "concurrent users" count in the admin panel) ──
+     Each open tab gets its own presence entry that Firebase auto-removes the
+     instant the tab closes or the connection drops, via onDisconnect(). */
+  (function trackPresence(){
+    try{
+      const presenceRef = db.ref('presence').push();
+      db.ref('.info/connected').on('value', snap => {
+        if (snap.val() === true) {
+          presenceRef.onDisconnect().remove();
+          presenceRef.set({ page: 'events', ts: firebase.database.ServerValue.TIMESTAMP });
+        }
+      });
+      setInterval(() => {
+        presenceRef.update({ ts: firebase.database.ServerValue.TIMESTAMP }).catch(() => {});
+      }, 25000);
+    }catch(err){ console.warn('Presence tracking failed to start.', err); }
+  })();
+}catch(err){
+  console.warn('Firebase failed to initialize — showing static events only.', err);
+}
+</script>
+
+<script src="shield.js"></script>
+</body>
+</html>

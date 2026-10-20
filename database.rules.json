@@ -1,0 +1,60 @@
+{
+  "rules": {
+    
+    "roster": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    
+    "live_players": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    
+    "live_viewers": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    
+    "wars": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    
+    "events": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    
+    "media": {
+      ".read": true,
+      ".write": "auth != null"
+    },
+    
+    "presence": {
+      ".read": true,
+      ".write": true,
+      "$session": {
+        ".validate": "newData.hasChildren(['ts']) && newData.child('ts').isNumber()"
+      }
+    },
+    
+    "notify_subscribers": {
+      ".read": "auth != null",
+      ".write": "auth != null"
+    },
+    
+    "fcm_tokens": {
+      ".read": "auth != null",
+      ".write": true,
+      "$tokenId": {
+        ".validate": "newData.hasChildren(['token']) && newData.child('token').isString()"
+      }
+    },
+
+    "$other": {
+      ".read": false,
+      ".write": false
+    }
+  }
+}

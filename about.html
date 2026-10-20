@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="lanhqeeNyvmNjhHICCvNTTFmaTNVcV1rIjGWmRSItxk" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAZEUS 7 — Our Story | RZ7 Gang Storyline</title>
+<meta name="description" content="The story of RAZEUS 7 (RZ7) — from formation to rise to power in GTA RP. Explore the full timeline, lore, and history of the RZ7 gang.">
+<meta name="keywords" content="RAZEUS 7 story, RZ7 lore, razeus 7 history, RZ7 storyline, RZ7 GTA RP story, RAZEUS 7 timeline, rz7 origin">
+<meta name="author" content="RAZEUS 7">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://razeus7.com/about.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAZEUS 7 — Our Story">
+<meta property="og:description" content="From formation to dominance — the full story of RAZEUS 7 in GTA RP.">
+<meta property="og:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<meta property="og:url" content="https://razeus7.com/about.html">
+<meta property="og:site_name" content="RAZEUS 7">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RAZEUS 7 — Our Story">
+<meta name="twitter:description" content="The full story of RAZEUS 7 — from formation to rise to power.">
+<meta name="twitter:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="icon" type="image/jpeg" href="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;600;700&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --crimson:#c41230;--blood:#7a1a24;--silver:#c0c0c8;--ember:#e84060;
+  --void:#040208;--abyss:#080412;--smoke:rgba(255,255,255,.04);
+}
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:#040208;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--crimson),#fff);border-radius:3px;}
+html{scroll-behavior:smooth;scroll-snap-type:y proximity;}
+body{font-family:'Poppins',sans-serif;background:var(--void);color:#fff;overflow-x:hidden;}
+
+/* ── ANIMATED GRADIENT CANVAS ── */
+.bg-canvas{
+  position:fixed;inset:0;z-index:-3;
+  background:
+    radial-gradient(ellipse 60% 50% at 25% 25%, rgba(196,18,48,.1), transparent 50%),
+    radial-gradient(ellipse 50% 50% at 75% 75%, rgba(255,255,255,.03), transparent 50%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(122,26,36,.05), transparent 60%);
+  background-size:400% 400%;
+  animation:bgDrift 25s ease-in-out infinite alternate;
+}
+@keyframes bgDrift{0%{background-position:0% 0%}50%{background-position:100% 50%}100%{background-position:50% 100%}}
+
+/* ── CANVAS PARTICLE SYSTEM ── */
+#bgParticles{position:fixed;inset:0;z-index:-2;pointer-events:none;}
+
+/* ── FLOATING EMBERS (CSS) ── */
+.bg-embers{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;}
+.bg-embers span{
+  position:absolute;bottom:-10px;border-radius:50%;
+  width:var(--s,3px);height:var(--s,3px);
+  background:radial-gradient(circle,var(--c,rgba(196,18,48,.6)),transparent 70%);
+  animation:emberRise var(--d,8s) linear infinite var(--delay,0s);
+  left:var(--x,50%);
+}
+@keyframes emberRise{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:.7}90%{opacity:.3}100%{transform:translateY(-100vh) scale(.3);opacity:0}}
+
+/* ── BOKEH ORBS — large soft glowing spheres ── */
+.bg-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:-1;mix-blend-mode:screen;}
+.bg-orb-1{width:220px;height:220px;top:8%;left:5%;background:radial-gradient(circle,rgba(196,18,48,.08),transparent 65%);animation:orb1 22s ease-in-out infinite;}
+.bg-orb-2{width:320px;height:320px;top:35%;right:-2%;background:radial-gradient(circle,rgba(196,18,48,.06),transparent 65%);animation:orb2 28s ease-in-out infinite 4s;}
+.bg-orb-3{width:260px;height:260px;bottom:8%;left:18%;background:radial-gradient(circle,rgba(255,255,255,.025),transparent 65%);animation:orb3 25s ease-in-out infinite 7s;}
+.bg-orb-4{width:180px;height:180px;top:55%;right:22%;background:radial-gradient(circle,rgba(196,18,48,.05),transparent 65%);animation:orb4 20s ease-in-out infinite 2s;}
+.bg-orb-5{width:380px;height:380px;top:18%;left:35%;background:radial-gradient(circle,rgba(150,20,40,.035),transparent 65%);animation:orb5 32s ease-in-out infinite 5s;}
+@keyframes orb1{0%,100%{transform:translate(0,0);opacity:.35}25%{transform:translate(80px,-70px);opacity:.65}50%{transform:translate(-30px,-130px);opacity:.25}75%{transform:translate(100px,-40px);opacity:.55}}
+@keyframes orb2{0%,100%{transform:translate(0,0);opacity:.25}33%{transform:translate(-110px,90px);opacity:.55}66%{transform:translate(50px,-70px);opacity:.3}}
+@keyframes orb3{0%,100%{transform:translate(0,0);opacity:.2}30%{transform:translate(100px,-110px);opacity:.45}60%{transform:translate(-50px,50px);opacity:.3}}
+@keyframes orb4{0%,100%{transform:translate(0,0);opacity:.25}40%{transform:translate(-80px,-70px);opacity:.5}80%{transform:translate(50px,40px);opacity:.15}}
+@keyframes orb5{0%,100%{transform:translate(0,0);opacity:.15}50%{transform:translate(-70px,100px);opacity:.4}}
+
+/* ── AURORA WAVE — animated light band across the top ── */
+.bg-aurora{
+  position:fixed;top:0;left:0;right:0;height:45vh;
+  z-index:-1;pointer-events:none;opacity:.5;
+  background:linear-gradient(180deg,rgba(196,18,48,.07) 0%,rgba(150,20,40,.03) 30%,transparent 100%);
+  animation:auroraShift 15s ease-in-out infinite alternate;
+}
+.bg-aurora::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent 0%,rgba(196,18,48,.06) 20%,rgba(255,255,255,.02) 40%,rgba(196,18,48,.05) 60%,transparent 100%);
+  background-size:200% 100%;
+  animation:auroraWave 8s ease-in-out infinite;
+}
+@keyframes auroraShift{0%{transform:translateY(-10%) scaleY(1)}100%{transform:translateY(5%) scaleY(1.3)}}
+@keyframes auroraWave{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── GRID OVERLAY — subtle perspective grid lines ── */
+.bg-grid{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(196,18,48,.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196,18,48,.018) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(0,0,0,.25),transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse 70% 50% at 50% 50%,rgba(0,0,0,.25),transparent 70%);
+  animation:gridPulse 10s ease-in-out infinite;
+}
+@keyframes gridPulse{0%,100%{opacity:.25}50%{opacity:.5}}
+
+@media(prefers-reduced-motion:reduce){
+  .bg-orb,.bg-aurora,.bg-grid,#bgParticles,.bg-embers{display:none!important;}
+  .bg-canvas{animation:none;}
+}
+
+/* ── NAVBAR ── */
+.navbar{
+  height:68px;width:100%;position:fixed;top:0;left:0;
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+  background:rgba(4,2,8,.75);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border-bottom:1px solid rgba(196,18,48,.15);z-index:9999;
+  transition:background .4s;
+}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo img{width:36px;height:36px;border-radius:8px;object-fit:cover;border:1px solid rgba(196,18,48,.3);}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:5px;color:#fff;}
+.nav-tagline{font-size:.5rem;letter-spacing:3px;color:var(--crimson);text-transform:uppercase;display:block;margin-top:-2px;}
+.nav-links{display:flex;align-items:center;gap:3px;}
+.nav-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:.7rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;border-radius:8px;transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:#fff;background:rgba(196,18,48,.1);}
+.nav-hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:8px;border-radius:8px;border:1px solid rgba(196,18,48,.3);background:rgba(255,255,255,.04);}
+.nav-hamburger span{width:18px;height:2px;border-radius:2px;background:var(--crimson);display:block;}
+.nav-toggle{display:none;}
+
+/* ── SECTIONS — full-screen snapping ── */
+.story-section{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  padding:100px 6% 80px;overflow:hidden;
+  scroll-snap-align:start;
+}
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(50px);transition:opacity .8s ease,transform .8s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-60px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-left.vis{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(60px);transition:opacity .8s ease,transform .8s ease;}
+.reveal-right.vis{opacity:1;transform:translateX(0);}
+.reveal-scale{opacity:0;transform:scale(.85);transition:opacity .8s ease,transform .8s ease;}
+.reveal-scale.vis{opacity:1;transform:scale(1);}
+
+/* ════════════════ HERO ════════════════ */
+.hero-section{
+  height:100vh;min-height:600px;text-align:center;
+  flex-direction:column;
+  background:
+    radial-gradient(ellipse 50% 40% at 50% 60%, rgba(196,18,48,.12), transparent 60%),
+    radial-gradient(ellipse 40% 30% at 25% 30%, rgba(200,200,210,.06), transparent 50%),
+    var(--void);
+}
+/* Glowing orb behind title */
+.hero-orb{
+  position:absolute;width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,18,48,.18),transparent 65%);
+  animation:orbPulse 5s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes orbPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.2);opacity:.8}}
+.hero-inner{position:relative;z-index:2;}
+.hero-badge{
+  font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;
+  letter-spacing:6px;color:var(--crimson);text-transform:uppercase;
+  padding:6px 20px;border:1px solid rgba(196,18,48,.3);border-radius:50px;
+  display:inline-block;margin-bottom:30px;
+  background:rgba(196,18,48,.06);
+  animation:fadeIn 1s .3s both;
+}
+.hero-title{
+  font-family:'Cinzel Decorative',serif;
+  font-size:clamp(3.5rem,12vw,9rem);font-weight:900;
+  line-height:.9;margin-bottom:20px;
+  background:linear-gradient(180deg,#fff 0%,rgba(255,255,255,.85) 40%,rgba(220,220,230,.7) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 80px rgba(196,18,48,.25));
+  animation:fadeIn 1.2s .5s both, textGlow 4s ease-in-out infinite 2s;
+}
+@keyframes textGlow{0%,100%{filter:drop-shadow(0 0 80px rgba(196,18,48,.25))}50%{filter:drop-shadow(0 0 120px rgba(196,18,48,.45))}}
+.hero-subtitle{
+  font-family:'Orbitron',sans-serif;font-size:clamp(.6rem,1.2vw,.85rem);
+  letter-spacing:8px;color:rgba(255,255,255,.4);text-transform:uppercase;
+  animation:fadeIn 1s .8s both;
+}
+.hero-scroll{
+  position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:fadeIn 1s 1.5s both;
+}
+.hero-scroll span{font-size:.6rem;letter-spacing:4px;color:rgba(255,255,255,.25);text-transform:uppercase;}
+.scroll-bar{width:1px;height:50px;background:linear-gradient(180deg,var(--crimson),transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1)}50%{opacity:1;transform:scaleY(1.3)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ════════════════ CHAPTER HEADERS ════════════════ */
+.ch-label{
+  font-family:'Orbitron',sans-serif;font-size:.6rem;font-weight:700;
+  letter-spacing:5px;color:var(--crimson);text-transform:uppercase;
+  display:flex;align-items:center;gap:12px;margin-bottom:14px;
+}
+.ch-label::before,.ch-label::after{content:'';width:30px;height:1px;background:linear-gradient(90deg,var(--crimson),transparent);}
+.ch-label::after{background:linear-gradient(270deg,var(--crimson),transparent);}
+.section-title{
+  font-family:'Cinzel Decorative',serif;font-size:clamp(2rem,5vw,4rem);font-weight:700;
+  line-height:1.1;margin-bottom:20px;
+  background:linear-gradient(135deg,#fff,rgba(255,255,255,.7));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+/* ════════════════ ORIGIN ════════════════ */
+.origin-section{
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(196,18,48,.06), transparent 50%),
+    radial-gradient(ellipse at 80% 30%, rgba(255,255,255,.02), transparent 50%);
+}
+.origin-grid{
+  max-width:1300px;width:100%;
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,80px);
+  align-items:center;
+}
+.origin-num{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(6rem,14vw,10rem);
+  color:rgba(196,18,48,.06);line-height:1;margin-bottom:-40px;
+}
+.origin-text p{color:rgba(255,255,255,.5);line-height:2;font-size:.92rem;margin-bottom:16px;}
+.origin-text strong{color:rgba(255,255,255,.5);}
+
+/* Glassmorphism stat card */
+.stat-card{
+  background:linear-gradient(135deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  border:1px solid rgba(255,255,255,.06);border-radius:20px;
+  padding:36px;
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  position:relative;overflow:hidden;
+  transition:transform .4s,box-shadow .4s;
+}
+.stat-card:hover{transform:translateY(-6px);box-shadow:0 30px 60px rgba(0,0,0,.4),0 0 40px rgba(196,18,48,.08);}
+/* Animated top border */
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--crimson),#fff,var(--crimson),transparent);
+  background-size:200% 100%;animation:borderFlow 3s linear infinite;
+}
+@keyframes borderFlow{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.stat-row{margin-bottom:24px;}
+.stat-row:last-child{margin-bottom:0;}
+.stat-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+.stat-label{font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.4);}
+.stat-value{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:#fff;}
+.stat-track{height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.stat-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--crimson),#fff);width:0;transition:width 2s ease;}
+.stat-bar.go{width:var(--w);}
+
+/* ════════════════ TIMELINE ════════════════ */
+.tl-section{
+  flex-direction:column;padding-top:120px;padding-bottom:120px;
+  background:radial-gradient(ellipse at 50% 30%,rgba(196,18,48,.05),transparent 50%);
+}
+.tl-header{text-align:center;margin-bottom:80px;position:relative;z-index:2;}
+.tl-wrap{position:relative;max-width:900px;width:100%;z-index:2;}
+/* Central spine */
+.tl-wrap::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,rgba(196,18,48,.4) 5%,rgba(196,18,48,.4) 95%,transparent);
+  transform:translateX(-50%);
+}
+.tl-entry{
+  display:grid;grid-template-columns:1fr 50px 1fr;align-items:start;
+  margin-bottom:70px;position:relative;
+}
+.tl-entry:nth-child(odd) .tl-card{grid-column:1;text-align:right;padding-right:30px;}
+.tl-entry:nth-child(odd) .tl-gap{grid-column:3;}
+.tl-entry:nth-child(even) .tl-card{grid-column:3;padding-left:30px;}
+.tl-entry:nth-child(even) .tl-gap{grid-column:1;}
+.tl-center{grid-column:2;display:flex;flex-direction:column;align-items:center;}
+/* Glowing dot */
+.tl-dot{
+  width:44px;height:44px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#fff,#e0a0a8 35%,var(--crimson) 70%,#2a0509);
+  border:2px solid rgba(255,255,255,.12);
+  box-shadow:0 0 20px rgba(196,18,48,.5),0 0 50px rgba(196,18,48,.15);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.8rem;color:rgba(122,26,36,.85);flex-shrink:0;
+  position:relative;
+}
+.tl-dot::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1px solid rgba(196,18,48,.2);animation:dotPulse 3s ease-in-out infinite;}
+@keyframes dotPulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.25);opacity:.5}}
+.tl-year{font-family:'Orbitron',sans-serif;font-size:.55rem;font-weight:700;color:rgba(255,255,255,.5);margin-top:6px;letter-spacing:1px;}
+.tl-date{font-family:'Orbitron',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:3px;color:var(--crimson);text-transform:uppercase;margin-bottom:8px;}
+.tl-title{font-family:'Cinzel Decorative',serif;font-size:1.3rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:10px;}
+.tl-desc{font-size:.82rem;line-height:1.85;color:rgba(255,255,255,.45);}
+.tl-desc strong{color:rgba(255,255,255,.75);}
+.tl-badge{
+  display:inline-block;margin-top:10px;padding:3px 10px;border-radius:4px;
+  font-size:.62rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  border:1px solid rgba(196,18,48,.25);background:rgba(196,18,48,.1);color:rgba(255,255,255,.5);
+}
+
+/* ════════════════ QUOTE ════════════════ */
+.quote-section{
+  text-align:center;min-height:60vh;
+  background:radial-gradient(ellipse at 50% 50%,rgba(196,18,48,.08),transparent 60%);
+}
+.quote-text{
+  font-family:'Cinzel Decorative',serif;font-size:clamp(1.6rem,4vw,3.5rem);
+  line-height:1.25;max-width:800px;
+  background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,255,255,.5));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+.quote-cite{font-size:.7rem;letter-spacing:4px;color:var(--crimson);font-weight:700;margin-top:20px;display:block;}
+.quote-line{width:50px;height:2px;background:var(--crimson);margin:16px auto 0;}
+
+/* ════════════════ NUMBERS ════════════════ */
+.nums-section{
+  flex-direction:column;
+  background:radial-gradient(ellipse at 50% 80%,rgba(255,255,255,.02),transparent 50%);
+}
+.nums-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;
+  max-width:1000px;width:100%;
+  border:1px solid rgba(255,255,255,.05);border-radius:16px;overflow:hidden;
+}
+.num-cell{
+  padding:50px 20px;text-align:center;
+  background:rgba(255,255,255,.02);position:relative;
+  transition:background .4s,transform .4s;
+}
+.num-cell:hover{background:rgba(196,18,48,.06);transform:translateY(-4px);}
+.num-cell::after{content:'';position:absolute;bottom:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,rgba(196,18,48,.15),transparent);}
+.num-big{
+  font-family:'Cinzel Decorative',serif;font-size:clamp(2.5rem,4vw,4rem);font-weight:700;
+  background:linear-gradient(180deg,#fff,rgba(200,200,210,.8));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  display:block;
+}
+.num-label{font-size:.65rem;letter-spacing:2.5px;color:rgba(255,255,255,.3);text-transform:uppercase;margin-top:8px;}
+
+/* ════════════════ MANIFESTO ════════════════ */
+.creed-section{
+  min-height:100vh;text-align:center;flex-direction:column;
+  background:
+    radial-gradient(ellipse 60% 50% at 50% 60%,rgba(196,18,48,.1),transparent 60%),
+    radial-gradient(ellipse 40% 30% at 30% 30%,rgba(255,255,255,.03),transparent 50%);
+}
+.creed-box{max-width:700px;position:relative;z-index:2;}
+.creed-box p{color:rgba(255,255,255,.5);line-height:2;font-size:.92rem;margin-bottom:16px;}
+.creed-box strong{color:#fff;}
+.creed-cta{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-top:28px;padding:14px 32px;border-radius:50px;
+  font-size:.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:#fff;text-decoration:none;
+  background:linear-gradient(135deg,var(--crimson),var(--blood));
+  border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 10px 30px rgba(196,18,48,.3);
+  transition:transform .3s,box-shadow .3s;
+}
+.creed-cta:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(196,18,48,.4);}
+/* Ghost text behind */
+.creed-ghost{
+  position:absolute;bottom:-5%;left:50%;transform:translateX(-50%);
+  font-family:'Cinzel Decorative',serif;font-size:clamp(5rem,15vw,12rem);font-weight:900;
+  color:rgba(255,255,255,.015);white-space:nowrap;pointer-events:none;
+}
+
+/* ════════════════ FOOTER ════════════════ */
+.footer{
+  text-align:center;padding:28px;
+  font-size:.6rem;letter-spacing:3px;color:rgba(255,255,255,.2);
+  border-top:1px solid rgba(255,255,255,.04);
+}
+
+/* ════════════════ MOBILE NAV ════════════════ */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(4,2,8,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(196,18,48,.2);padding:6px 0 calc(6px + env(safe-area-inset-bottom));justify-content:space-around;}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:3px;text-decoration:none;font-size:.5rem;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.35);padding:6px 4px;transition:.2s;}
+.bn-item i{font-size:1rem;}
+.bn-item:hover,.bn-item.active{color:var(--crimson);}
+
+@media(max-width:900px){
+  .origin-grid{grid-template-columns:1fr;}
+  .tl-entry{grid-template-columns:30px 1fr;}
+  .tl-entry .tl-card{grid-column:2!important;text-align:left!important;padding:0 0 0 16px!important;}
+  .tl-entry .tl-gap{display:none!important;}
+  .tl-center{grid-column:1;}
+  .tl-wrap::before{left:15px;}
+  .tl-dot{width:30px;height:30px;font-size:.6rem;}
+  .nums-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .nav-hamburger{display:flex;}
+  .nav-links{display:none;}
+  .bottom-nav{display:flex;}
+  body{padding-bottom:calc(56px + env(safe-area-inset-bottom));}
+  .story-section{padding:80px 5% 60px;}
+}
+</style>
+</head>
+<body>
+<div class="bg-canvas"></div>
+<canvas id="bgParticles"></canvas>
+<div class="bg-aurora"></div>
+<div class="bg-grid"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+<div class="bg-orb bg-orb-4"></div>
+<div class="bg-orb bg-orb-5"></div>
+<div class="bg-embers" id="bgEmbers"></div>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">
+    <img src="images/logo/rz7_logo.jpeg" alt="RZ7">
+    <div><span class="nav-brand">R Z 7</span><span class="nav-tagline">GTA OFFICIAL</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="players.html">Players</a>
+    <a href="about.html" class="active">Storyline</a>
+    <a href="pointtable.html">Point Table</a>
+    <a href="media.html">Media</a>
+    <a href="contact.html">Events</a>
+  </div>
+  <label class="nav-hamburger" for="navToggle"><span></span><span></span><span></span></label>
+</nav>
+
+<nav class="bottom-nav">
+  <a href="index.html" class="bn-item"><i class="fa-solid fa-house"></i><span>Home</span></a>
+  <a href="players.html" class="bn-item"><i class="fa-solid fa-users"></i><span>Players</span></a>
+  <a href="about.html" class="bn-item active"><i class="fa-solid fa-scroll"></i><span>Story</span></a>
+  <a href="pointtable.html" class="bn-item"><i class="fa-solid fa-ranking-star"></i><span>Points</span></a>
+  <a href="media.html" class="bn-item"><i class="fa-solid fa-photo-film"></i><span>Media</span></a>
+  <a href="contact.html" class="bn-item"><i class="fa-solid fa-calendar-days"></i><span>Events</span></a>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="story-section hero-section">
+  <div class="hero-orb"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Est. 2026 · The Origin Story</div>
+    <h1 class="hero-title">RAZEUS 7</h1>
+    <p class="hero-subtitle">Born in chaos · Built in loyalty · Ruled by family</p>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-bar"></div></div>
+</section>
+
+<!-- ═══════ ORIGIN ═══════ -->
+<section class="story-section origin-section" id="origin">
+  <div class="origin-grid">
+    <div class="reveal-left">
+      <span class="origin-num">01</span>
+      <div class="ch-label">Chapter One</div>
+      <h2 class="section-title">Where It<br>All Began</h2>
+      <p class="origin-text">In <strong>2026</strong>, a group of passionate gamers from Kerala decided the server wasn't big enough for their ambitions. What started as a few friends grinding ranked matches together quickly evolved into something far greater — a brotherhood forged in fire.</p>
+      <p class="origin-text"><strong>RZ7 SHEIKH</strong> had a vision: build a gang that wasn't just skilled, but <strong>feared, respected, and unstoppable</strong>. A crew that played hard, won harder, and left every lobby knowing the RZ7 name.</p>
+      <p class="origin-text">From late-night sessions and clutch victories to building a community that stretches across platforms — this is the story of how an empire was born.</p>
+    </div>
+    <div class="reveal-right">
+      <div class="stat-card">
+        <div class="stat-row"><div class="stat-head"><span class="stat-label">Dominance</span><span class="stat-value">100%</span></div><div class="stat-track"><div class="stat-bar" style="--w:100%"></div></div></div>
+        <div class="stat-row"><div class="stat-head"><span class="stat-label">Loyalty</span><span class="stat-value">99%</span></div><div class="stat-track"><div class="stat-bar" style="--w:99%"></div></div></div>
+        <div class="stat-row"><div class="stat-head"><span class="stat-label">Team Strength</span><span class="stat-value">97%</span></div><div class="stat-track"><div class="stat-bar" style="--w:97%"></div></div></div>
+        <div class="stat-row"><div class="stat-head"><span class="stat-label">Growth Rate</span><span class="stat-value">95%</span></div><div class="stat-track"><div class="stat-bar" style="--w:95%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TIMELINE ═══════ -->
+<section class="story-section tl-section" id="timeline">
+  <div class="tl-header reveal">
+    <div class="ch-label" style="justify-content:center;">Chapter Two</div>
+    <h2 class="section-title">The Timeline</h2>
+    <p style="color:rgba(255,255,255,.35);font-size:.85rem;letter-spacing:2px;">Every chapter that built the empire</p>
+  </div>
+  <div class="tl-wrap">
+    <div class="tl-entry reveal"><div class="tl-card"><div class="tl-date">Early 2026 · The Spark</div><div class="tl-title">The Gang Is Formed</div><div class="tl-desc"><strong>RZ7 SHEIKH</strong> created the RZ7 gang, with <strong>RZ7 Kurup</strong> and <strong>RZ7 Mack</strong> serving as Co-Leaders. Together, they built the foundation.</div><span class="tl-badge">Origin</span></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-crown"></i></div><div class="tl-year">2026</div></div><div class="tl-gap"></div></div>
+    <div class="tl-entry reveal"><div class="tl-gap"></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-bolt"></i></div><div class="tl-year">2026</div></div><div class="tl-card"><div class="tl-date">Mid 2026</div><div class="tl-title">The Dream</div><div class="tl-desc">Xlantis City was the destination. RZ7 was determined to earn its place among the strongest gangs in the city.</div></div></div>
+    <div class="tl-entry reveal"><div class="tl-card"><div class="tl-date">Late 2026 · Test</div><div class="tl-title">The Loyalty Test</div><div class="tl-desc">Entry into Xlantis City required Loyalty Points. Several gangs stood alongside RZ7, but when the selection came, RZ7 fell short. The dream was put on hold.</div></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-shield"></i></div><div class="tl-year">2026</div></div><div class="tl-gap"></div></div>
+    <div class="tl-entry reveal"><div class="tl-gap"></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-play"></i></div><div class="tl-year">2026</div></div><div class="tl-card"><div class="tl-date">Early 2026</div><div class="tl-title">The Comeback</div><div class="tl-desc">RZ7 didn't disappear. We stayed together, trained harder, and waited for our next opportunity.</div></div></div>
+    <div class="tl-entry reveal"><div class="tl-card"><div class="tl-date">Mid 2026</div><div class="tl-title">RAMPAGE — The Toughest Tournament</div><div class="tl-desc">Xlantis authorities announced <strong>RAMPAGE</strong>. Every major gang entered the battlefield, ready to prove who truly belonged at the top.</div></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-users"></i></div><div class="tl-year">2026</div></div><div class="tl-gap"></div></div>
+    <div class="tl-entry reveal"><div class="tl-gap"></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-star"></i></div><div class="tl-year">2026</div></div><div class="tl-card"><div class="tl-date">2026</div><div class="tl-title">We Fought. We Fell. We Rose</div><div class="tl-desc">The battles pushed us to our limits. We faced defeats, lost hope at times. But RZ7 never walked away. Every loss made us stronger.</div></div></div>
+    <div class="tl-entry reveal"><div class="tl-card"><div class="tl-date">Mid 2026 · Result</div><div class="tl-title">The Result — 3rd Place 🥉</div><div class="tl-desc">Against the strongest gangs, RZ7 secured <strong>3rd Place</strong> in RAMPAGE.</div><span class="tl-badge">Podium</span></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-trophy"></i></div><div class="tl-year">2026</div></div><div class="tl-gap"></div></div>
+    <div class="tl-entry reveal"><div class="tl-gap"></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-door-open"></i></div><div class="tl-year">2026</div></div><div class="tl-card"><div class="tl-date">Mid 2026</div><div class="tl-title">The Second Chance</div><div class="tl-desc">Our performance changed everything. Xlantis City finally recognized what RZ7 was capable of.</div></div></div>
+    <div class="tl-entry reveal"><div class="tl-card"><div class="tl-date">Late 2026 · Selected</div><div class="tl-title">RZ7 Selected for Xlantis City</div><div class="tl-desc">The gates finally opened. RZ7 earned its place — not through Loyalty Points, but through what we proved on the battlefield.</div></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-city"></i></div><div class="tl-year">2026</div></div><div class="tl-gap"></div></div>
+    <div class="tl-entry reveal"><div class="tl-gap"></div><div class="tl-center"><div class="tl-dot"><i class="fa fa-crown"></i></div><div class="tl-year">2026</div></div><div class="tl-card"><div class="tl-date">Late 2026 · Now</div><div class="tl-title">Elite Gang 👑</div><div class="tl-desc">RZ7 was granted <strong>ELITE GANG</strong> status. We entered as outsiders. We left RAMPAGE as 3rd-place contenders. The story doesn't end here. This is where it begins.</div><span class="tl-badge">Now</span></div></div>
+  </div>
+</section>
+
+<!-- ═══════ QUOTE ═══════ -->
+<section class="story-section quote-section">
+  <div class="reveal-scale">
+    <p class="quote-text">"We don't just play the game. We own it."</p>
+    <span class="quote-cite">— RZ7 SHEIKH, Leader</span>
+    <div class="quote-line"></div>
+  </div>
+</section>
+
+<!-- ═══════ NUMBERS ═══════ -->
+<section class="story-section nums-section" id="numbers">
+  <div class="reveal" style="text-align:center;margin-bottom:60px;">
+    <div class="ch-label" style="justify-content:center;">By The Numbers</div>
+    <h2 class="section-title">The Stats Don't Lie</h2>
+  </div>
+  <div class="nums-grid reveal-scale">
+    <div class="num-cell"><span class="num-big">30+</span><div class="num-label">Active Members</div></div>
+    <div class="num-cell"><span class="num-big">2026</span><div class="num-label">Year Founded</div></div>
+    <div class="num-cell"><span class="num-big">∞</span><div class="num-label">Lobbies Dominated</div></div>
+    <div class="num-cell"><span class="num-big">3</span><div class="num-label">Leadership Core</div></div>
+  </div>
+</section>
+
+<!-- ═══════ MANIFESTO ═══════ -->
+<section class="story-section creed-section" id="creed">
+  <div class="creed-ghost">FAMILY</div>
+  <div class="creed-box reveal">
+    <div class="ch-label" style="justify-content:center;">Chapter Three</div>
+    <h2 class="section-title">The Code<br>We Live By</h2>
+    <p><strong>Respect is earned, never given.</strong> Every rank in this empire was built through sweat, skill, and sacrifice. If you wear the RZ7 tag, you carry its weight with pride.</p>
+    <p>We don't run from a fight. We don't make excuses. <strong>We adapt, we dominate, and we move forward.</strong> That's the RZ7 way — has been since day one.</p>
+    <p>The empire isn't just a gaming clan. It's a <strong>legacy in the making</strong>. And every player on this roster is writing their chapter right now.</p>
+    <a href="players.html" class="creed-cta"><i class="fa fa-users"></i> Meet The Roster</a>
+  </div>
+</section>
+
+<footer class="footer">© 2026 RZ7 FAMILY — ALL RIGHTS RESERVED</footer>
+
+<script>
+/* ── EMBER PARTICLES ── */
+(function(){
+  var wrap = document.getElementById('bgEmbers');
+  if(!wrap) return;
+  var colors = ['rgba(196,18,48,.5)','rgba(200,200,210,.4)','rgba(255,255,255,.25)','rgba(196,18,48,.35)'];
+  for(var i=0;i<25;i++){
+    var s = document.createElement('span');
+    s.style.setProperty('--x', (Math.random()*100).toFixed(0)+'%');
+    s.style.setProperty('--s', (2+Math.random()*3).toFixed(0)+'px');
+    s.style.setProperty('--d', (6+Math.random()*10).toFixed(1)+'s');
+    s.style.setProperty('--delay', (Math.random()*10).toFixed(1)+'s');
+    s.style.setProperty('--c', colors[Math.floor(Math.random()*colors.length)]);
+    wrap.appendChild(s);
+  }
+})();
+
+/* ── SCROLL REVEAL ── */
+(function(){
+  var els = document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        e.target.classList.add('vis');
+        // Animate stat bars when visible
+        e.target.querySelectorAll('.stat-bar').forEach(function(b){b.classList.add('go');});
+      }
+    });
+  },{threshold:0.15,rootMargin:'0px 0px -50px 0px'});
+  els.forEach(function(el){obs.observe(el);});
+})();
+
+/* ── NAVBAR SCROLL ── */
+window.addEventListener('scroll',function(){
+  var n=document.querySelector('.navbar');
+  if(n) n.style.background=window.scrollY>80?'rgba(4,2,8,.92)':'rgba(4,2,8,.75)';
+},{passive:true});
+/* ── CANVAS PARTICLE SYSTEM ── */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var c = document.getElementById('bgParticles');
+  if(!c) return;
+  var ctx = c.getContext('2d');
+  var W, H;
+  function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  var COUNT = 70;
+  var particles = [];
+  var colors = [[196,18,48],[255,255,255],[180,40,60],[220,220,230]];
+
+  for(var i = 0; i < COUNT; i++){
+    var col = colors[Math.floor(Math.random()*colors.length)];
+    particles.push({
+      x: Math.random()*W, y: Math.random()*H,
+      r: 0.4 + Math.random()*1.4,
+      vx: (Math.random()-0.5)*0.12,
+      vy: -0.08 - Math.random()*0.2,
+      alpha: 0.03 + Math.random()*0.18,
+      alphaDir: (Math.random()-0.5)*0.002,
+      col: col
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i = 0; i < particles.length; i++){
+      var p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.alpha += p.alphaDir;
+      if(p.alpha <= 0.02 || p.alpha >= 0.25) p.alphaDir *= -1;
+      p.alpha = Math.max(0.02, Math.min(0.25, p.alpha));
+      if(p.y < -10){ p.y = H + 10; p.x = Math.random()*W; }
+      if(p.x < -10) p.x = W + 10;
+      if(p.x > W + 10) p.x = -10;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba('+p.col[0]+','+p.col[1]+','+p.col[2]+','+p.alpha+')';
+      ctx.shadowColor = 'rgba('+p.col[0]+','+p.col[1]+','+p.col[2]+','+(p.alpha*0.5)+')';
+      ctx.shadowBlur = p.r * 4;
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+<script src="shield.js"></script>
+</body>
+</html>

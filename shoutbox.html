@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>RAZEUS 7 — Live Shoutbox</title>
+<meta name="description" content="RZ7 Live Shoutbox — real-time chat for the RAZEUS 7 community. Jump in and talk with the crew and fans.">
+<meta name="keywords" content="RAZEUS 7 chat, RZ7 shoutbox, razeus 7 live chat, rz7 community chat">
+<meta name="author" content="RAZEUS 7">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://razeus7.com/shoutbox.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="RAZEUS 7 — Live Shoutbox">
+<meta property="og:description" content="Real-time chat for the RZ7 community.">
+<meta property="og:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<meta property="og:url" content="https://razeus7.com/shoutbox.html">
+<meta property="og:site_name" content="RAZEUS 7">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="images/logo/rz7_logo.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#7a1a24;--goldlight:#ffffff;--bg:#07060a;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);overflow-x:hidden;color:#fff;min-height:100vh;display:flex;flex-direction:column;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(122,26,36,.4);border-radius:20px;}
+
+/* ── PARTICLE CANVAS ── */
+#particle-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* ── BACKGROUND ── */
+.bg-decor{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+.bg-grain{
+  position:absolute;inset:-2px;opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size:180px 180px;
+}
+.corner-stripes{
+  position:absolute;width:280px;height:280px;opacity:.05;
+  background:repeating-linear-gradient(45deg,var(--gold) 0 14px,transparent 14px 30px);
+}
+.corner-stripes-tl{top:-100px;left:-100px;}
+.corner-stripes-br{bottom:-100px;right:-100px;}
+
+/* ── NAVBAR ── */
+.navbar{
+  height:72px;width:100%;position:fixed;top:0;left:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  background:rgba(8,7,6,0.88);
+  backdrop-filter:blur(32px) saturate(180%);
+  -webkit-backdrop-filter:blur(32px) saturate(180%);
+  border-bottom:1px solid rgba(122,26,36,0.35);
+  z-index:9999;
+  animation:navIn 0.6s ease both;
+}
+@keyframes navIn{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{width:38px;height:38px;border-radius:10px;object-fit:cover;border:1.5px solid rgba(122,26,36,0.35);}
+.nav-brand{
+  font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:5px;
+  background:linear-gradient(135deg,#fff,var(--goldlight));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;
+}
+.nav-tagline{font-size:0.55rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;display:block;line-height:1;margin-top:-2px;}
+
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  font-size:0.72rem;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;padding:8px 14px;border-radius:8px;
+  transition:color 0.2s,background 0.2s;background:none;border:none;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--goldlight);background:rgba(122,26,36,0.08);}
+
+/* ══════════════════════════════════════
+   SHOUTBOX LAYOUT
+══════════════════════════════════════ */
+.sb-container{
+  position:relative;z-index:2;
+  max-width:800px;width:100%;margin:0 auto;
+  padding:88px 16px 0;
+  display:flex;flex-direction:column;
+  flex:1;
+  min-height:0;
+}
+
+/* header bar */
+.sb-header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 0;flex-shrink:0;
+}
+.sb-title{
+  font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;
+  letter-spacing:4px;color:#fff;
+  display:flex;align-items:center;gap:10px;
+}
+.sb-live-dot{
+  width:8px;height:8px;border-radius:50%;background:#a6293a;
+  animation:liveBlink 1.2s ease-in-out infinite;flex-shrink:0;
+}
+@keyframes liveBlink{0%,100%{opacity:1;box-shadow:0 0 4px #a6293a;}50%{opacity:.4;box-shadow:0 0 12px #c9394d;}}
+
+.sb-online{
+  font-size:.7rem;color:rgba(255,255,255,.35);letter-spacing:1px;
+  display:flex;align-items:center;gap:6px;
+}
+.sb-online-count{color:rgba(122,26,36,.7);font-weight:600;}
+
+/* ── NAME SETUP ── */
+.sb-name-setup{
+  background:rgba(255,255,255,.03);border:1px solid rgba(122,26,36,.25);
+  border-radius:16px;padding:28px;text-align:center;
+  margin-bottom:16px;flex-shrink:0;
+  animation:fadeUp .4s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.sb-name-setup h3{
+  font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700;
+  letter-spacing:3px;color:rgba(122,26,36,.6);margin-bottom:6px;text-transform:uppercase;
+}
+.sb-name-setup p{font-size:.75rem;color:rgba(255,255,255,.3);margin-bottom:18px;}
+.sb-name-row{display:flex;gap:10px;max-width:400px;margin:0 auto;}
+.sb-name-input{
+  flex:1;padding:12px 16px;border-radius:12px;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  color:#fff;font-family:'Poppins',sans-serif;font-size:.88rem;
+  outline:none;transition:.3s;text-align:center;
+}
+.sb-name-input::placeholder{color:rgba(255,255,255,.25);}
+.sb-name-input:focus{border-color:rgba(122,26,36,.45);background:rgba(255,255,255,.09);}
+.sb-name-btn{
+  padding:12px 24px;border-radius:12px;border:none;cursor:pointer;
+  font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  background:linear-gradient(135deg,rgba(122,26,36,.4),rgba(122,26,36,.2));
+  color:rgba(255,255,255,.8);border:1px solid rgba(122,26,36,.35);
+  transition:.3s;white-space:nowrap;
+}
+.sb-name-btn:hover{background:linear-gradient(135deg,rgba(122,26,36,.6),rgba(122,26,36,.3));color:#fff;}
+
+/* ── CHAT AREA ── */
+.sb-chat{
+  flex:1;min-height:0;
+  overflow-y:auto;
+  padding:8px 0;
+  display:flex;flex-direction:column;
+  scroll-behavior:smooth;
+}
+
+/* messages */
+.sb-msg{
+  padding:8px 14px;margin-bottom:4px;border-radius:10px;
+  animation:msgIn .25s ease;
+  transition:background .2s;
+  position:relative;
+}
+.sb-msg:hover{background:rgba(255,255,255,.02);}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.sb-msg-head{
+  display:flex;align-items:center;gap:8px;margin-bottom:2px;
+}
+.sb-msg-name{
+  font-size:.78rem;font-weight:600;color:var(--goldlight);
+  letter-spacing:.5px;
+}
+.sb-msg-name.crew{
+  background:linear-gradient(135deg,#fff,#7a1a24);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.sb-msg-badge{
+  font-size:.5rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+  padding:2px 7px;border-radius:4px;
+}
+.sb-msg-badge.admin{background:rgba(122,26,36,.35);color:#c9394d;}
+.sb-msg-badge.crew{background:rgba(122,26,36,.2);color:rgba(255,255,255,.5);}
+.sb-msg-time{
+  font-size:.6rem;color:rgba(255,255,255,.15);margin-left:auto;
+}
+.sb-msg-text{
+  font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.45;
+  word-break:break-word;
+}
+
+/* admin delete on hover */
+.sb-msg-del{
+  position:absolute;top:8px;right:8px;
+  width:22px;height:22px;border-radius:6px;
+  background:rgba(255,0,0,.6);border:none;color:#fff;
+  cursor:pointer;font-size:.55rem;
+  display:none;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.sb-msg-del:hover{background:rgba(255,0,0,.9);}
+body.is-admin .sb-msg:hover .sb-msg-del{display:flex;}
+
+/* system message */
+.sb-sys{
+  text-align:center;padding:6px 14px;margin-bottom:4px;
+  font-size:.65rem;color:rgba(122,26,36,.4);letter-spacing:1px;
+  font-style:italic;
+}
+
+/* new messages indicator */
+.sb-new-msgs{
+  position:sticky;bottom:8px;align-self:center;
+  padding:8px 20px;border-radius:50px;cursor:pointer;
+  background:rgba(122,26,36,.85);color:#fff;
+  font-size:.7rem;font-weight:600;letter-spacing:1px;
+  border:none;backdrop-filter:blur(12px);
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+  display:none;transition:.3s;z-index:5;
+}
+.sb-new-msgs:hover{background:rgba(122,26,36,1);transform:scale(1.05);}
+
+/* ── INPUT BAR ── */
+.sb-input-bar{
+  flex-shrink:0;
+  padding:12px 0 16px;
+  display:flex;gap:10px;align-items:center;
+  border-top:1px solid rgba(255,255,255,.04);
+}
+.sb-input{
+  flex:1;padding:13px 18px;border-radius:14px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  color:#fff;font-family:'Poppins',sans-serif;font-size:.85rem;
+  outline:none;transition:.3s;resize:none;
+  min-height:44px;max-height:88px;
+}
+.sb-input::placeholder{color:rgba(255,255,255,.25);}
+.sb-input:focus{border-color:rgba(122,26,36,.4);background:rgba(255,255,255,.08);}
+.sb-send{
+  width:44px;height:44px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,rgba(122,26,36,.5),rgba(122,26,36,.25));
+  color:rgba(255,255,255,.7);font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  transition:.3s;flex-shrink:0;
+}
+.sb-send:hover{background:linear-gradient(135deg,rgba(122,26,36,.7),rgba(122,26,36,.4));color:#fff;box-shadow:0 0 16px rgba(122,26,36,.25);}
+.sb-send:disabled{opacity:.3;cursor:not-allowed;}
+
+.sb-char-count{
+  font-size:.55rem;color:rgba(255,255,255,.15);flex-shrink:0;min-width:30px;text-align:right;
+}
+
+/* cooldown bar */
+.sb-cooldown{
+  height:2px;background:rgba(255,255,255,.03);border-radius:2px;
+  overflow:hidden;flex-shrink:0;
+}
+.sb-cooldown-fill{
+  height:100%;width:0%;background:rgba(122,26,36,.5);
+  transition:width linear;
+}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:1001;
+  background:rgba(8,7,6,0.92);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border-top:1px solid rgba(122,26,36,0.35);
+  padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+  justify-content:space-around;align-items:center;
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;flex:1;min-width:0;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  font-size:0.52rem;letter-spacing:0.4px;text-transform:uppercase;
+  padding:7px 2px 5px;border-radius:12px;
+  transition:color 0.2s ease,background 0.2s ease,transform 0.2s ease;
+}
+.bn-item i{font-size:1.08rem;line-height:1;transition:transform 0.2s ease;}
+.bn-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.bn-item:active{transform:scale(0.94);}
+.bn-item.active,.bn-item:hover{color:#fff;background:rgba(122,26,36,0.16);}
+.bn-item.active i{transform:translateY(-1px);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .nav-links{display:none!important;}
+  .bottom-nav{display:flex;}
+  .sb-container{padding-bottom:calc(70px + env(safe-area-inset-bottom));}
+}
+@media(max-width:600px){
+  .sb-container{padding:76px 10px 0;}
+  .sb-name-row{flex-direction:column;}
+  .corner-stripes{width:170px;height:170px;}
+  .sb-title{font-size:.8rem;letter-spacing:2px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<div class="bg-decor">
+  <div class="corner-stripes corner-stripes-tl"></div>
+  <div class="corner-stripes corner-stripes-br"></div>
+  <div class="bg-grain"></div>
+</div>
+
+<!-- ── NAVBAR ── -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo/rz7_logo.jpeg" alt="RZ7">
+    <div>
+      <span class="nav-brand">RZ7</span>
+      <span class="nav-tagline">GTA Official</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="players.html">Players</a>
+    <a href="pointtable.html">Point Table</a>
+    <a href="shoutbox.html" class="active">Shoutbox</a>
+    <a href="community.html">Community</a>
+    <a href="contact.html">Events</a>
+  </div>
+</nav>
+
+<!-- ── BOTTOM NAV ── -->
+<nav class="bottom-nav">
+  <a href="index.html" class="bn-item">
+    <i class="fa-solid fa-house"></i><span>Home</span>
+  </a>
+  <a href="players.html" class="bn-item">
+    <i class="fa-solid fa-users"></i><span>Players</span>
+  </a>
+  <a href="shoutbox.html" class="bn-item active">
+    <i class="fa-solid fa-comments"></i><span>Shoutbox</span>
+  </a>
+  <a href="community.html" class="bn-item">
+    <i class="fa-solid fa-square-poll-vertical"></i><span>Polls</span>
+  </a>
+  <a href="contact.html" class="bn-item">
+    <i class="fa-solid fa-calendar-days"></i><span>Events</span>
+  </a>
+</nav>
+
+<!-- ══════════════════════════════════════
+     SHOUTBOX
+══════════════════════════════════════ -->
+<div class="sb-container">
+
+  <!-- header -->
+  <div class="sb-header">
+    <div class="sb-title">
+      <span class="sb-live-dot"></span> LIVE SHOUTBOX
+    </div>
+    <div class="sb-online">
+      <i class="fa-solid fa-wifi" style="font-size:.6rem;"></i>
+      <span class="sb-online-count" id="onlineCount">0</span> online
+    </div>
+  </div>
+
+  <!-- name setup (shown first) -->
+  <div class="sb-name-setup" id="nameSetup">
+    <h3>Enter the Chat</h3>
+    <p>Pick a name to start talking</p>
+    <div class="sb-name-row">
+      <input type="text" class="sb-name-input" id="nameInput" placeholder="Your name..." maxlength="20" autocomplete="off" spellcheck="false">
+      <button class="sb-name-btn" id="nameBtn">JOIN</button>
+    </div>
+  </div>
+
+  <!-- chat area -->
+  <div class="sb-chat" id="chatArea" style="display:none;">
+    <div class="sb-sys" id="chatWelcome"></div>
+  </div>
+
+  <!-- new messages button -->
+  <button class="sb-new-msgs" id="newMsgsBtn" onclick="scrollToBottom()">
+    <i class="fa-solid fa-arrow-down"></i> &nbsp;New messages
+  </button>
+
+  <!-- input bar (hidden until name set) -->
+  <div id="inputSection" style="display:none;">
+    <div class="sb-cooldown"><div class="sb-cooldown-fill" id="cooldownBar"></div></div>
+    <div class="sb-input-bar">
+      <input type="text" class="sb-input" id="msgInput" placeholder="Type a message..." maxlength="280" autocomplete="off">
+      <span class="sb-char-count" id="charCount">280</span>
+      <button class="sb-send" id="sendBtn" disabled><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ══════════════════════════════════════
+   CONFIG
+══════════════════════════════════════ */
+const MAX_MSG_LENGTH = 280;
+const COOLDOWN_MS = 3000;         /* 3s between messages */
+const MAX_MESSAGES_DISPLAY = 150; /* keep DOM light */
+const MAX_MESSAGES_DB = 500;      /* auto-prune old messages from Firebase */
+const ADMIN_EMAILS = ['lrakkan1l@gmail.com'];
+
+/* crew member names — get the gradient name style */
+const CREW_NAMES = [
+  'SHEIKH','MACK','KURUP','MALIK','BILAL','BLAKE','FLUFFY','THE GOD',
+  'JOSHUA','PAPPADAM','WIPZY','NOKIYA','MINNAL','TURBO','KIDU','CHARAN',
+  'IKRU MON','JJ','USMAAN','ISMAIL','ZENDNEX','RINU','TAKAI','SAKAI',
+  'THALAPATHY','RAY','PRANAV','DREAM','CHARLIE','ALAN'
+];
+
+/* ══════════════════════════════════════
+   FIREBASE
+══════════════════════════════════════ */
+const fbCfg = {
+  apiKey:"AIzaSyB3E3vdJvjB88p-aTWLIw9Z6_HhYVA9EQM",
+  authDomain:"mrz-war-table.firebaseapp.com",
+  databaseURL:"https://mrz-war-table-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"mrz-war-table",
+  storageBucket:"mrz-war-table.firebasestorage.app",
+  messagingSenderId:"427955707558",
+  appId:"1:427955707558:web:fbb9eff081478179881e67"
+};
+if(!firebase.apps.length) firebase.initializeApp(fbCfg);
+const db = firebase.database();
+const chatRef = db.ref('shoutbox');
+const presRef = db.ref('shoutbox_presence');
+
+let isAdmin = false;
+firebase.auth().onAuthStateChanged(user => {
+  if(user && ADMIN_EMAILS.includes(user.email)){
+    isAdmin = true;
+    document.body.classList.add('is-admin');
+  }
+});
+
+/* ══════════════════════════════════════
+   ELEMENTS
+══════════════════════════════════════ */
+const nameSetup = document.getElementById('nameSetup');
+const nameInput = document.getElementById('nameInput');
+const nameBtn   = document.getElementById('nameBtn');
+const chatArea  = document.getElementById('chatArea');
+const inputSection = document.getElementById('inputSection');
+const msgInput  = document.getElementById('msgInput');
+const sendBtn   = document.getElementById('sendBtn');
+const charCount = document.getElementById('charCount');
+const cooldownBar = document.getElementById('cooldownBar');
+const newMsgsBtn = document.getElementById('newMsgsBtn');
+const chatWelcome = document.getElementById('chatWelcome');
+const onlineCountEl = document.getElementById('onlineCount');
+
+let userName = '';
+let lastSendTime = 0;
+let isAtBottom = true;
+let unreadCount = 0;
+
+/* ══════════════════════════════════════
+   NAME SETUP
+══════════════════════════════════════ */
+/* restore saved name */
+try{
+  const saved = localStorage.getItem('rz7-sb-name');
+  if(saved){
+    userName = saved;
+    enterChat();
+  }
+}catch(e){}
+
+nameInput.addEventListener('keydown', function(e){
+  if(e.key === 'Enter') nameBtn.click();
+});
+
+nameBtn.addEventListener('click', function(){
+  const n = nameInput.value.trim().replace(/[<>"'&]/g,'');
+  if(n.length < 2){
+    nameInput.style.borderColor = 'rgba(255,0,0,.5)';
+    setTimeout(() => nameInput.style.borderColor = '', 1000);
+    return;
+  }
+  userName = n;
+  try{ localStorage.setItem('rz7-sb-name', n); }catch(e){}
+  enterChat();
+});
+
+function enterChat(){
+  nameSetup.style.display = 'none';
+  chatArea.style.display = 'flex';
+  inputSection.style.display = 'block';
+  chatWelcome.textContent = 'Welcome to the RZ7 Shoutbox, ' + userName + '!';
+  msgInput.focus();
+  joinPresence();
+  loadMessages();
+}
+
+/* ══════════════════════════════════════
+   PRESENCE — track who's online
+══════════════════════════════════════ */
+let myPresRef = null;
+
+function joinPresence(){
+  myPresRef = presRef.push();
+  db.ref('.info/connected').on('value', snap => {
+    if(snap.val() === true){
+      myPresRef.onDisconnect().remove();
+      myPresRef.set({
+        name: userName,
+        ts: firebase.database.ServerValue.TIMESTAMP
+      });
+    }
+  });
+}
+
+/* online count */
+presRef.on('value', snap => {
+  const count = snap.numChildren();
+  onlineCountEl.textContent = count;
+});
+
+/* also track on main presence node */
+(function(){
+  try{
+    const pr = db.ref('presence').push();
+    db.ref('.info/connected').on('value', s => {
+      if(s.val() === true){
+        pr.onDisconnect().remove();
+        pr.set({ page:'shoutbox', ts:firebase.database.ServerValue.TIMESTAMP });
+      }
+    });
+  }catch(e){}
+})();
+
+/* ══════════════════════════════════════
+   MESSAGES
+══════════════════════════════════════ */
+function escHtml(s){
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function formatTime(ts){
+  const d = new Date(ts);
+  return d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true});
+}
+
+function isCrewName(name){
+  const upper = name.toUpperCase().replace(/^RZ7\s*/,'');
+  return CREW_NAMES.includes(upper);
+}
+
+function createMsgEl(data, key){
+  const el = document.createElement('div');
+  el.className = 'sb-msg';
+  el.dataset.key = key;
+
+  const isCrew = isCrewName(data.name);
+  const nameClass = isCrew ? 'sb-msg-name crew' : 'sb-msg-name';
+  let badge = '';
+  if(data.isAdmin) badge = '<span class="sb-msg-badge admin">ADMIN</span>';
+  else if(isCrew) badge = '<span class="sb-msg-badge crew">RZ7</span>';
+
+  el.innerHTML = `
+    <div class="sb-msg-head">
+      <span class="${nameClass}">${escHtml(data.name)}</span>
+      ${badge}
+      <span class="sb-msg-time">${formatTime(data.ts)}</span>
+    </div>
+    <div class="sb-msg-text">${escHtml(data.text)}</div>
+    <button class="sb-msg-del" title="Delete"><i class="fa-solid fa-trash"></i></button>
+  `;
+
+  /* admin delete */
+  el.querySelector('.sb-msg-del').addEventListener('click', function(){
+    chatRef.child(key).remove();
+  });
+
+  return el;
+}
+
+/* scroll detection */
+chatArea.addEventListener('scroll', function(){
+  const threshold = 60;
+  isAtBottom = (chatArea.scrollHeight - chatArea.scrollTop - chatArea.clientHeight) < threshold;
+  if(isAtBottom){
+    unreadCount = 0;
+    newMsgsBtn.style.display = 'none';
+  }
+});
+
+function scrollToBottom(){
+  chatArea.scrollTop = chatArea.scrollHeight;
+  isAtBottom = true;
+  unreadCount = 0;
+  newMsgsBtn.style.display = 'none';
+}
+window.scrollToBottom = scrollToBottom;
+
+/* load last N messages then listen for new ones */
+let initialLoad = true;
+
+function loadMessages(){
+  chatRef.orderByChild('ts').limitToLast(MAX_MESSAGES_DISPLAY).on('child_added', snap => {
+    const data = snap.val();
+    const el = createMsgEl(data, snap.key);
+    chatArea.appendChild(el);
+
+    /* keep DOM size in check */
+    while(chatArea.querySelectorAll('.sb-msg').length > MAX_MESSAGES_DISPLAY){
+      const first = chatArea.querySelector('.sb-msg');
+      if(first) first.remove();
+    }
+
+    if(isAtBottom || initialLoad){
+      scrollToBottom();
+    } else {
+      unreadCount++;
+      newMsgsBtn.style.display = 'block';
+      newMsgsBtn.innerHTML = '<i class="fa-solid fa-arrow-down"></i> &nbsp;' + unreadCount + ' new message' + (unreadCount > 1 ? 's' : '');
+    }
+  });
+
+  /* handle deletes */
+  chatRef.on('child_removed', snap => {
+    const el = chatArea.querySelector('[data-key="'+snap.key+'"]');
+    if(el) el.remove();
+  });
+
+  /* mark initial load done after a beat */
+  setTimeout(() => { initialLoad = false; }, 2000);
+}
+
+/* ══════════════════════════════════════
+   SEND MESSAGE
+══════════════════════════════════════ */
+msgInput.addEventListener('input', function(){
+  const len = this.value.length;
+  charCount.textContent = MAX_MSG_LENGTH - len;
+  sendBtn.disabled = len === 0 || len > MAX_MSG_LENGTH;
+  charCount.style.color = len > MAX_MSG_LENGTH - 20 ? 'rgba(255,0,0,.5)' : 'rgba(255,255,255,.15)';
+});
+
+msgInput.addEventListener('keydown', function(e){
+  if(e.key === 'Enter' && !e.shiftKey){
+    e.preventDefault();
+    sendBtn.click();
+  }
+});
+
+sendBtn.addEventListener('click', function(){
+  const text = msgInput.value.trim();
+  if(!text || text.length > MAX_MSG_LENGTH) return;
+
+  /* cooldown check */
+  const now = Date.now();
+  if(now - lastSendTime < COOLDOWN_MS){
+    const left = Math.ceil((COOLDOWN_MS - (now - lastSendTime)) / 1000);
+    msgInput.style.borderColor = 'rgba(255,0,0,.3)';
+    setTimeout(() => msgInput.style.borderColor = '', 800);
+    return;
+  }
+
+  sendBtn.disabled = true;
+  lastSendTime = Date.now();
+
+  const msg = {
+    name: userName,
+    text: text,
+    ts: firebase.database.ServerValue.TIMESTAMP,
+    isAdmin: isAdmin
+  };
+
+  chatRef.push(msg).then(() => {
+    msgInput.value = '';
+    charCount.textContent = MAX_MSG_LENGTH;
+    sendBtn.disabled = true;
+    startCooldown();
+  }).catch(() => {
+    sendBtn.disabled = false;
+  });
+});
+
+function startCooldown(){
+  cooldownBar.style.transition = 'none';
+  cooldownBar.style.width = '100%';
+  cooldownBar.offsetHeight; /* force reflow */
+  cooldownBar.style.transition = 'width ' + COOLDOWN_MS + 'ms linear';
+  cooldownBar.style.width = '0%';
+}
+
+/* ══════════════════════════════════════
+   AUTO-PRUNE old messages (admin only)
+══════════════════════════════════════ */
+function pruneOldMessages(){
+  if(!isAdmin) return;
+  chatRef.orderByChild('ts').once('value', snap => {
+    const total = snap.numChildren();
+    if(total > MAX_MESSAGES_DB){
+      const toDelete = total - MAX_MESSAGES_DB;
+      let count = 0;
+      snap.forEach(child => {
+        if(count < toDelete){
+          chatRef.child(child.key).remove();
+          count++;
+        }
+      });
+    }
+  });
+}
+/* run prune every 5 minutes if admin */
+setInterval(pruneOldMessages, 300000);
+
+/* ══════════════════════════════════════
+   PARTICLES
+══════════════════════════════════════ */
+(function(){
+  const c = document.getElementById('particle-canvas');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  let W, H, pts = [];
+  function resize(){ W = c.width = window.innerWidth; H = c.height = window.innerHeight; }
+  resize(); window.addEventListener('resize', resize);
+  for(let i = 0; i < 35; i++){
+    pts.push({
+      x:Math.random()*window.innerWidth, y:Math.random()*window.innerHeight,
+      r:Math.random()*1.5+.3, dx:(Math.random()-.5)*.12, dy:(Math.random()-.5)*.12,
+      o:Math.random()*.2+.05
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p => {
+      p.x += p.dx; p.y += p.dy;
+      if(p.x<0)p.x=W; if(p.x>W)p.x=0; if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(122,26,36,'+p.o+')'; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+})();
+</script>
+</body>
+</html>

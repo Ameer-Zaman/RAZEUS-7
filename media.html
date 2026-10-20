@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="lanhqeeNyvmNjhHICCvNTTFmaTNVcV1rIjGWmRSItxk" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAZEUS 7 — Media Team | RZ7 Editors & Creators</title>
+<meta name="description" content="The RAZEUS 7 (RZ7) media team — editors, clip makers, thumbnail artists, and motion designers behind the RZ7 content. See the crew leaderboard.">
+<meta name="keywords" content="RAZEUS 7 media, RZ7 editors, razeus 7 content, RZ7 media team, RZ7 YouTube, RAZEUS 7 clips, rz7 creators">
+<meta name="author" content="RAZEUS 7">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://razeus7.com/media.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="RAZEUS 7 — Media Team">
+<meta property="og:description" content="Meet the RZ7 media crew — the editors and creators behind RAZEUS 7 content.">
+<meta property="og:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<meta property="og:url" content="https://razeus7.com/media.html">
+<meta property="og:site_name" content="RAZEUS 7">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RAZEUS 7 — Media Team">
+<meta name="twitter:description" content="The editors and creators behind RAZEUS 7.">
+<meta name="twitter:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+ <link rel="icon" type="image/png" href="images/logo/rz7_logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800&family=Poppins:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#7a1a24;--goldlight:#ffffff;}
+body{font-family:'Poppins',sans-serif;background:#07060a;color:#fff;min-height:100vh;overflow-x:hidden;}
+
+/* ══════════════════════════════════════
+   AMBIENT BACKGROUND — soft drifting gradient light + a faint grain
+   texture, sitting behind everything. Kept slow and low-opacity so it
+   reads as atmosphere, not decoration.
+══════════════════════════════════════ */
+.bg-ambient{
+  position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;
+}
+.bg-blob{
+  position:absolute;border-radius:50%;
+  filter:blur(120px);
+  will-change:transform;
+}
+.bg-blob-1{
+  width:620px;height:620px;top:-160px;left:-120px;
+  background:radial-gradient(circle,rgba(122,26,36,.28),transparent 70%);
+  animation:driftA 26s ease-in-out infinite;
+}
+.bg-blob-2{
+  width:520px;height:520px;bottom:-140px;right:-100px;
+  background:radial-gradient(circle,rgba(168,31,43,.22),transparent 70%);
+  animation:driftB 32s ease-in-out infinite;
+}
+.bg-blob-3{
+  width:480px;height:480px;top:38%;left:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.05),transparent 72%);
+  animation:driftC 38s ease-in-out infinite;
+}
+@keyframes driftA{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(60px,50px) scale(1.12);}
+}
+@keyframes driftB{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(-50px,-40px) scale(1.08);}
+}
+@keyframes driftC{
+  0%,100%{transform:translate(-50%,0) scale(1);}
+  50%{transform:translate(-50%,-60px) scale(1.15);}
+}
+
+.bg-grain{
+  position:fixed;inset:-100px;z-index:0;pointer-events:none;
+  opacity:.035;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Everything else needs to sit above the ambient layer */
+.navbar,.bottom-nav,.page{position:relative;z-index:1;}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#0a0908;}
+::-webkit-scrollbar-thumb{background:#7a1a24;border-radius:10px;}
+
+/* ── NAVBAR (same as players.html) ── */
+.navbar{
+  height:72px;width:100%;position:fixed;top:0;left:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  background:rgba(8,7,6,0.88);
+  backdrop-filter:blur(32px) saturate(180%);
+  -webkit-backdrop-filter:blur(32px) saturate(180%);
+  border-bottom:1px solid rgba(122,26,36,0.35);
+  z-index:9999;
+  animation:navIn 0.6s ease both;
+}
+@keyframes navIn{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{width:38px;height:38px;border-radius:10px;object-fit:cover;border:1.5px solid rgba(122,26,36,0.35);}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:5px;background:linear-gradient(135deg,#fff,var(--goldlight));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block;}
+.nav-tagline{font-size:0.55rem;letter-spacing:4px;color:var(--gold);text-transform:uppercase;display:block;line-height:1;margin-top:-2px;}
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.72rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;border-radius:8px;transition:color 0.2s,background 0.2s;background:none;border:none;}
+.nav-links a:hover,.nav-links a.active{color:var(--goldlight);background:rgba(122,26,36,0.08);}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border-radius:8px;border:1px solid rgba(122,26,36,0.35);background:rgba(255,255,255,0.05);}
+.nav-hamburger span{width:20px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--goldlight),var(--gold));transition:0.3s;display:block;}
+
+/* ── PAGE WRAPPER ── */
+.page{padding:100px 6% 60px;}
+
+/* ── HEADER ── */
+.page-header{margin-bottom:48px;}
+.page-header h1{
+  font-family:'Orbitron',sans-serif;font-size:2rem;font-weight:800;
+  color:#fff;letter-spacing:2px;margin-bottom:6px;
+}
+.page-header h1 span{color:var(--goldlight);}
+.page-header p{font-size:.85rem;color:rgba(255,255,255,.4);max-width:480px;line-height:1.7;}
+.header-line{width:48px;height:2px;background:var(--gold);margin-bottom:16px;border-radius:2px;}
+
+/* ── FILTER DROPDOWN ── */
+.filter-dropdown{position:relative;display:inline-block;margin-bottom:32px;}
+.filter-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:11px 18px;border-radius:12px;cursor:pointer;font-size:.72rem;
+  font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  color:#fff;transition:.2s;font-family:'Poppins',sans-serif;
+}
+.filter-btn:hover{border-color:rgba(122,26,36,.5);background:rgba(122,26,36,.08);}
+.filter-btn i.fa-chevron-down{font-size:.6rem;color:rgba(255,255,255,.4);transition:transform .25s;margin-left:2px;}
+.filter-dropdown.open .filter-btn i.fa-chevron-down{transform:rotate(180deg);}
+.filter-dropdown.open .filter-btn{border-color:rgba(122,26,36,.5);}
+
+.filter-menu{
+  position:absolute;top:calc(100% + 8px);left:0;min-width:220px;
+  background:#0d0c10;border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;overflow:hidden;z-index:50;
+  box-shadow:0 20px 50px rgba(0,0,0,.55);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease,visibility .18s;
+}
+.filter-dropdown.open .filter-menu{opacity:1;visibility:visible;transform:translateY(0);}
+.fitem{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 18px;font-size:.85rem;font-weight:500;color:rgba(255,255,255,.75);
+  cursor:pointer;transition:background .15s,color .15s;
+}
+.fitem .fi-icon{width:20px;text-align:center;font-size:1rem;}
+.fitem:hover{background:rgba(255,255,255,.05);color:#fff;}
+.fitem.active{background:linear-gradient(90deg,rgba(122,26,36,.55),rgba(122,26,36,.2));color:#fff;}
+
+/* ══════════════════════════════════════
+   LEADERBOARD TABLE
+══════════════════════════════════════ */
+.crew-grid{
+  width:100%;
+  background:rgba(255,255,255,.02);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;
+  overflow:hidden;
+}
+
+/* Header row */
+.lb-head{
+  display:grid;
+  grid-template-columns:56px 1fr 160px auto;
+  gap:0;
+  padding:11px 22px;
+  background:rgba(122,26,36,.07);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.lb-head span{
+  font-size:.55rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.25);display:flex;align-items:center;
+}
+
+/* Each member row — grid-template-areas so the mobile collapse can fully
+   rearrange pieces (including wrapping socials onto their own row) without
+   leaking cells the way a plain column-count change would. */
+.crew-card{
+  display:grid;
+  grid-template-columns:56px 1fr 160px auto;
+  grid-template-areas:"avatar name role socials";
+  align-items:center;
+  gap:0;
+  padding:15px 22px;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  transition:background .18s;
+  position:relative;
+  cursor:default;
+  opacity:0;
+  animation:cardEnter .5s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes cardEnter{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.crew-card::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:transparent;
+  border-radius:0 2px 2px 0;
+  transition:background .2s;
+}
+.crew-card:last-child{border-bottom:none;}
+.crew-card:hover{background:rgba(255,255,255,.025);}
+.crew-card:hover::before{background:linear-gradient(180deg,#7a1a24,rgba(122,26,36,.3));}
+.crew-card.hidden{display:none;}
+
+/* Top 3 get a restrained, editorial treatment — a metallic accent bar with
+   a slow light-sheen pass (like a reflection travelling down polished
+   metal), a faint oversized rank numeral watermark, and a subtle static
+   tint. No glow/blur, no pulsing — motion stays minimal and deliberate. */
+.crew-card.top-rank{
+  position:relative;z-index:0;
+  padding:20px 24px;
+  transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,background .3s ease;
+}
+.crew-card.top-rank:hover{transform:translateY(-3px);z-index:2;}
+
+.crew-card.top-rank::before{
+  transition:none;
+  background-size:100% 300%;
+  animation:metalSheen 7s ease-in-out infinite;
+}
+.crew-card.top-rank.rank-1::before{background-image:linear-gradient(180deg,#5c0d14,#e0384a,#5c0d14,#e0384a,#5c0d14);}
+.crew-card.top-rank.rank-2::before{background-image:linear-gradient(180deg,#7d7d7d,#f2f2f2,#7d7d7d,#f2f2f2,#7d7d7d);animation-delay:.6s;}
+.crew-card.top-rank.rank-3::before{background-image:linear-gradient(180deg,#4a2a20,#c98a68,#4a2a20,#c98a68,#4a2a20);animation-delay:1.2s;}
+@keyframes metalSheen{
+  0%{background-position:0% 0%;}
+  100%{background-position:0% 100%;}
+}
+
+/* Each podium spot gets its own background character instead of a shared
+   formula — rank-1 leans into a fine diagonal hairline texture (foil-card
+   feel), rank-2 gets a broad satin sheen band, rank-3 a warm dual-glow. */
+.crew-card.top-rank.rank-1{
+  background:
+    radial-gradient(130% 200% at 0% 50%,rgba(224,56,74,.16),transparent 62%),
+    repeating-linear-gradient(115deg,rgba(255,255,255,.03) 0px,rgba(255,255,255,.03) 1px,transparent 1px,transparent 9px),
+    linear-gradient(90deg,rgba(200,32,47,.05),transparent 55%);
+}
+.crew-card.top-rank.rank-2{
+  background:
+    linear-gradient(100deg,transparent 0%,rgba(255,255,255,.06) 22%,rgba(255,255,255,.11) 30%,rgba(255,255,255,.06) 38%,transparent 60%),
+    radial-gradient(130% 200% at 0% 50%,rgba(255,255,255,.07),transparent 60%),
+    linear-gradient(90deg,rgba(255,255,255,.02),transparent 55%);
+}
+.crew-card.top-rank.rank-3{
+  background:
+    radial-gradient(90px 90px at 50px 50%,rgba(221,156,120,.22),transparent 70%),
+    radial-gradient(130% 200% at 0% 50%,rgba(138,74,58,.14),transparent 62%),
+    linear-gradient(90deg,rgba(138,74,58,.05),transparent 55%);
+}
+
+/* On hover: the row lifts slightly with a real shadow (like a card raised
+   off the table), and its tint deepens — the premium cue is the reaction
+   to attention, not constant ambient motion. */
+.crew-card.top-rank.rank-1:hover{
+  background:
+    radial-gradient(130% 200% at 0% 50%,rgba(224,56,74,.26),transparent 65%),
+    repeating-linear-gradient(115deg,rgba(255,255,255,.045) 0px,rgba(255,255,255,.045) 1px,transparent 1px,transparent 9px),
+    linear-gradient(90deg,rgba(200,32,47,.12),transparent 60%);
+  box-shadow:0 14px 30px rgba(0,0,0,.4),0 6px 16px rgba(200,32,47,.22);
+}
+.crew-card.top-rank.rank-2:hover{
+  background:
+    linear-gradient(100deg,transparent 0%,rgba(255,255,255,.09) 22%,rgba(255,255,255,.16) 30%,rgba(255,255,255,.09) 38%,transparent 60%),
+    radial-gradient(130% 200% at 0% 50%,rgba(255,255,255,.11),transparent 62%),
+    linear-gradient(90deg,rgba(255,255,255,.04),transparent 55%);
+  box-shadow:0 14px 30px rgba(0,0,0,.4),0 6px 16px rgba(255,255,255,.12);
+}
+.crew-card.top-rank.rank-3:hover{
+  background:
+    radial-gradient(110px 110px at 50px 50%,rgba(221,156,120,.32),transparent 70%),
+    radial-gradient(130% 200% at 0% 50%,rgba(138,74,58,.22),transparent 65%),
+    linear-gradient(90deg,rgba(138,74,58,.1),transparent 60%);
+  box-shadow:0 14px 30px rgba(0,0,0,.4),0 6px 16px rgba(138,74,58,.2);
+}
+
+/* Faint oversized numeral sitting behind the row content — a quiet
+   editorial/leaderboard flourish that brightens slightly on hover. */
+.crew-card.top-rank::after{
+  content:attr(data-rank-num);
+  position:absolute;z-index:-1;pointer-events:none;user-select:none;
+  right:26px;top:50%;transform:translateY(-52%);
+  font-family:'Bebas Neue',sans-serif;font-size:4.4rem;line-height:1;
+  transition:color .3s ease;
+}
+.crew-card.top-rank.rank-1::after{color:rgba(200,32,47,.07);}
+.crew-card.top-rank.rank-2::after{color:rgba(255,255,255,.055);}
+.crew-card.top-rank.rank-3::after{color:rgba(138,74,58,.08);}
+.crew-card.top-rank.rank-1:hover::after{color:rgba(200,32,47,.14);}
+.crew-card.top-rank.rank-2:hover::after{color:rgba(255,255,255,.1);}
+.crew-card.top-rank.rank-3:hover::after{color:rgba(138,74,58,.15);}
+
+/* ── #1 RANK — content stays above the ambient aura/ember layers ── */
+.crew-card.top-rank.rank-1 .lb-avatar-wrap,
+.crew-card.top-rank.rank-1 .lb-name-col,
+.crew-card.top-rank.rank-1 .lb-role,
+.crew-card.top-rank.rank-1 .lb-socials{
+  position:relative;
+  z-index:2;
+}
+
+/* ── #1 ANIMATED BORDER SHIMMER ──
+   A gold-red gradient that slowly rotates around the card border,
+   like a holographic foil card catching light. */
+.crew-card.top-rank.rank-1{
+  border:1px solid transparent !important;
+  background-clip:padding-box !important;
+  position:relative;
+}
+.crew-card.top-rank.rank-1::before{
+  content:'';
+  position:absolute;inset:-1px;
+  border-radius:inherit;
+  background:conic-gradient(
+    from var(--shimmer-angle,0deg),
+    rgba(224,56,74,.6),
+    rgba(240,192,70,.4),
+    rgba(224,56,74,.1),
+    rgba(240,192,70,.3),
+    rgba(224,56,74,.6)
+  );
+  z-index:-2;
+  animation:borderShimmer 6s linear infinite;
+  mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite:xor;
+  -webkit-mask-composite:xor;
+  padding:1px;
+}
+@property --shimmer-angle{
+  syntax:"<angle>";
+  initial-value:0deg;
+  inherits:false;
+}
+@keyframes borderShimmer{
+  to{--shimmer-angle:360deg;}
+}
+
+/* ── #1 BREATHING AURA ──
+   A subtle red/gold glow that pulses behind the entire row,
+   like embers smouldering beneath the card. */
+.rank1-aura{
+  position:absolute;inset:-8px;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:-3;
+  background:radial-gradient(ellipse at 20% 50%,rgba(224,56,74,.15),transparent 60%),
+             radial-gradient(ellipse at 80% 50%,rgba(240,192,70,.08),transparent 50%);
+  animation:auraPulse 3.5s ease-in-out infinite;
+  filter:blur(12px);
+}
+@keyframes auraPulse{
+  0%,100%{opacity:.4;transform:scale(1);}
+  50%{opacity:.75;transform:scale(1.02);}
+}
+
+/* ── #1 FLOATING EMBER PARTICLES ──
+   Tiny glowing particles that drift upward from the card,
+   like sparks from a fire — each has randomized position and timing
+   via inline CSS custom properties set in JS. */
+.rank1-embers{
+  position:absolute;inset:0;
+  overflow:hidden;
+  border-radius:inherit;
+  pointer-events:none;
+  z-index:1;
+}
+.rank1-ember{
+  position:absolute;
+  bottom:-4px;
+  width:3px;height:3px;
+  border-radius:50%;
+  background:radial-gradient(circle,#f0c046,#e0384a);
+  opacity:0;
+  animation:emberFloat var(--dur,4s) ease-out infinite var(--delay,0s);
+  left:var(--x,50%);
+}
+@keyframes emberFloat{
+  0%{opacity:0;transform:translateY(0) scale(1);}
+  15%{opacity:.8;}
+  60%{opacity:.4;}
+  100%{opacity:0;transform:translateY(-70px) scale(0.3);}
+}
+
+/* ── #1 ENHANCED CROWN ──
+   Crown gets a stronger glow pulse and slow rotation wobble. */
+.crew-card.top-rank.rank-1 .lb-crown{
+  animation:crownFloat 3.2s ease-in-out infinite, crownGlow 2.5s ease-in-out infinite;
+}
+@keyframes crownGlow{
+  0%,100%{filter:drop-shadow(0 2px 6px rgba(224,77,93,.6)) drop-shadow(0 0 2px rgba(240,192,70,.3));}
+  50%{filter:drop-shadow(0 2px 10px rgba(224,77,93,.9)) drop-shadow(0 0 8px rgba(240,192,70,.6));}
+}
+
+/* ── #1 NAME GLOW ──
+   The #1 player's name gets a subtle text shimmer. */
+.crew-card.top-rank.rank-1 .lb-name{
+  background:linear-gradient(90deg,#fff 0%,#fff 40%,#ffccd1 50%,#fff 60%,#fff 100%);
+  background-size:200% 100%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:nameShimmer 4s ease-in-out infinite;
+}
+@keyframes nameShimmer{
+  0%,100%{background-position:100% 0;}
+  50%{background-position:0% 0;}
+}
+
+/* ── #1 RANK BADGE PULSE ──
+   The #1 medallion gets a breathing ring. */
+.crew-card.top-rank.rank-1 .lb-rank{
+  animation:rankPulse 2.8s ease-in-out infinite;
+}
+@keyframes rankPulse{
+  0%,100%{box-shadow:0 2px 5px rgba(0,0,0,.55),0 0 0 0 rgba(224,77,93,.4);}
+  50%{box-shadow:0 2px 5px rgba(0,0,0,.55),0 0 0 4px rgba(224,77,93,.15);}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .rank1-aura,.rank1-ember,.crew-card.top-rank.rank-1 .lb-crown,
+  .crew-card.top-rank.rank-1 .lb-name,.crew-card.top-rank.rank-1 .lb-rank,
+  .crew-card.top-rank.rank-1::before{animation:none!important;}
+  .rank1-aura{opacity:.4;}
+}
+@media(max-width:720px){
+  .rank1-ember{display:none;}
+}
+
+
+/* Avatar (+ rank badge for the top 3) */
+.lb-avatar-wrap{grid-area:avatar;position:relative;width:40px;height:40px;flex-shrink:0;}
+.lb-avatar{
+  width:40px;height:40px;border-radius:10px;
+  background:rgba(122,26,36,.15);
+  border:1px solid rgba(255,255,255,.09);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;overflow:hidden;
+  transition:box-shadow .35s ease,width .35s ease,height .35s ease;
+}
+.lb-avatar img{width:100%;height:100%;object-fit:cover;object-position:top;}
+
+.crew-card.top-rank .lb-avatar-wrap{width:48px;height:48px;}
+.crew-card.top-rank .lb-avatar{width:48px;height:48px;border-radius:12px;border-color:rgba(255,255,255,.15);}
+.crew-card.top-rank.rank-1 .lb-avatar{box-shadow:0 0 0 2px rgba(224,77,93,.55),0 0 18px rgba(224,77,93,.3),0 6px 14px rgba(0,0,0,.45);}
+.crew-card.top-rank.rank-2 .lb-avatar{box-shadow:0 0 0 2px rgba(242,242,242,.5),0 0 18px rgba(255,255,255,.18),0 6px 14px rgba(0,0,0,.45);}
+.crew-card.top-rank.rank-3 .lb-avatar{box-shadow:0 0 0 2px rgba(221,156,120,.55),0 0 18px rgba(221,156,120,.28),0 6px 14px rgba(0,0,0,.45);}
+.crew-card.top-rank:hover.rank-1 .lb-avatar{box-shadow:0 0 0 2px rgba(224,77,93,.8),0 0 26px rgba(224,77,93,.5),0 8px 18px rgba(0,0,0,.5);}
+.crew-card.top-rank:hover.rank-2 .lb-avatar{box-shadow:0 0 0 2px rgba(255,255,255,.75),0 0 26px rgba(255,255,255,.3),0 8px 18px rgba(0,0,0,.5);}
+.crew-card.top-rank:hover.rank-3 .lb-avatar{box-shadow:0 0 0 2px rgba(221,156,120,.8),0 0 26px rgba(221,156,120,.45),0 8px 18px rgba(0,0,0,.5);}
+
+/* Crown accent above the #1 avatar */
+.lb-crown{
+  position:absolute;top:-15px;left:50%;transform:translateX(-50%) rotate(-8deg);
+  font-size:.8rem;color:#ef4d5d;z-index:3;pointer-events:none;
+  filter:drop-shadow(0 2px 6px rgba(224,77,93,.6));
+  animation:crownFloat 3.2s ease-in-out infinite;
+}
+@keyframes crownFloat{0%,100%{transform:translateX(-50%) rotate(-8deg) translateY(0);}50%{transform:translateX(-50%) rotate(-8deg) translateY(-2px);}}
+
+.lb-rank{
+  position:absolute;bottom:-4px;right:-5px;
+  width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Bebas Neue',sans-serif;font-size:.68rem;letter-spacing:0;
+  border:1.5px solid #07060a;
+  overflow:hidden;
+  box-shadow:
+    0 2px 5px rgba(0,0,0,.55),
+    inset 0 1px 1px rgba(255,255,255,.45),
+    inset 0 -2px 3px rgba(0,0,0,.35);
+  transition:transform .35s cubic-bezier(.22,1,.36,1);
+}
+.lb-rank.rank-1{background:radial-gradient(circle at 35% 28%,#ef4d5d,#a8121f 62%,#7a0d18);color:#fff;}
+.lb-rank.rank-2{background:radial-gradient(circle at 35% 28%,#ffffff,#c2c2c2 62%,#8f8f8f);color:#1a1a1a;}
+.lb-rank.rank-3{background:radial-gradient(circle at 35% 28%,#dd9c78,#a35a3e 62%,#7a3f2a);color:#fff;}
+
+/* A light streak sweeps across the medallion once, only while the row is
+   hovered — like a coin catching light when you pay attention to it. */
+.lb-rank::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.65) 50%,transparent 70%);
+  background-size:300% 300%;
+  background-position:180% 180%;
+  transition:background-position .7s ease;
+  pointer-events:none;
+}
+.crew-card.top-rank:hover .lb-rank{transform:scale(1.12);}
+.crew-card.top-rank:hover .lb-rank::after{background-position:-80% -80%;}
+
+/* Name col */
+.lb-name-col{grid-area:name;padding-left:14px;}
+.lb-name{
+  font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:1px;
+  color:#fff;line-height:1;margin-bottom:3px;
+}
+.lb-sub{font-size:.6rem;color:rgba(255,255,255,.28);letter-spacing:.5px;}
+
+.crew-card.top-rank .lb-name{font-size:1.28rem;letter-spacing:1.3px;}
+.crew-card.top-rank.rank-1 .lb-name{background:linear-gradient(135deg,#fff 30%,#ffb3ba);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 22px rgba(224,77,93,.3);}
+.crew-card.top-rank.rank-2 .lb-name{background:linear-gradient(135deg,#fff 30%,#d8d8d8);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 22px rgba(255,255,255,.22);}
+.crew-card.top-rank.rank-3 .lb-name{background:linear-gradient(135deg,#fff 30%,#e3b28e);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 22px rgba(221,156,120,.28);}
+.crew-card.top-rank .lb-sub{color:rgba(255,255,255,.4);letter-spacing:1px;}
+
+/* Role col */
+.lb-role{
+  grid-area:role;
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.58rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 16px 6px 13px;white-space:nowrap;
+  width:fit-content;align-self:center;justify-self:start;
+  position:relative;overflow:hidden;
+  /* Cloud shape — organic rounded blob instead of a rectangle */
+  border-radius:18px 14px 16px 12px;
+  /* Glassmorphism base — frosted glass over a dark surface */
+  background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,rgba(255,255,255,.03) 100%);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.9);
+  box-shadow:0 2px 8px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.08);
+  transition:all .3s ease;
+}
+/* Inner cloud highlight — soft bright patches that mimic cloud density */
+.lb-role::before{
+  content:'';position:absolute;
+  top:-40%;left:-20%;width:140%;height:180%;
+  background:
+    radial-gradient(ellipse at 25% 30%,rgba(255,255,255,.09),transparent 45%),
+    radial-gradient(ellipse at 70% 60%,rgba(255,255,255,.05),transparent 40%),
+    radial-gradient(ellipse at 50% 10%,rgba(255,255,255,.06),transparent 50%);
+  pointer-events:none;
+}
+/* Wispy cloud edge — a faint outer glow that softens the boundary */
+.lb-role::after{
+  content:'';position:absolute;inset:-2px;
+  border-radius:20px 16px 18px 14px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.04),transparent 70%);
+  pointer-events:none;
+  z-index:-1;
+  filter:blur(3px);
+}
+.lb-role.editor{
+  border-radius:16px 18px 14px 16px;
+  background:linear-gradient(135deg,rgba(224,56,74,.12) 0%,rgba(180,40,60,.06) 50%,rgba(255,255,255,.04) 100%);
+  border-color:rgba(224,56,74,.25);
+  box-shadow:0 2px 10px rgba(122,26,36,.2),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.lb-role.editor::before{
+  background:
+    radial-gradient(ellipse at 20% 25%,rgba(224,56,74,.1),transparent 45%),
+    radial-gradient(ellipse at 75% 65%,rgba(255,180,180,.06),transparent 40%);
+}
+.lb-role.clipmaker{
+  border-radius:14px 16px 18px 14px;
+  background:linear-gradient(135deg,rgba(255,255,255,.07) 0%,rgba(200,210,230,.05) 50%,rgba(255,255,255,.03) 100%);
+  border-color:rgba(255,255,255,.15);
+  box-shadow:0 2px 10px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.1);
+  color:rgba(255,255,255,.85);
+}
+.lb-role.clipmaker::before{
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.08),transparent 45%),
+    radial-gradient(ellipse at 65% 70%,rgba(200,220,255,.05),transparent 40%);
+}
+.lb-role.thumbnail{
+  border-radius:17px 13px 16px 15px;
+  background:linear-gradient(135deg,rgba(240,192,70,.08) 0%,rgba(200,160,50,.04) 50%,rgba(255,255,255,.03) 100%);
+  border-color:rgba(240,192,70,.2);
+  box-shadow:0 2px 10px rgba(200,160,50,.15),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.lb-role.thumbnail::before{
+  background:
+    radial-gradient(ellipse at 25% 30%,rgba(240,192,70,.09),transparent 45%),
+    radial-gradient(ellipse at 70% 55%,rgba(255,220,130,.05),transparent 40%);
+}
+.lb-role.motion{
+  border-radius:15px 17px 13px 17px;
+  background:linear-gradient(135deg,rgba(160,80,200,.1) 0%,rgba(120,50,160,.06) 50%,rgba(255,255,255,.03) 100%);
+  border-color:rgba(160,80,200,.25);
+  box-shadow:0 2px 10px rgba(120,50,160,.18),inset 0 1px 0 rgba(255,255,255,.06);
+}
+.lb-role.motion::before{
+  background:
+    radial-gradient(ellipse at 20% 25%,rgba(160,80,200,.09),transparent 45%),
+    radial-gradient(ellipse at 72% 60%,rgba(200,140,255,.05),transparent 40%);
+}
+.lb-role.lead{
+  border-radius:18px 14px 17px 13px;
+  background:linear-gradient(135deg,rgba(224,56,74,.18) 0%,rgba(240,192,70,.08) 40%,rgba(180,40,60,.12) 100%);
+  border-color:rgba(224,77,93,.3);
+  box-shadow:0 2px 12px rgba(122,26,36,.25),0 0 20px rgba(224,56,74,.08),inset 0 1px 0 rgba(255,255,255,.1);
+  color:#fff;
+}
+.lb-role.lead::before{
+  background:
+    radial-gradient(ellipse at 15% 20%,rgba(240,192,70,.1),transparent 45%),
+    radial-gradient(ellipse at 65% 55%,rgba(224,56,74,.08),transparent 40%),
+    radial-gradient(ellipse at 45% 80%,rgba(255,200,180,.05),transparent 35%);
+}
+/* Hover lift on all roles */
+.crew-card:hover .lb-role{
+  box-shadow:0 4px 14px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12);
+  border-color:rgba(255,255,255,.18);
+  transform:translateY(-1px);
+}
+
+
+
+/* Socials col */
+.lb-socials{grid-area:socials;display:flex;gap:7px;justify-content:flex-end;flex-wrap:wrap;}
+.soc-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 13px;border-radius:99px;
+  font-size:.65rem;font-weight:600;letter-spacing:.5px;
+  text-decoration:none;cursor:pointer;transition:.2s;
+  border:1px solid;white-space:nowrap;
+}
+.soc-btn.yt{
+  background:rgba(255,0,0,.06);border-color:rgba(255,0,0,.2);
+  color:rgba(255,80,80,.75);
+}
+.soc-btn.yt:hover{
+  background:#ff0000;border-color:#ff0000;
+  color:#fff;box-shadow:0 4px 16px rgba(255,0,0,.35);
+}
+.soc-btn.ig{
+  background:rgba(131,58,180,.06);border-color:rgba(131,58,180,.2);
+  color:rgba(200,120,220,.75);
+}
+.soc-btn.ig:hover{
+  background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcaf45);
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 16px rgba(253,29,29,.35);
+}
+.soc-btn i{font-size:.72rem;}
+
+/* Empty / no results */
+.no-results{
+  text-align:center;padding:56px 20px;
+  color:rgba(255,255,255,.22);display:none;
+  border:none;
+}
+.no-results i{font-size:2rem;margin-bottom:10px;display:block;color:rgba(122,26,36,.18);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:720px){
+  .lb-head{display:none;}
+  .crew-card{
+    grid-template-columns:44px 1fr auto;
+    grid-template-areas:
+      "avatar name socials"
+      "avatar role .";
+    row-gap:4px;
+    column-gap:10px;
+    padding:14px 16px;
+    align-items:center;
+  }
+  .lb-avatar-wrap{width:38px;height:38px;align-self:start;}
+  .lb-avatar{width:38px;height:38px;}
+  .crew-card.top-rank{padding:16px;}
+  .crew-card.top-rank .lb-avatar-wrap{width:44px;height:44px;}
+  .crew-card.top-rank .lb-avatar{width:44px;height:44px;}
+  .crew-card.top-rank .lb-name{font-size:1.18rem;}
+  .lb-name-col{padding-left:0;align-self:end;}
+  .lb-role{margin-top:1px;align-self:start;}
+
+  /* Socials sit directly across from the name — icon-only circular buttons,
+     no text label, so they fit comfortably on the same row. */
+  .lb-socials{justify-content:flex-end;gap:6px;align-self:end;}
+  .soc-btn{
+    width:32px;height:32px;padding:0;border-radius:50%;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .soc-btn i{font-size:.85rem;}
+  .soc-label{display:none;}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .nav-links{
+    position:fixed;top:72px;left:0;right:0;
+    background:rgba(8,7,6,0.97);backdrop-filter:blur(24px);
+    flex-direction:column;padding:20px 6%;gap:4px;
+    border-bottom:1px solid rgba(122,26,36,0.35);
+    display:none;z-index:999;
+  }
+  .nav-links.open{display:flex;}
+  .nav-links a{width:100%;padding:12px 16px;border-radius:10px;}
+  .nav-hamburger{display:flex;}
+  .page{padding:100px 5% 60px;}
+}
+@media(max-width:500px){
+  .page-header h1{font-size:1.6rem;}
+}
+
+/* ══════════════════════════════════════
+   BOTTOM NAV — mobile app-style tab bar
+══════════════════════════════════════ */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:1001;
+  background:rgba(8,7,6,0.92);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border-top:1px solid rgba(122,26,36,0.35);
+  padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+  justify-content:space-around;
+  align-items:center;
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;flex:1;min-width:0;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  font-size:0.52rem;letter-spacing:0.4px;text-transform:uppercase;
+  padding:7px 2px 5px;border-radius:12px;
+  transition:color 0.2s ease,background 0.2s ease,transform 0.2s ease;
+}
+.bn-item i{font-size:1.08rem;line-height:1;transition:transform 0.2s ease;}
+.bn-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.bn-item:active{transform:scale(0.94);}
+.bn-item.active,.bn-item:hover{color:#fff;background:rgba(122,26,36,0.16);}
+.bn-item.active i{transform:translateY(-1px);}
+@media(max-width:600px){
+  .nav-hamburger,.menu-toggle{display:none!important;}
+  .nav-links{display:none!important;}
+  .bottom-nav{display:flex;}
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+}
+</style>
+</head>
+<body>
+
+<!-- Ambient background: soft drifting light + grain, sits behind everything -->
+<div class="bg-ambient">
+  <div class="bg-blob bg-blob-1"></div>
+  <div class="bg-blob bg-blob-2"></div>
+  <div class="bg-blob bg-blob-3"></div>
+</div>
+<div class="bg-grain"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo/rz7_logo.jpeg" alt="RZ7">
+    <div>
+      <span class="nav-brand">RZ7</span>
+      <span class="nav-tagline">GTA Official</span>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="players.html">Players</a>
+    <a href="about.html">Storyline</a>
+    <a href="pointtable.html">Point Table</a>
+    <a href="media.html" class="active">Media</a>
+    <a href="contact.html">Events</a>
+  </div>
+  <div class="nav-hamburger" id="navHamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<nav class="bottom-nav" id="bottomNav">
+  <a href="index.html" class="bn-item">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </a>
+  <a href="players.html" class="bn-item">
+    <i class="fa-solid fa-users"></i>
+    <span>Players</span>
+  </a>
+  <a href="about.html" class="bn-item">
+    <i class="fa-solid fa-book-open"></i>
+    <span>Story</span>
+  </a>
+  <a href="pointtable.html" class="bn-item">
+    <i class="fa-solid fa-ranking-star"></i>
+    <span>Points</span>
+  </a>
+  <a href="media.html" class="bn-item active">
+    <i class="fa-solid fa-photo-film"></i>
+    <span>Media</span>
+  </a>
+  <a href="contact.html" class="bn-item">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>EVENTS</span>
+  </a>
+</nav>
+
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="page-header">
+    <div class="header-line"></div>
+    <h1>MEDIA <span>TEAM</span></h1>
+    <p>The editors, clip makers and designers behind every RZ7 highlight and visual.</p>
+  </div>
+
+  <!-- FILTER DROPDOWN -->
+  <div class="filter-dropdown" id="filterDropdown">
+    <button class="filter-btn" id="filterBtn" type="button">
+      <i class="fas fa-sliders"></i>
+      <span id="filterBtnLabel">All Roles</span>
+      <i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="filter-menu" id="filterMenu">
+      <div class="fitem active" data-filter="all"><span class="fi-icon">🎞️</span>All Roles</div>
+      <div class="fitem" data-filter="lead"><span class="fi-icon">🎬</span>Lead Editor</div>
+      <div class="fitem" data-filter="editor"><span class="fi-icon">✂️</span>Editor</div>
+      <div class="fitem" data-filter="clipmaker"><span class="fi-icon">📹</span>Clip Maker</div>
+      <div class="fitem" data-filter="thumbnail"><span class="fi-icon">🖼️</span>Thumbnail</div>
+      <div class="fitem" data-filter="motion"><span class="fi-icon">💥</span>Motion Design</div>
+    </div>
+  </div>
+
+  <!-- LEADERBOARD TABLE -->
+  <div class="crew-grid" id="crewGrid">
+    <div class="lb-head">
+      <span></span>
+      <span style="padding-left:14px;">Member</span>
+      <span>Role</span>
+      <span style="justify-content:flex-end;">Links</span>
+    </div>
+    <div class="no-results" id="noResults">
+      <i class="fas fa-magnifying-glass"></i>
+      <p>No crew members found.</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* Crew is populated entirely from Firebase — no placeholder/dummy members.
+   Starts empty; renderCards() shows a loading state until the first
+   Firebase snapshot arrives, then either real cards or a true empty state. */
+let crew = [];
+let mediaLoaded = false;
+
+const ROLE_LABEL = {lead:'Lead Editor',editor:'Editor',clipmaker:'Clip Maker',thumbnail:'Thumbnail',motion:'Motion Design'};
+const ROLE_ICON  = {lead:'🎬',editor:'✂️',clipmaker:'📹',thumbnail:'🖼️',motion:'💥'};
+
+/* Escape any value before inserting it into HTML — protects against
+   stored XSS if a name/tool/role ever contains malicious markup
+   (e.g. from a compromised or misconfigured Firebase write). */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+// Only allow http(s) URLs through to href — blocks javascript: and other
+// dangerous URL schemes from social links.
+function safeUrl(url){
+  if(!url) return '';
+  try{
+    const u = new URL(url, window.location.href);
+    return (u.protocol === 'http:' || u.protocol === 'https:') ? u.href : '';
+  }catch(e){
+    return '';
+  }
+}
+// Photos specifically: allow http(s) URLs OR base64 image data URIs (the
+// admin panel's photo uploader stores compressed photos this way). Safe
+// here since it only ever lands in an <img src>, decoded as pixels.
+function safePhotoSrc(src){
+  if(!src) return '';
+  if(/^data:image\/(png|jpe?g|gif|webp|avif);base64,/i.test(src)) return src;
+  return safeUrl(src);
+}
+
+/* ── BUILD LEADERBOARD ROWS ── */
+function makeCard(m, index){
+  const div = document.createElement('div');
+  const rank = index + 1; // only the top 3 get a visible rank badge + special background
+  div.className = 'crew-card' + (rank <= 3 ? ` top-rank rank-${rank}` : '');
+  if (rank <= 3) div.dataset.rankNum = rank;
+  div.dataset.role = m.role;
+  div.dataset.name = (m.name||'').toLowerCase();
+
+  const roleLabel = escapeHtml(m.roleLabel || ROLE_LABEL[m.role] || m.role || 'Media');
+  const icon = m.icon || ROLE_ICON[m.role] || '🎬';
+  const focus = escapeHtml(m.focus || 'center 20%');
+  const safeName = escapeHtml(m.name || '');
+  const photo = safePhotoSrc(m.photo || '');
+  const ytHref  = escapeHtml(safeUrl(m.yt));
+  const igHref  = escapeHtml(safeUrl(m.ig));
+
+  // Only build a social button if the URL actually exists
+  const socials = [
+    ytHref ? `<a data-href="${ytHref}" class="soc-btn yt"><i class="fa-brands fa-youtube"></i><span class="soc-label"> YouTube</span></a>` : '',
+    igHref ? `<a data-href="${igHref}" class="soc-btn ig"><i class="fa-brands fa-instagram"></i><span class="soc-label"> Instagram</span></a>` : '',
+  ].filter(Boolean).join('');
+
+  // #1 rank: breathing aura glow behind the card
+  const auraHTML = rank === 1 ? `<div class="rank1-aura" aria-hidden="true"></div>` : '';
+
+  // #1 rank: floating ember particles with randomized positions/timing
+  let embersHTML = '';
+  if (rank === 1) {
+    const emberCount = 12;
+    let embers = '';
+    for (let i = 0; i < emberCount; i++) {
+      const x = 8 + Math.random() * 84;          // 8%–92% horizontal spread
+      const dur = 3 + Math.random() * 3;          // 3–6s float duration
+      const delay = Math.random() * dur;           // staggered start
+      const size = 2 + Math.random() * 2;          // 2–4px
+      embers += `<div class="rank1-ember" style="--x:${x.toFixed(0)}%;--dur:${dur.toFixed(1)}s;--delay:${delay.toFixed(1)}s;width:${size.toFixed(0)}px;height:${size.toFixed(0)}px;"></div>`;
+    }
+    embersHTML = `<div class="rank1-embers" aria-hidden="true">${embers}</div>`;
+  }
+
+  div.innerHTML = `
+    ${auraHTML}
+    ${embersHTML}
+    <!-- Avatar (+ rank badge for #1–#3) -->
+    <div class="lb-avatar-wrap">
+      ${rank === 1 ? `<i class="fa-solid fa-crown lb-crown"></i>` : ''}
+      <div class="lb-avatar">
+        ${photo ? `<img src="${photo}" alt="${safeName}" style="object-position:${focus}">` : icon}
+      </div>
+      ${rank <= 3 ? `<span class="lb-rank rank-${rank}">${rank}</span>` : ''}
+    </div>
+
+    <!-- Name -->
+    <div class="lb-name-col">
+      <div class="lb-name">${safeName}</div>
+      <div class="lb-sub">RZ7 Media</div>
+    </div>
+
+    <!-- Role -->
+    <span class="lb-role ${m.role}">${icon} ${roleLabel}</span>
+
+    <!-- Socials — only shown if links exist -->
+    <div class="lb-socials">${socials || '<span style="font-size:.62rem;color:rgba(255,255,255,.18);letter-spacing:1px;">—</span>'}</div>`;
+
+  const img = div.querySelector('.lb-avatar img');
+  if(img){
+    img.addEventListener('error', function(){
+      this.parentElement.textContent = icon;
+    }, { once: true });
+  }
+
+  return div;
+}
+
+const grid = document.getElementById('crewGrid');
+const fitems = document.querySelectorAll('.fitem');
+let activeFilter = 'all'; // declared before first use — renderCards() below calls filter() immediately
+
+function renderCards(){
+  grid.querySelectorAll('.crew-card').forEach(c => c.remove());
+
+  const noResults = document.getElementById('noResults');
+
+  if (!mediaLoaded){
+    // Still waiting on the first Firebase response — show a loading state,
+    // not stale placeholder members.
+    noResults.innerHTML = `<i class="fas fa-spinner fa-spin"></i><p>Loading media team…</p>`;
+    noResults.style.display = 'block';
+    return;
+  }
+
+  if (!crew.length){
+    noResults.innerHTML = `<i class="fas fa-photo-film"></i><p>No media team members yet.</p>`;
+    noResults.style.display = 'block';
+    return;
+  }
+
+  noResults.innerHTML = `<i class="fas fa-magnifying-glass"></i><p>No crew members match this filter.</p>`;
+  noResults.style.display = 'none';
+  crew.forEach((m, i) => {
+    const row = makeCard(m, i);
+    // Staggered entrance animation — each row fades/slides in slightly after
+    // the one before it, so a fresh batch of data feels alive rather than
+    // just appearing all at once.
+    row.style.animationDelay = (i * 45) + 'ms';
+    grid.appendChild(row);
+  });
+  filter();
+}
+renderCards();
+
+/* ── FIREBASE LIVE SYNC — media data comes entirely from here, no fallback list ── */
+try{
+  const firebaseConfig = {
+    apiKey: "AIzaSyB3E3vdJvjB88p-aTWLIw9Z6_HhYVA9EQM",
+    authDomain: "mrz-war-table.firebaseapp.com",
+    databaseURL: "https://mrz-war-table-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mrz-war-table",
+    storageBucket: "mrz-war-table.firebasestorage.app",
+    messagingSenderId: "427955707558",
+    appId: "1:427955707558:web:fbb9eff081478179881e67"
+  };
+  if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const mediaRef = db.ref('media');
+
+  /* ── LIVE VISITOR PRESENCE (powers the "concurrent users" count in the admin panel) ──
+     Each open tab gets its own presence entry that Firebase auto-removes the
+     instant the tab closes or the connection drops, via onDisconnect(). */
+  (function trackPresence(){
+    try{
+      const presenceRef = db.ref('presence').push();
+      db.ref('.info/connected').on('value', snap => {
+        if (snap.val() === true) {
+          presenceRef.onDisconnect().remove();
+          presenceRef.set({
+            page: 'media',
+            ts: firebase.database.ServerValue.TIMESTAMP
+          });
+        }
+      });
+      // Heartbeat: refresh the timestamp periodically so the admin panel can
+      // tell a genuinely stale/ghost entry (crashed tab, lost network) apart
+      // from someone still on the page, even if onDisconnect never fires.
+      setInterval(() => {
+        presenceRef.update({ ts: firebase.database.ServerValue.TIMESTAMP }).catch(() => {});
+      }, 25000);
+    }catch(err){ console.warn('Presence tracking failed to start.', err); }
+  })();
+
+  mediaRef.on('value', snap => {
+    const raw = snap.val();
+    if(raw && Object.keys(raw).length > 0){
+      const order = {lead:0,editor:1,clipmaker:2,thumbnail:3,motion:4};
+      // Admin-set drag order (rank) wins; members never manually reordered
+      // fall back to role→name order and sort after ranked members.
+      crew = Object.values(raw).sort((a,b) => {
+        const ra = a.rank, rb = b.rank;
+        if (ra != null && rb != null) return ra - rb;
+        if (ra != null) return -1;
+        if (rb != null) return 1;
+        return (order[a.role]??9)-(order[b.role]??9) || (a.name||'').localeCompare(b.name||'');
+      });
+    } else {
+      crew = []; // Firebase genuinely has no members yet — show the real empty state, not stale/dummy data
+    }
+    mediaLoaded = true;
+    renderCards();
+  }, err => {
+    console.warn('Media Firebase error:', err.message);
+    mediaLoaded = true; // don't leave visitors stuck on the loading state forever
+    renderCards();
+  });
+}catch(err){
+  console.warn('Firebase (media) failed to initialize.', err);
+  mediaLoaded = true;
+  renderCards();
+}
+
+/* ── FILTER ── */
+function filter(){
+  let visible = 0;
+  document.querySelectorAll('.crew-card').forEach(card => {
+    const show = activeFilter === 'all' || card.dataset.role === activeFilter;
+    card.classList.toggle('hidden', !show);
+    if(show) visible++;
+  });
+  document.getElementById('noResults').style.display = visible === 0 ? 'block' : 'none';
+}
+
+/* ── FILTER DROPDOWN OPEN/CLOSE + SELECTION ── */
+const filterDropdown = document.getElementById('filterDropdown');
+const filterBtn = document.getElementById('filterBtn');
+const filterBtnLabel = document.getElementById('filterBtnLabel');
+
+filterBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  filterDropdown.classList.toggle('open');
+});
+
+fitems.forEach(item => {
+  item.addEventListener('click', () => {
+    fitems.forEach(t => t.classList.remove('active'));
+    item.classList.add('active');
+    activeFilter = item.dataset.filter;
+    filterBtnLabel.textContent = item.textContent.trim();
+    filterDropdown.classList.remove('open');
+    filter();
+  });
+});
+
+// Close the dropdown when clicking anywhere outside it
+document.addEventListener('click', (e) => {
+  if (!filterDropdown.contains(e.target)) filterDropdown.classList.remove('open');
+});
+
+/* ── SOCIAL LINK HANDLER (no popup, just open or ignore #) ── */
+document.addEventListener('click', function(e){
+  const btn = e.target.closest('.soc-btn');
+  if(!btn) return;
+  e.preventDefault();
+  const href = btn.dataset.href || '#';
+  if(href && href !== '#') window.open(href,'_blank','noopener,noreferrer');
+});
+
+/* ── NAVBAR HAMBURGER ── */
+document.getElementById('navHamburger').addEventListener('click', function(){
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => {
+  document.getElementById('navLinks').classList.remove('open');
+}));
+</script>
+<script src="shield.js"></script>
+</body>
+</html>

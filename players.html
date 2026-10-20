@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js-eyes">
+<head>
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="lanhqeeNyvmNjhHICCvNTTFmaTNVcV1rIjGWmRSItxk" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAZEUS 7 — Players | RZ7 Gang Roster</title>
+<meta name="description" content="Meet the RAZEUS 7 (RZ7) crew — the full gang roster with live stream status, roles, and social links. See who's live right now on YouTube and Kick.">
+<meta name="keywords" content="RAZEUS 7 players, RZ7 roster, RZ7 gang members, razeus 7 crew, rz7 live, RZ7 GTA RP players, RAZEUS 7 members">
+<meta name="author" content="RAZEUS 7">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://razeus7.com/players.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="RAZEUS 7 — Gang Roster & Live Streams">
+<meta property="og:description" content="The full RZ7 crew. See who's streaming live, explore player profiles, and connect with the RAZEUS 7 family.">
+<meta property="og:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<meta property="og:url" content="https://razeus7.com/players.html">
+<meta property="og:site_name" content="RAZEUS 7">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RAZEUS 7 — Gang Roster & Live Streams">
+<meta name="twitter:description" content="The full RZ7 crew — see who's live right now.">
+<meta name="twitter:image" content="https://razeus7.com/images/logo/rz7_logo.jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" type="image/png" href="images/logo/rz7_logo.jpeg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Poppins:wght@300;400;500;600;700;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--gold:#7a1a24;--goldlight:#ffffff;--green:#ffffff;}
+body{font-family:'Poppins',sans-serif;background:#07060a;overflow-x:hidden;color:#fff;min-height:100vh;cursor:auto;}
+
+/* ══════════════════════════════════════
+   LOADING SCREEN — CLEAN MINIMAL
+══════════════════════════════════════ */
+#loader{
+  position:fixed;inset:0;z-index:99999;
+  background:#060504;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;
+  transition:opacity 1s ease, visibility 1s ease;
+}
+#loader.hide{opacity:0;visibility:hidden;}
+
+/* soft ambient glow behind everything */
+#loader::before{
+  content:'';position:absolute;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(ellipse, rgba(122,26,36,0.07) 0%, transparent 70%);
+  animation:ambientPulse 3s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes ambientPulse{
+  0%,100%{transform:scale(1);opacity:0.6;}
+  50%{transform:scale(1.2);opacity:1;}
+}
+
+/* crown icon */
+.loader-icon{
+  position:relative;z-index:2;
+  font-size:2rem;
+  color:var(--gold);
+  margin-bottom:28px;
+  animation:iconFloat 3s ease-in-out infinite;
+  opacity:0.9;
+}
+@keyframes iconFloat{
+  0%,100%{transform:translateY(0);filter:drop-shadow(0 0 8px rgba(122,26,36,0.4));}
+  50%{transform:translateY(-6px);filter:drop-shadow(0 0 20px rgba(255,255,255,0.8));}
+}
+
+/* title */
+.loader-title{
+  position:relative;z-index:2;
+  font-family:'Orbitron',sans-serif;
+  font-size:1.6rem;font-weight:700;
+  color:#fff;
+  letter-spacing:10px;text-align:center;
+  margin-bottom:8px;
+}
+
+/* subtitle */
+.loader-sub{
+  position:relative;z-index:2;
+  font-size:.6rem;letter-spacing:5px;text-transform:uppercase;
+  color:rgba(122,26,36,0.4);margin-bottom:48px;text-align:center;
+}
+
+/* thin progress line */
+.loader-progress-wrap{
+  position:relative;z-index:2;
+  width:200px;height:1px;
+  background:rgba(255,255,255,0.06);
+  margin-bottom:16px;
+}
+.loader-progress-bar{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,transparent,#7a1a24,#ffffff,#7a1a24,transparent);
+  background-size:200% 100%;
+  animation:lineShimmer 2s linear infinite;
+  transition:width .1s linear;
+  box-shadow:0 0 12px rgba(255,255,255,0.6);
+}
+@keyframes lineShimmer{
+  0%{background-position:100% 0;}
+  100%{background-position:-100% 0;}
+}
+
+/* percent */
+.loader-pct{
+  position:relative;z-index:2;
+  font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:400;
+  color:rgba(122,26,36,0.4);letter-spacing:3px;
+}
+
+/* hide old elements */
+.loader-corner,.loader-ring,.loader-logo-center,
+.siren-bar,.beam-left,.beam-right,.pulse-ring,.siren-scanlines{display:none!important;}
+
+/* ── PARTICLE CANVAS ── */
+#particle-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;}
+
+/* ── BACKGROUND VARIETY LAYER ── */
+.bg-decor{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+
+/* fine cinematic film-grain texture */
+.bg-grain{
+  position:absolute;inset:-2px;
+  opacity:.035;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size:180px 180px;
+}
+
+/* diagonal hazard-stripe corner accents — restricted-territory motif */
+.corner-stripes{
+  position:absolute;width:280px;height:280px;opacity:.05;
+  background:repeating-linear-gradient(45deg,var(--gold) 0 14px,transparent 14px 30px);
+}
+.corner-stripes-tl{top:-100px;left:-100px;}
+.corner-stripes-br{bottom:-100px;right:-100px;}
+@media(max-width:600px){
+  .corner-stripes{width:170px;height:170px;}
+}
+
+
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-track{background:#080808;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#7a1a24,#ffffff);border-radius:20px;}
+
+/* ── NAVBAR — index.html style ── */
+.navbar{
+  height:72px;width:100%;
+  position:fixed;top:0;left:0;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;
+  background:rgba(8,7,6,0.88);
+  backdrop-filter:blur(32px) saturate(180%);
+  -webkit-backdrop-filter:blur(32px) saturate(180%);
+  border-bottom:1px solid rgba(122,26,36,0.35);
+  z-index:9999;
+  animation:navIn 0.6s ease both;
+}
+@keyframes navIn{from{transform:translateY(-100%);opacity:0}to{transform:translateY(0);opacity:1}}
+
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;}
+.nav-logo img{width:38px;height:38px;border-radius:10px;object-fit:cover;border:1.5px solid rgba(122,26,36,0.35);}
+.nav-brand{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:1.5rem;letter-spacing:5px;
+  background:linear-gradient(135deg,#fff,var(--goldlight));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:block;
+}
+.nav-tagline{
+  font-size:0.55rem;letter-spacing:4px;color:var(--gold);
+  text-transform:uppercase;display:block;line-height:1;margin-top:-2px;
+}
+.logo{display:none;} /* hide old logo class */
+
+.nav-links{display:flex;align-items:center;gap:4px;}
+.nav-links a{
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  font-size:0.72rem;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;padding:8px 14px;border-radius:8px;
+  transition:color 0.2s,background 0.2s;
+  background:none;border:none;
+}
+.nav-links a:hover,.nav-links a.active{
+  color:var(--goldlight);
+  background:rgba(122,26,36,0.08);
+}
+
+.nav-hamburger{display:none!important;}
+
+/* ── HEADER ── */
+.header{padding-top:112px;text-align:center;margin-bottom:40px;position:relative;z-index:2;}
+.header h1{font-family:'Orbitron',sans-serif;font-size:3rem;background:linear-gradient(135deg,var(--goldlight),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+.header p{color:rgba(255,255,255,.4);font-size:.9rem;letter-spacing:3px;text-transform:uppercase;}
+
+/* ── SEARCH ── */
+.search-wrap{display:flex;justify-content:center;margin-bottom:30px;padding:0 20px;position:relative;z-index:2;}
+.search-box{position:relative;width:100%;max-width:500px;}
+.search-box input{width:100%;padding:14px 20px 14px 50px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(122,26,36,.2);color:#fff;font-family:'Poppins',sans-serif;font-size:.9rem;outline:none;transition:.3s;backdrop-filter:blur(12px);}
+.search-box input::placeholder{color:rgba(255,255,255,.3);}
+.search-box input:focus{border-color:rgba(122,26,36,.5);background:rgba(255,255,255,.09);box-shadow:0 0 24px rgba(122,26,36,.1);}
+.search-box i{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:rgba(122,26,36,.55);font-size:.95rem;pointer-events:none;}
+
+/* ── FILTER PILLS ── */
+.filter-pills{display:flex;justify-content:center;gap:9px;flex-wrap:wrap;margin-bottom:36px;position:relative;z-index:2;padding:0 20px;}
+.pill{padding:9px 22px;border-radius:50px;cursor:pointer;font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:.3s;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.55);display:flex;align-items:center;gap:7px;}
+.pill:hover{border-color:rgba(122,26,36,.4);color:var(--goldlight);}
+.pill.active{background:rgba(122,26,36,.14);border-color:var(--goldlight);color:var(--goldlight);box-shadow:0 0 16px rgba(122,26,36,.18);}
+.pill-yt:hover,.pill-yt.active{background:rgba(255,0,0,.12);border-color:#ff4040;color:#ff4040;box-shadow:0 0 14px rgba(255,0,0,.2);}
+.pill-kick:hover,.pill-kick.active{background:rgba(83,252,24,.1);border-color:#53fc18;color:#53fc18;box-shadow:0 0 14px rgba(83,252,24,.18);}
+.pill-live:hover,.pill-live.active{background:rgba(122,26,36,.12);border-color:#a6293a;color:#c9394d;box-shadow:0 0 14px rgba(122,26,36,.25);}
+.pill-live-dot{width:8px;height:8px;border-radius:50%;background:#a6293a;animation:liveBlink 1.2s ease-in-out infinite;flex-shrink:0;}
+.pill-dlx:hover,.pill-dlx.active{background:rgba(30,90,200,.12);border-color:#3b82f6;color:#60a5fa;box-shadow:0 0 14px rgba(30,90,200,.2);}
+.section-divider.dlx-divider span{color:rgba(59,130,246,.5);}
+.section-divider.dlx-divider::before{background:linear-gradient(90deg,transparent,rgba(59,130,246,.2),transparent);}
+
+
+/* ── VISIT BADGE ── */
+.visit-badge{
+  display:inline-flex;align-items:center;gap:8px;margin-top:10px;
+  padding:6px 14px;border-radius:99px;font-size:.7rem;font-weight:600;
+  letter-spacing:.4px;color:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  animation:fadeInUp .5s ease;
+}
+.visit-badge i{color:var(--goldlight);font-size:.75rem;}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── STATS ── */
+.stats-bar{display:flex;justify-content:center;gap:30px;margin-bottom:44px;position:relative;z-index:2;flex-wrap:wrap;}
+.stat-item{text-align:center;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:800;color:var(--goldlight);}
+.stat-label{font-size:.7rem;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;}
+
+/* ── MAIN LAYOUT WRAPPER ── */
+.roster-wrap{width:100%;max-width:1600px;margin:auto;padding:0 40px 160px;position:relative;z-index:2;}
+
+/* Row 1: Godfather + Leader side by side centered */
+.row-top{
+  display:flex;
+  justify-content:center;
+  gap:32px;
+  margin-bottom:32px;
+  flex-wrap:wrap;
+}
+
+/* Row 2: 3 Co-leaders */
+.row-coleader{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:28px;
+  max-width:900px;
+  margin:0 auto 32px;
+}
+
+/* Row 3+: Members grid */
+.row-members{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+/* Row 4: DLX Members grid */
+.row-dlx{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+
+/* ── CARD — index.html style ── */
+.pcard{
+  position:relative;
+  width:100%;
+  overflow:hidden;
+  border-radius:20px;
+  background:#111009;
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;flex-direction:column;
+  will-change:transform,box-shadow;
+  transition:transform .38s cubic-bezier(.22,1,.36,1),
+             box-shadow .38s cubic-bezier(.22,1,.36,1),
+             border-color .28s ease,
+             opacity .35s;
+  box-shadow:0 16px 36px rgba(0,0,0,.4);
+}
+.row-top .pcard{max-width:420px;min-width:320px;}
+.pcard.hidden{display:none !important;}
+.pcard::before,.pcard::after{content:none !important;display:none !important;}
+.pcard:hover{
+  transform:translateY(-10px);
+  border-color:var(--pc-accent,rgba(122,26,36,.7));
+  box-shadow:0 24px 56px rgba(0,0,0,.65),
+             0 0 0 1px rgba(255,255,255,.05),
+             0 0 32px -4px var(--pc-glow,rgba(122,26,36,.28));
+}
+
+/* ── BANNER (photo area) ── */
+.pc-banner{
+  position:relative;height:260px;
+  overflow:hidden;flex-shrink:0;
+}
+.pc-banner-inner{
+  position:absolute;inset:0;
+  will-change:transform;
+  transition:transform .5s cubic-bezier(.22,1,.36,1);
+}
+.pcard:hover .pc-banner-inner{transform:scale(1.06);}
+
+/* Photo inside banner */
+.pc-banner-inner img{
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 20%;
+  display:block;pointer-events:none;
+}
+
+/* role-coloured gradient fallback when no photo */
+.pcard[data-role="godfather"] .pc-banner-inner{background:linear-gradient(135deg,#1a0408,#7a1a24);}
+.pcard[data-role="leader"]    .pc-banner-inner{background:linear-gradient(135deg,#0a0a0a,#2e2e2e);}
+.pcard[data-role="coleader"]  .pc-banner-inner{background:linear-gradient(135deg,#1a0800,#7a2e00);}
+.pcard[data-role="member"]    .pc-banner-inner{background:linear-gradient(135deg,#0a0800,#2a2000);}
+.pcard[data-gang="dlx"]       .pc-banner-inner{background:linear-gradient(135deg,#040a1a,#1a3a7a);}
+.pcard[data-gang="dlx"]       {--pc-accent:rgba(30,90,200,.7);--pc-glow:rgba(30,90,200,.25);}
+
+/* bottom fade overlay */
+.pc-banner-inner::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:72px;
+  background:linear-gradient(to bottom,transparent,#111009);
+  pointer-events:none;
+}
+
+/* card colour variants */
+.pcard[data-role="godfather"]{--pc-accent:rgba(122,26,36,.7);--pc-glow:rgba(122,26,36,.25);}
+.pcard[data-role="leader"]   {--pc-accent:rgba(180,180,180,.7);--pc-glow:rgba(180,180,180,.2);}
+.pcard[data-role="coleader"] {--pc-accent:rgba(122,26,36,.7);  --pc-glow:rgba(122,26,36,.25);}
+.pcard[data-role="member"]   {--pc-accent:rgba(122,26,36,.7); --pc-glow:rgba(122,26,36,.25);}
+
+/* ── BADGE (top-left pill) ── */
+.pc-badge{
+  position:absolute;top:14px;left:14px;
+  display:inline-block;
+  width:fit-content;
+  font-family:'Orbitron',sans-serif;
+  font-size:.5rem;letter-spacing:2.5px;text-transform:uppercase;
+  padding:5px 13px;border-radius:50px;
+  background:rgba(0,0,0,.72);
+  border:1px solid var(--pc-accent,rgba(122,26,36,.6));
+  color:#fff;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  z-index:5;will-change:auto;transition:none;
+  white-space:nowrap;
+}
+
+/* LIVE badge — eye icon + viewer count pill (top-right of banner) */
+.pc-live{
+  position:absolute;top:14px;right:14px;
+  padding:4px 11px 4px 7px;border-radius:50px;
+  background:linear-gradient(135deg,rgba(10,8,6,.92),rgba(20,12,14,.94));
+  font-size:.6rem;font-weight:700;letter-spacing:1px;
+  display:flex;align-items:center;gap:7px;
+  z-index:6;
+  border:1px solid rgba(255,40,40,.25);
+  box-shadow:0 2px 12px rgba(0,0,0,.6),0 0 15px rgba(255,0,0,.2);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.live-eye{
+  width:20px;height:13px;flex-shrink:0;
+  filter:drop-shadow(0 0 2px rgba(0,0,0,.4));
+}
+.live-eye svg{width:100%;height:100%;overflow:visible;}
+.eye-lid-skin{fill:#1a1210;}
+.eye-lid-top{animation:eyeBlinkTop 5s ease-in-out infinite;}
+.eye-lid-bottom{animation:eyeBlinkBottom 5s ease-in-out infinite;}
+@keyframes eyeBlinkTop{
+  0%,89%,100%{transform:translateY(-100%);}
+  92%,95%{transform:translateY(0);}
+}
+@keyframes eyeBlinkBottom{
+  0%,90.5%,100%{transform:translateY(100%);}
+  93%,95%{transform:translateY(10%);}
+}
+.eye-look{transition:transform .08s linear;}
+@media(prefers-reduced-motion:reduce){
+  .eye-lid-top,.eye-lid-bottom{animation:none!important;}
+}
+.live-count{
+  display:inline-flex;align-items:center;gap:1px;
+  font-family:'Orbitron',monospace;font-weight:700;letter-spacing:0;
+}
+/* ── Casino rolling counter ── */
+.cc-char{display:inline-block;height:12px;overflow:hidden;position:relative;text-align:center;}
+.cc-digit{
+  width:8px;
+  background:rgba(255,255,255,.08);
+  border-radius:2px;
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.35);
+}
+.cc-digit::before,.cc-digit::after{
+  content:'';position:absolute;left:0;right:0;height:3px;z-index:2;pointer-events:none;
+}
+.cc-digit::before{top:0;background:linear-gradient(rgba(0,0,0,.5),transparent);}
+.cc-digit::after{bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.4));}
+.cc-static{width:auto;line-height:12px;color:rgba(255,255,255,.7);font-size:.5rem;padding:0 .5px;}
+.cc-strip{
+  display:flex;flex-direction:column;will-change:transform;
+  transition:transform .7s cubic-bezier(.16,1,.3,1);
+}
+.cc-strip span{
+  display:block;width:100%;height:12px;line-height:12px;
+  color:#fff;font-size:.55rem;
+  text-shadow:0 0 5px rgba(255,50,50,.3);
+}
+.pc-live i{font-size:.62rem;}
+
+/* WATCH LIVE — overlay button that appears over the banner image on hover */
+.pc-watch-btn{
+  position:absolute;inset:0;margin:auto;
+  width:150px;height:44px;
+  display:none;
+  align-items:center;justify-content:center;gap:8px;
+  border-radius:10px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#ff2e2e,#7a1a24);
+  color:#fff;font-family:'Poppins',sans-serif;
+  font-size:.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  text-decoration:none;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  opacity:0;pointer-events:none;
+  transform:translateY(8px) scale(.96);
+  transition:opacity .25s ease,transform .25s ease,filter .22s ease;
+  z-index:8;
+}
+.pc-watch-btn i{font-size:.85rem;}
+/* Darken the photo a touch so the button reads clearly, only while hovered */
+.pcard.is-live .pc-banner::after{
+  content:'';position:absolute;inset:0;background:rgba(0,0,0,0);
+  transition:background .25s ease;pointer-events:none;z-index:7;
+}
+.pcard.is-live:hover .pc-banner::after{background:rgba(0,0,0,.45);}
+.pcard.is-live:hover .pc-watch-btn{
+  display:flex;opacity:1;pointer-events:auto;transform:translateY(0) scale(1);
+}
+.pc-watch-btn:hover{filter:brightness(1.12);}
+
+/* LIVE CHAT button — beside watch btn */
+/* ═══════════════════════════════════════
+   VIEWERS ROW (under status)
+═══════════════════════════════════════ */
+.pc-vl-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:0 0 12px;padding:0 2px;
+}
+.pc-viewers{
+  display:flex;align-items:center;gap:5px;
+  font-size:.68rem;font-weight:600;color:rgba(255,255,255,.3);
+  letter-spacing:.5px;
+}
+.pc-viewers i{font-size:.58rem;color:rgba(122,26,36,.5);}
+.pc-viewers span{font-family:'Orbitron',sans-serif;font-size:.62rem;color:rgba(255,255,255,.4);}
+
+/* LIVE card border pulse */
+.pcard.is-live{border-color:rgba(122,26,36,.35) !important;}
+
+/* ── CARD BODY ── */
+.pc-profile{display:none;}  /* remove old avatar block */
+
+.pc-content{
+  padding:16px 20px 22px;
+  display:flex;flex-direction:column;flex:1;
+}
+
+/* Name */
+.pc-name{
+  font-family:'Bebas Neue',cursive;
+  font-size:1.7rem;font-weight:400;letter-spacing:1px;
+  color:#fff;margin-bottom:8px;
+  transition:color .28s ease;
+  -webkit-text-fill-color:#fff; /* override any gradient leftover */
+  background:none !important;
+  animation:none !important;
+}
+.pcard:hover .pc-name{
+  color:var(--pc-accent,#ffffff);
+  -webkit-text-fill-color:unset;
+}
+
+/* Role label — bio line under name */
+.pc-role-label{
+  font-size:.65rem;color:rgba(255,255,255,.3);
+  letter-spacing:.5px;text-transform:none;font-weight:500;
+  line-height:1.5;
+}
+
+/* Status row */
+.pc-status-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:12px 0;padding:0 2px;
+}
+.pc-status-label{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase;}
+.pc-status{display:flex;align-items:center;gap:6px;font-weight:700;font-size:.72rem;}
+.pc-sdot{width:9px;height:9px;border-radius:50%;background:#2ecc71;animation:onlinePulse 2s infinite;}
+@keyframes onlinePulse{0%,100%{opacity:1;box-shadow:0 0 5px #2ecc71;}50%{opacity:.55;box-shadow:0 0 12px #2ecc71;}}
+.pc-status.offline{color:rgba(255,255,255,.32);}
+.pc-status.offline .pc-sdot{background:rgba(255,255,255,.22);animation:none;box-shadow:none;}
+
+/* ── PLAYER POINTS ROW (mirrors .pc-status-row) ── */
+.pc-points-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin:0 0 12px;padding:0 2px;
+}
+.pc-points-label{font-size:.68rem;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase;}
+.pc-points-val{display:flex;align-items:center;gap:6px;font-weight:700;font-size:.72rem;color:rgba(255,255,255,.45);}
+.pc-points-star{width:13px;height:13px;flex-shrink:0;}
+.pc-points-star svg{width:100%;height:100%;display:block;}
+
+/* ── SOCIALS — centered labeled buttons ── */
+.pc-socials{
+  display:flex;gap:8px;
+  margin-top:auto;padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.07);
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.pc-soc{
+  flex:0 0 auto;
+  width:40px;height:40px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.65);
+  text-decoration:none;cursor:pointer;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),
+             background .22s ease,box-shadow .22s ease,
+             color .18s ease,border-color .18s ease;
+}
+.pc-soc i{font-size:.95rem;}
+.pc-soc:hover{transform:translateY(-4px);color:#fff;}
+.kick-soc:hover{background:#53fc18;color:#000;border-color:transparent;box-shadow:0 6px 18px rgba(83,252,24,.4);}
+.yt-soc:hover{background:#ff0000;color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(255,0,0,.4);}
+.discord-soc:hover{background:#5865f2;color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(88,101,242,.4);}
+.ig-soc:hover{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(253,29,29,.4);}
+
+/* ── CARD ENTRANCE ── */
+.pcard{animation:cardEntrance .6s ease both;}
+@keyframes cardEntrance{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.row-members .pcard:nth-child(1){animation-delay:.05s;}
+.row-members .pcard:nth-child(2){animation-delay:.1s;}
+.row-members .pcard:nth-child(3){animation-delay:.15s;}
+.row-members .pcard:nth-child(4){animation-delay:.2s;}
+.row-members .pcard:nth-child(5){animation-delay:.25s;}
+.row-members .pcard:nth-child(6){animation-delay:.3s;}
+.row-members .pcard:nth-child(7){animation-delay:.35s;}
+.row-members .pcard:nth-child(8){animation-delay:.4s;}
+.row-members .pcard:nth-child(9){animation-delay:.45s;}
+.row-members .pcard:nth-child(n+10){animation-delay:.5s;}
+
+/* Bebas Neue font */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+/* offline status */
+.pc-status.offline{color:rgba(255,255,255,.35);}
+.pc-status.offline .pc-sdot{background:rgba(255,255,255,.25);animation:none;box-shadow:none;}
+
+.pc-badge{position:absolute;top:14px;right:14px;padding:6px 12px;border-radius:50px;background:rgba(0,0,0,.45);backdrop-filter:blur(8px);font-size:.65rem;font-weight:700;letter-spacing:1px;border:1px solid rgba(255,255,255,.14);}
+
+.no-results{text-align:center;padding:80px 20px;color:rgba(255,255,255,.3);display:none;grid-column:1/-1;}
+.no-results i{font-size:2.8rem;margin-bottom:14px;color:rgba(122,26,36,.25);display:block;}
+
+.footer{padding:34px 20px;text-align:center;border-top:1px solid rgba(255,255,255,.06);color:rgba(255,255,255,.35);font-size:.82rem;position:relative;z-index:2;}
+
+/* section divider label */
+.section-divider{text-align:center;margin-bottom:20px;position:relative;}
+.section-divider span{font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:3px;color:rgba(122,26,36,.5);text-transform:uppercase;padding:0 16px;background:#07060a;position:relative;z-index:1;}
+.section-divider::before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(122,26,36,.2),transparent);}
+
+@keyframes rotateGlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* ── LINK EXPIRED POPUP ── */
+#link-expired-popup{
+  position:fixed;inset:0;z-index:999999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s ease;
+}
+#link-expired-popup.show{opacity:1;pointer-events:all;}
+.lep-box{
+  background:linear-gradient(145deg,#110d00,#1c1500);
+  border:1px solid rgba(122,26,36,.35);
+  border-radius:22px;padding:36px 40px;text-align:center;
+  box-shadow:0 24px 60px rgba(0,0,0,.8),0 0 40px rgba(122,26,36,.08);
+  max-width:340px;width:90%;
+  transform:scale(.88);transition:transform .25s ease;
+  position:relative;
+}
+#link-expired-popup.show .lep-box{transform:scale(1);}
+.lep-icon{font-size:2.6rem;margin-bottom:14px;display:block;
+  animation:lepIconPulse 1.8s ease-in-out infinite;}
+@keyframes lepIconPulse{0%,100%{filter:drop-shadow(0 0 6px rgba(122,26,36,.3));}50%{filter:drop-shadow(0 0 18px rgba(122,26,36,.8));}}
+.lep-title{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;
+  background:linear-gradient(135deg,#ffffff,#7a1a24);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:3px;margin-bottom:8px;}
+.lep-msg{color:rgba(255,255,255,.5);font-size:.82rem;line-height:1.5;margin-bottom:24px;}
+.lep-close{
+  background:linear-gradient(135deg,#7a1a24,#ffffff);
+  color:#000;font-weight:800;font-size:.82rem;letter-spacing:1.5px;
+  border:none;border-radius:50px;padding:11px 32px;cursor:pointer;
+  transition:.3s;text-transform:uppercase;
+}
+.lep-close:hover{transform:scale(1.07);box-shadow:0 0 20px rgba(122,26,36,.4);}
+
+@media(min-width:901px){
+  /* Lock every pcard to a consistent desktop size instead of
+     stretching to fill its row-top / row-coleader / row-members cell */
+  .pcard{
+    width:320px;
+    min-width:320px;
+    max-width:320px;
+  }
+  .row-top .pcard{
+    width:320px;
+    min-width:320px;
+    max-width:320px;
+  }
+  .row-members{
+    grid-template-columns:repeat(auto-fit,320px);
+    justify-content:center;
+  }
+  .row-coleader{
+    grid-template-columns:repeat(auto-fit,320px);
+    justify-content:center;
+    max-width:none;
+  }
+  .row-dlx{
+    grid-template-columns:repeat(auto-fit,320px);
+    justify-content:center;
+  }
+}
+
+@media(max-width:900px){
+  .row-members{grid-template-columns:repeat(2,1fr);}
+  .row-coleader{grid-template-columns:repeat(2,1fr);}
+  .row-dlx{grid-template-columns:repeat(2,1fr);}
+  .roster-wrap{padding:0 20px 160px;}
+  .nav-links{display:none!important;}
+  .bottom-nav{display:flex;}
+  body{padding-bottom:calc(60px + env(safe-area-inset-bottom));}
+}
+@media(max-width:600px){
+  .row-members{grid-template-columns:1fr;}
+  .row-dlx{grid-template-columns:1fr;}
+  .header h1{font-size:2rem;}
+  .row-top{flex-direction:column;align-items:center;}
+  .row-coleader{grid-template-columns:1fr;}
+  .roster-wrap{padding:0 14px 160px;}
+}
+
+/* ══════════════════════════════════════
+   BOTTOM NAV — mobile app-style tab bar
+══════════════════════════════════════ */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:1001;
+  background:rgba(8,7,6,0.92);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border-top:1px solid rgba(122,26,36,0.35);
+  padding:6px 2px calc(6px + env(safe-area-inset-bottom));
+  justify-content:space-around;
+  align-items:center;
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:3px;flex:1;min-width:0;
+  color:rgba(255,255,255,0.5);text-decoration:none;
+  font-size:0.52rem;letter-spacing:0.4px;text-transform:uppercase;
+  padding:7px 2px 5px;border-radius:12px;
+  transition:color 0.2s ease,background 0.2s ease,transform 0.2s ease;
+}
+.bn-item i{font-size:1.08rem;line-height:1;transition:transform 0.2s ease;}
+.bn-item span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.bn-item:active{transform:scale(0.94);}
+.bn-item.active,.bn-item:hover{color:#fff;background:rgba(122,26,36,0.16);}
+.bn-item.active i{transform:translateY(-1px);}
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<div class="bg-decor" aria-hidden="true">
+  <div class="corner-stripes corner-stripes-tl"></div>
+  <div class="corner-stripes corner-stripes-br"></div>
+  <div class="bg-grain"></div>
+</div>
+
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="images/logo/rz7_logo.jpeg" alt="RZ7">
+    <div>
+      <span class="nav-brand">RZ7</span>
+      <span class="nav-tagline">GTA Official</span>
+    </div>
+  </a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html">Home</a>
+    <a href="players.html" class="active">Players</a>
+    <a href="pointtable.html">Point Table</a>
+    <a href="community.html">Community</a>
+    <a href="contact.html">Events</a>
+  </div>
+</nav>
+
+<nav class="bottom-nav" id="bottomNav">
+  <a href="index.html" class="bn-item">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </a>
+  <a href="players.html" class="bn-item active">
+    <i class="fa-solid fa-users"></i>
+    <span>Players</span>
+  </a>
+  <a href="pointtable.html" class="bn-item">
+    <i class="fa-solid fa-ranking-star"></i>
+    <span>Points</span>
+  </a>
+  <a href="community.html" class="bn-item">
+    <i class="fa-solid fa-comments"></i>
+    <span>Chat</span>
+  </a>
+  <a href="contact.html" class="bn-item">
+    <i class="fa-solid fa-calendar-days"></i>
+    <span>Events</span>
+  </a>
+</nav>
+
+
+<div class="header">
+  <h1>RZ7 GANG</h1>
+  <p>Elite Roster — Season 2026</p>
+  <div class="visit-badge" id="visitBadge" style="display:none;">
+    <i class="fa-solid fa-clock-rotate-left"></i>
+    <span id="visitBadgeText"></span>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <i class="fa fa-search"></i>
+    <input type="text" id="searchInput" placeholder="Search players…" autocomplete="off">
+  </div>
+</div>
+
+<div class="filter-pills">
+  <div class="pill active" data-filter="all">All</div>
+  <div class="pill pill-live" data-filter="live"><span class="pill-live-dot"></span> Live Now (<span id="liveCount">0</span>)</div>
+  <div class="pill pill-dlx" data-filter="dlx">DLX Members</div>
+  <div class="pill-meta" id="memberCount" style="font-size:0.68rem;color:rgba(255,255,255,0.4);align-self:center;"></div>
+</div>
+
+<!-- ROSTER -->
+<div class="roster-wrap" id="rosterWrap">
+
+  <!-- ROW 1: Godfather + Leader -->
+  <div class="section-divider"><span>Leadership</span></div>
+  <div class="row-top" id="rowTop"></div>
+
+  <!-- ROW 2: Co-Leaders -->
+  <div class="section-divider" id="coleaderDivider" style="margin-top:14px;"><span>Co-Leaders</span></div>
+  <div class="row-coleader" id="rowColeader"></div>
+
+  <!-- ROW 3+: Members -->
+  <div class="section-divider" id="memberDivider" style="margin-top:14px;"><span>Members</span></div>
+  <div class="row-members" id="rowMembers"></div>
+
+  <!-- ROW 4: DLX Members -->
+  <div class="section-divider dlx-divider" id="dlxDivider" style="margin-top:28px;display:none;"><span>DLX Members</span></div>
+  <div class="row-dlx" id="rowDlx"></div>
+
+  <!-- Lives outside the row grids on purpose: renderAllCards() wipes
+       rowMembers.innerHTML on every render (Firebase update, fallback,
+       re-render), which was silently destroying this element when it
+       used to live inside rowMembers — so "no results" never actually
+       displayed. Keeping it here means it survives every re-render. -->
+  <div class="no-results" id="noResults"><i class="fa fa-search"></i><p>No players found</p></div>
+
+</div>
+
+<footer class="footer">© 2026 RAZEUS 7 — ALL RIGHTS RESERVED</footer>
+
+
+<script>
+/* Anti-inspect protection loaded via shield.js */
+
+/* ── VISIT COUNTER (stored on this device via localStorage) ──
+   Increments once per page load and is remembered across visits on this
+   browser/device. Not tied to an identity — clearing site data or using
+   a different browser/device resets it. */
+(function trackVisits(){
+  try{
+    const key = 'rz7_players_visits';
+    let data;
+    try{ data = JSON.parse(localStorage.getItem(key)) || {}; }catch(e){ data = {}; }
+    data.count = (data.count || 0) + 1;
+    if(!data.firstVisit) data.firstVisit = new Date().toISOString();
+    data.lastVisit = new Date().toISOString();
+    localStorage.setItem(key, JSON.stringify(data));
+
+    const badge = document.getElementById('visitBadge');
+    const text  = document.getElementById('visitBadgeText');
+    if(badge && text && data.count > 1){
+      text.textContent = `Welcome back — visit #${data.count}`;
+      badge.style.display = 'inline-flex';
+    }
+  }catch(e){
+    // localStorage unavailable (private mode, blocked, etc.) — fail silently
+  }
+})();
+</script>
+
+<script>
+/* ── LIVE STATE (defined first so everything below can use it) ── */
+/* ── FIREBASE SETUP ──
+   Wrapped in try/catch: if Firebase fails to load (blocked by a mobile
+   ad-blocker/privacy browser, flaky network, etc.) the rest of this
+   script — navbar, music player, search, roster fallback — must still
+   run instead of the whole page silently breaking. */
+let _db = null, liveRef = null, viewersRef = null;
+try{
+  const _fbCfg = {
+    apiKey: "AIzaSyB3E3vdJvjB88p-aTWLIw9Z6_HhYVA9EQM",
+    authDomain: "mrz-war-table.firebaseapp.com",
+    databaseURL: "https://mrz-war-table-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mrz-war-table",
+    storageBucket: "mrz-war-table.firebasestorage.app",
+    messagingSenderId: "427955707558",
+    appId: "1:427955707558:web:fbb9eff081478179881e67"
+  };
+  if(!firebase.apps.length) firebase.initializeApp(_fbCfg);
+  _db     = firebase.database();
+  liveRef = _db.ref('live_players');
+  viewersRef = _db.ref('live_viewers');
+
+  /* ── LIVE VISITOR PRESENCE (powers the "concurrent users" count in the admin panel) ──
+     Each open tab gets its own presence entry that Firebase auto-removes the
+     instant the tab closes or the connection drops, via onDisconnect(). */
+  (function trackPresence(){
+    try{
+      const presenceRef = _db.ref('presence').push();
+      _db.ref('.info/connected').on('value', snap => {
+        if (snap.val() === true) {
+          presenceRef.onDisconnect().remove();
+          presenceRef.set({
+            page: 'players',
+            ts: firebase.database.ServerValue.TIMESTAMP
+          });
+        }
+      });
+      // Heartbeat: refresh the timestamp periodically so the admin panel can
+      // tell a genuinely stale/ghost entry (crashed tab, lost network) apart
+      // from someone still on the page, even if onDisconnect never fires.
+      setInterval(() => {
+        presenceRef.update({ ts: firebase.database.ServerValue.TIMESTAMP }).catch(() => {});
+      }, 25000);
+    }catch(err){ console.warn('Presence tracking failed to start.', err); }
+  })();
+}catch(err){
+  console.warn('Firebase (live status) failed to initialize — live badges will stay static.', err);
+}
+
+/* ── LIVE STATE ── */
+let liveState = {};
+// Live viewer counts, keyed by player name (lowercase). Populated by the
+// auto live-check poller below when the Worker returns a viewerCount.
+// Purely local/display data — not synced through Firebase.
+let liveViewers = {};
+function saveLive(){ if(liveRef) liveRef.set(liveState); }
+
+// Format a raw viewer number as a compact string, e.g. 1834 -> "1.8K"
+function formatViewers(n){
+  if(n == null || isNaN(n)) return null;
+  n = Math.max(0, Math.round(n));
+  if(n >= 1000000) return (n/1000000).toFixed(n % 1000000 === 0 ? 0 : 1) + 'M';
+  if(n >= 1000)    return (n/1000).toFixed(n % 1000 === 0 ? 0 : 1) + 'K';
+  return String(n);
+}
+
+/* ── CASINO COUNTER — rolling digit animation for viewer counts ──
+   Each numeric digit gets a vertical strip (0-9) that scrolls to the
+   target value. Letters (K, M) and dots are static. On first render
+   digits spin in from random positions; subsequent updates roll only
+   the digits that changed, with a staggered delay for the slot-machine
+   feel. ── */
+const CC_H = 12; // must match .cc-char height in CSS
+function animateCasinoCounter(el, val) {
+  if (!el) return;
+  const str = String(val);
+  if (el.dataset.v === str) return;        // nothing changed
+  el.dataset.v = str;
+  const chars = str.split('');
+
+  // Rebuild when character count changes (e.g. "999" → "1.0K") or first paint
+  if (chars.length !== el.children.length) {
+    el.innerHTML = '';
+    chars.forEach((ch, i) => {
+      const w = document.createElement('span');
+      if (/\d/.test(ch)) {
+        w.className = 'cc-char cc-digit';
+        const strip = document.createElement('span');
+        strip.className = 'cc-strip';
+        for (let d = 0; d <= 9; d++) {
+          const s = document.createElement('span');
+          s.textContent = d;
+          strip.appendChild(s);
+        }
+        // Start at a random digit so the initial spin looks organic
+        const rand = Math.floor(Math.random() * 10);
+        strip.style.transition = 'none';
+        strip.style.transform = 'translateY(' + (-rand * CC_H) + 'px)';
+        w.appendChild(strip);
+        el.appendChild(w);
+        // Spin to target with staggered delay
+        const target = parseInt(ch);
+        setTimeout(() => {
+          strip.style.transition = 'transform .7s cubic-bezier(.16,1,.3,1)';
+          strip.style.transform = 'translateY(' + (-target * CC_H) + 'px)';
+        }, 60 + i * 90);
+      } else {
+        w.className = 'cc-char cc-static';
+        w.textContent = ch;
+        el.appendChild(w);
+      }
+    });
+    return;
+  }
+
+  // Same length — animate only the digits that changed
+  chars.forEach((ch, i) => {
+    const w = el.children[i];
+    if (!w) return;
+    if (/\d/.test(ch) && w.classList.contains('cc-digit')) {
+      const strip = w.querySelector('.cc-strip');
+      if (strip) {
+        const target = parseInt(ch);
+        setTimeout(() => {
+          strip.style.transform = 'translateY(' + (-target * CC_H) + 'px)';
+        }, i * 80);
+      }
+    } else if (w.classList.contains('cc-static')) {
+      w.textContent = ch;
+    }
+  });
+}
+
+/* ── LISTEN FOR LIVE STATUS + VIEWER COUNTS (real-time, written by the
+   Cloudflare Worker cron job — see live-status-worker.js) ──
+   The client no longer checks YouTube/Kick itself; it only reads
+   whatever the Worker last wrote to Firebase. */
+if(liveRef){
+  liveRef.on('value', snap => {
+    liveState = snap.val() || {};
+    applyLiveState();
+    // If no cards exist yet (roster hasn't loaded), retry after render
+    if(document.querySelectorAll('.pcard').length === 0){
+      setTimeout(applyLiveState, 2000);
+      setTimeout(applyLiveState, 5000);
+    }
+  });
+}
+if(viewersRef){
+  viewersRef.on('value', snap => {
+    liveViewers = snap.val() || {};
+    applyLiveState();
+  });
+}
+
+/* ── SCOREBOARD POINTS LISTENER ── */
+var scoreboardData = {};
+if(_db){
+  _db.ref('scoreboard').on('value', snap => {
+    scoreboardData = snap.val() || {};
+    applyScoreboard();
+  });
+}
+function applyScoreboard(){
+  document.querySelectorAll('.pcard').forEach(card => {
+    const name = card.dataset.name;
+    const ptsEl = card.querySelector('.pc-points-num');
+    if(!ptsEl) return;
+    const data = scoreboardData[name];
+    const pts = data && typeof data.score === 'number' ? data.score : 0;
+    ptsEl.textContent = pts.toLocaleString();
+  });
+}
+
+
+function applyLiveState(){
+  let liveCount = 0;
+  document.querySelectorAll('.pcard').forEach(card => {
+    const name   = card.dataset.name;
+    const rId    = card.dataset.rosterId;
+    const source = liveState[rId] || liveState[name]; // match by roster ID first, then name
+    const isLive = !!source;
+    card.classList.toggle('is-live', isLive);
+
+    // Top-right pill: red dot + viewer count (falls back to "LIVE" text
+    // when we don't have a number yet, e.g. right after going live or
+    // for manually-toggled admin lives).
+    let badge = card.querySelector('.pc-live');
+    if(isLive && !badge){
+      badge = document.createElement('div');
+      badge.className = 'pc-live';
+      card.querySelector('.pc-banner-inner').appendChild(badge);
+    } else if(!isLive && badge){
+      badge.remove();
+      badge = null;
+    }
+    if(badge){
+      const formatted = formatViewers(liveViewers[rId] || liveViewers[name]);
+      const count = formatted != null ? formatted : '0';
+      // Build eye SVG only once — casino counter animates separately
+      if(!badge.dataset.init){
+        const blinkDelay = (-(Math.random() * 4.5)).toFixed(2) + 's';
+        const gid = name.replace(/[^a-z0-9]/gi,'') + Math.random().toString(36).slice(2,6);
+        badge.innerHTML =
+          '<div class="live-eye"><svg viewBox="0 0 32 20" xmlns="http://www.w3.org/2000/svg">' +
+            '<defs><clipPath id="ec' + gid + '"><path d="M1,10 C6,1 26,1 31,10 C26,19 6,19 1,10Z"/></clipPath></defs>' +
+            '<path d="M1,10 C6,1 26,1 31,10 C26,19 6,19 1,10Z" fill="#f5eee8" stroke="rgba(80,40,30,.3)" stroke-width=".4"/>' +
+            '<g clip-path="url(#ec' + gid + ')">' +
+              '<g class="eye-look">' +
+                '<circle cx="16" cy="10" r="6.5" fill="#3d1e10"/>' +
+                '<circle cx="16" cy="10" r="5.8" fill="#5a3018"/>' +
+                '<circle cx="16" cy="10" r="5" fill="#6b3a1c"/>' +
+                '<circle cx="16" cy="10" r="2.2" fill="#0a0404"/>' +
+                '<circle cx="16" cy="10" r="1.4" fill="#050202"/>' +
+                '<ellipse cx="14" cy="7.5" rx="1.4" ry="1" fill="#fff" opacity=".8" transform="rotate(-15 14 7.5)"/>' +
+                '<circle cx="18.5" cy="12" r=".4" fill="#fff" opacity=".3"/>' +
+              '</g>' +
+              '<g class="eye-lid-top" style="animation-delay:' + blinkDelay + '"><rect class="eye-lid-skin" x="-1" y="-1" width="34" height="12"/></g>' +
+              '<g class="eye-lid-bottom" style="animation-delay:' + blinkDelay + '"><rect class="eye-lid-skin" x="-1" y="9" width="34" height="12"/></g>' +
+            '</g>' +
+          '</svg></div>' +
+          '<span class="live-count"></span>';
+        badge.dataset.init = '1';
+      }
+      // Roll the digits to the new count (no-op if value unchanged)
+      animateCasinoCounter(badge.querySelector('.live-count'), count);
+    }
+
+    // WATCH LIVE button — links to whichever platform is currently live
+    const watchBtn = card.querySelector('.pc-watch-btn');
+    if(watchBtn){
+      if(isLive){
+        // Prefer the platform Firebase says is live; fall back to
+        // whichever link the player actually has (yt, then kick).
+        let href = '#';
+        if(source === 'yt' && card.dataset.yt !== '#') href = card.dataset.yt;
+        else if(source === 'kick' && card.dataset.kick !== '#') href = card.dataset.kick;
+        else if(card.dataset.yt !== '#') href = card.dataset.yt;
+        else if(card.dataset.kick !== '#') href = card.dataset.kick;
+        watchBtn.href = href;
+      } else {
+        watchBtn.href = '#';
+      }
+    }
+
+    const statusEl = card.querySelector('.pc-status');
+    const dot      = statusEl ? statusEl.querySelector('.pc-sdot') : null;
+    const txt      = statusEl ? statusEl.querySelector('.status-txt') : null;
+    if(isLive){
+      if(statusEl){ statusEl.classList.remove('offline'); statusEl.style.color = '#2ecc71'; }
+      if(dot){ dot.style.background = '#2ecc71'; dot.style.boxShadow = '0 0 8px #2ecc71'; }
+      if(txt) txt.textContent = 'ONLINE';
+      liveCount++;
+    } else {
+      if(statusEl){ statusEl.classList.add('offline'); statusEl.style.color = ''; }
+      if(dot){ dot.style.background = ''; dot.style.boxShadow = ''; }
+      if(txt) txt.textContent = 'OFFLINE';
+    }
+
+    /* ── update card-body viewer count ── */
+    const viewsEl = card.querySelector('.pc-viewers span');
+    if(viewsEl){
+      const vc = liveViewers[rId] || liveViewers[name] || 0;
+      viewsEl.textContent = typeof vc === 'number' ? vc.toLocaleString() : vc;
+    }
+  });
+  const lcEl = document.getElementById('liveCount'); if(lcEl) lcEl.textContent = liveCount;
+  const ac   = document.getElementById('adminLiveCount'); if(ac) ac.textContent = liveCount;
+  updateTabTitleTicker(liveCount);
+}
+
+/* ── TAB TITLE TICKER ──
+   Flashes "🔴 X LIVE NOW" in the browser tab whenever a player is live,
+   so people notice even when this tab isn't focused. */
+const _originalTitle = document.title;
+let _titleFlashTimer = null;
+let _titleFlashOn = false;
+function updateTabTitleTicker(liveCount){
+  if(liveCount > 0){
+    if(_titleFlashTimer) return; // already ticking
+    _titleFlashTimer = setInterval(() => {
+      _titleFlashOn = !_titleFlashOn;
+      const n = document.getElementById('liveCount');
+      const count = n ? n.textContent : liveCount;
+      document.title = _titleFlashOn
+        ? `🔴 ${count} LIVE NOW`
+        : _originalTitle;
+    }, 2200);
+  } else if(_titleFlashTimer){
+    clearInterval(_titleFlashTimer);
+    _titleFlashTimer = null;
+    document.title = _originalTitle;
+  }
+}
+
+/* ── DATA ── */
+ let players = [
+/*
+
+  { name:'RZ7 SHEIKH',     role:'leader',   badge:'LEADER',
+    photo:'images/players/sheikh.jpg',
+    yt:'https://youtube.com/@sheikhgaming_op',
+    kick:'https://kick.com/sheikh_official',
+    ig:'https://www.instagram.com/_sheikh.official_',
+    discord:'https://discord.gg/dTyGJtnuK' },
+
+
+  { name:'RZ7 MACK',       role:'coleader', badge:'CO LEADER',
+    photo:'images/players/mack.jpg',
+    yt:'https://youtube.com/@mackgaminglive',
+    kick:'https://kick.com/mack_gaming',
+    ig:'https://www.instagram.com/ig.m_a_c_k',
+    discord:'https://discord.gg/dXqgJt5f' },
+
+  { name:'RZ7 KURUP',      role:'coleader', badge:'CO LEADER',
+    photo:'images/players/kurup.png',
+    yt:'https://youtube.com/@kurupdenny',
+    kick:'https://kick.com/dennygaming',
+    ig:'https://www.instagram.com/kurupdenny',
+    discord:'https://discord.gg/qhYeUBt6sY' },
+
+  
+  { name:'RZ7 MALIK',      role:'member',   badge:'MEMBER',
+    photo:'images/players/malik.jpg',
+    yt:'https://youtube.com/@stormforca007',
+    kick:'https://kick.com/stormforca',
+    ig:'https://www.instagram.com/suii_malikk',
+    discord:'https://discord.gg/AEYp6UXDz' },
+
+  { name:'RZ7 BILAL',      role:'member',   badge:'MEMBER',
+    photo:'images/players/bilal.png',
+    yt:'https://youtube.com/@ig_fatboygaming',
+    kick:'https://kick.com/ig-fatboygaming',
+    ig:'https://www.instagram.com/ig.bilal__',
+    discord:'https://discord.gg/qFZBdVhBg' },
+
+  { name:'RZ7 BLAKE',      role:'member',   badge:'MEMBER',
+    photo:'images/players/blake.png',
+    yt:'https://youtube.com/@rz7_blake',
+    kick:'https://kick.com/rz7-blake',
+    ig:'https://www.instagram.com/rz7_blake',
+    discord:'https://discord.gg/f727DAV9' },
+
+  { name:'RZ7 FLUFFY',     role:'member',   badge:'MEMBER',
+    photo:'images/players/fluffy.png',
+    yt:'https://youtube.com/@imbluffingw',
+    kick:'https://kick.com/imbluffing',
+    ig:'https://www.instagram.com/im_bluffing_',
+    discord:'https://discord.gg/heG3BrS3rV' },
+
+  { name:'RZ7 THE GOD',    role:'member',   badge:'MEMBER',
+    photo:'images/players/god.webp',
+    yt:'https://youtube.com/@mrzthegod',
+    kick:'https://kick.com/thegod',
+    ig:'https://www.instagram.com/dios_the_god_',
+    discord:'https://discord.gg/heG3BrS3rV' },
+
+  { name:'RZ7 JOSHUA',     role:'member',   badge:'MEMBER',
+    photo:'images/players/joshua.png',
+    yt:'https://youtube.com/@mrzjoshua',
+    kick:'https://kick.com/joshuafps',
+    ig:'https://www.instagram.com/joshuafps',
+    discord:'https://discord.gg/heG3BrS3rV' },
+
+  { name:'RZ7 PAPPADAM',   role:'member',   badge:'MEMBER',
+    photo:'images/players/papu.webp',
+    yt:'https://youtube.com/@vegeta_myron',
+    kick:'https://kick.com/vegetamyron',
+    ig:'https://www.instagram.com/vegetamyron_',
+    discord:'https://discord.gg/heG3BrS3rV' },
+
+  { name:'RZ7 WIPZY',      role:'member',   badge:'MEMBER',
+    photo:'images/players/wipzy.jpg',
+    yt:'https://youtube.com/@wipzy',
+    kick:'https://kick.com/wipzy_og',
+    ig:'https://www.instagram.com/ig.wipzygaming',
+    discord:'https://discord.gg/jzfDmWvHW' },
+
+  { name:'RZ7 NOKIYA',     role:'member',   badge:'MEMBER',
+    photo:'images/players/nokiya.png',
+    yt:'https://youtube.com/@nokiyaw',
+    kick:'https://kick.com/nokiya_w',
+    ig:'https://www.instagram.com/nokiya.w',
+    discord:'https://discord.gg/eRDjUrGRf' },
+
+  { name:'RZ7 MINNAL',     role:'member',   badge:'MEMBER',
+    photo:'images/players/amban.png',
+    yt:'https://youtube.com/@the-noob-suii',
+    kick:'https://kick.com/minnalftw',
+    ig:'https://www.instagram.com/_m1nn4l',
+    discord:null },
+
+  { name:'RZ7 TURBO',      role:'member',   badge:'MEMBER',
+    photo:'images/players/turbo.jpg',
+    yt:'https://youtube.com/@tu3boo69',
+    kick:'https://kick.com/rz7turbow',
+    ig:'https://www.instagram.com/turboo.xd',
+    discord:'https://discord.gg/eRDjUrGRf' },
+
+  { name:'RZ7 KIDU',       role:'member',   badge:'MEMBER',
+    photo:'images/players/kidu.webp',
+    yt:'https://youtube.com/@kiduuu_ftw',
+    kick:'https://kick.com/kiduuu-fr',
+    ig:'https://www.instagram.com/kiduuu.67',
+    discord:'https://discord.gg/peTAsr9W' },
+
+  { name:'RZ7 CHARAN',     role:'member',   badge:'MEMBER',
+    photo:'images/players/charan.webp',
+    yt:'https://youtube.com/@charan_ftw',
+    kick:'https://kick.com/charanw',
+    ig:'https://www.instagram.com/charan_ftw',
+    discord:'https://discord.gg/peTAsr9W' },
+
+  { name:'RZ7 IKRU MON',   role:'member',   badge:'MEMBER',
+    photo:'images/players/ikru2.webp',
+    yt:'https://youtube.com/@rz7_ikruuuuh',
+    kick:'https://kick.com/ikruuuh',
+    ig:'https://www.instagram.com/ikruuuuh',
+    discord:null },
+
+  { name:'RZ7 JJ',         role:'member',   badge:'MEMBER',
+    photo:'images/players/jj.webp',
+    yt:'https://youtube.com/@jeje.1it',
+    kick:'https://kick.com/jjlit',
+    ig:'https://www.instagram.com/jj.1it',
+    discord:'https://discord.gg/jr6Rr2kYk' },
+
+  { name:'RZ7 USMAAN',     role:'member',   badge:'MEMBER',
+    photo:'images/players/usman.webp',
+    yt:'https://youtube.com/@usman999w',
+    kick:'https://kick.com/usman_w',
+    ig:'https://www.instagram.com/ft.usmanw',
+    discord:'https://discord.gg/aGsfWZCuP' },
+
+  { name:'RZ7 ISMAIL',     role:'member',   badge:'MEMBER',
+    photo:'images/players/ismail2.png',
+    yt:'https://youtube.com/@ismailrpw',
+    kick:'https://kick.com/ismail_w',
+    ig:'https://www.instagram.com/ft.ismailw',
+    discord:'https://discord.gg/7tzrQXrC3' },
+
+  { name:'RZ7 ZENDNEX',    role:'member',   badge:'MEMBER',
+    photo:'images/players/zendex.webp',
+    yt:'https://youtube.com/@zendnex7',
+    kick:'https://kick.com/zendnexduvor',
+    ig:null,
+    discord:'https://discord.gg/JXZUU6KR2q' },
+
+  { name:'RZ7 RINU',       role:'member',   badge:'MEMBER',
+    photo:'images/players/rayan.png',
+    yt:'https://youtube.com/@rinu_.w',
+    kick:'https://kick.com/rz7_rinu',
+    ig:'https://www.instagram.com/_rinu.w',
+    discord:'https://discord.gg/WpZPacz8P9' },
+
+  { name:'RZ7 TAKAI',      role:'member',   badge:'MEMBER',
+    photo:'images/players/takai2.png',
+    yt:'https://youtube.com/@takai.3ve',
+    kick:'https://kick.com/jintakai',
+    ig:'https://www.instagram.com/takaiiii_',
+    discord:'https://discord.gg/fCwRMpADF' },
+
+  { name:'RZ7 SAKAI',      role:'member',   badge:'MEMBER',
+    photo:'images/players/sakai.png',
+    yt:'https://youtube.com/@0xsakaiii',
+    kick:'https://kick.com/rz7sakai',
+    ig:'https://www.instagram.com/rz7_sakai',
+    discord:'https://discord.gg/fCwRMpADF' },
+
+  { name:'RZ7 THALAPATHY', role:'member',   badge:'MEMBER',
+    photo:'images/players/charan.webp',
+    yt:'https://youtube.com/@mafia_thalapathy',
+    kick:'https://kick.com/thalapathy_ftw',
+    ig:'https://www.instagram.com/rz7_thalapathy',
+    discord:'https://discord.gg/QFTxm2ZMq' },
+
+  { name:'RZ7 RAY',        role:'member',   badge:'MEMBER',
+    photo:'images/players/rayan.png',
+    yt:null,
+    kick:'https://kick.com/rz7-rayy',
+    ig:'https://www.instagram.com/blr.rayy',
+    discord:null },
+
+  { name:'RZ7 PRANAV',     role:'member',   badge:'MEMBER',
+    photo:'images/players/pranav.jpg',
+    yt:'https://youtube.com/@prnvv1hz',
+    kick:'https://kick.com/pranavsettan',
+    ig:'https://www.instagram.com/ig.pranav_sett',
+    discord:'https://discord.gg/6ZqBkkgU5' },
+
+  { name:'RZ7 DREAM',      role:'member',   badge:'MEMBER',
+    photo:'images/players/dnl.webp',
+    yt:'https://youtube.com/@dreamlandwalkr',
+    kick:'https://kick.com/dreamlandwalker',
+    ig:'https://www.instagram.com/ig_dream_land_walker',
+    discord:'https://discord.gg/Ahrs9TC9j' },
+
+  { name:'RZ7 CHARLIE',    role:'member',   badge:'MEMBER',
+    photo:'images/players/charlie.webp',
+    yt:'https://youtube.com/@og_notcharlie',
+    kick:'https://kick.com/rz7charlie',
+    ig:'https://www.instagram.com/not_chxrlie.exe',
+    discord:null },
+
+  { name:'RZ7 ALAN',       role:'member',   badge:'MEMBER',
+    photo:'images/players/alan.webp',
+    yt:'https://youtube.com/@al4n_exe',
+    kick:'https://kick.com/ig-alan-exe',
+    ig:'https://www.instagram.com/ig_.alan.exe',
+    discord:'https://discord.gg/X2YnxKKPw' },
+
+  { name:'RZ7 ERAN',       role:'member',   badge:'MEMBER',
+    photo:'images/players/rozario.png',
+    yt:'https://youtube.com/@slngrx',
+    kick:'https://kick.com/rz7eren',
+    ig:'https://www.instagram.com/ig_slinger.yt',
+    discord:null },
+
+  { name:'RZ7 KNULL',      role:'member',   badge:'MEMBER',
+    photo:'images/players/bruce.webp',
+    yt:'https://youtube.com/@knullpov',
+    kick:'https://kick.com/knull-pov',
+    ig:'https://www.instagram.com/knull.povv',
+    discord:'https://discord.gg/eRDjUrGRf' },
+
+  { name:'RZ7 KHALID',     role:'member',   badge:'MEMBER',
+    photo:'images/players/malik.jpg',
+    yt:'https://youtube.com/@mishal6363',
+    kick:'https://kick.com/rz7_khalid',
+    ig:'https://www.instagram.com/khal1ddd_',
+    discord:null },
+*/
+];
+
+const roleBios = {
+  leader:   'The head of RAZEUS 7. Ice-cold under pressure — the voice that calls the shots when the city burns.',
+  coleader: 'A key pillar of the empire. Trusted, feared, and always two steps ahead of the enemy.',
+  member:   'A soldier of the streets. Loyal to the code, ready when called, never seen unless needed.',
+  dlx:      'DLX affiliate — connected, dangerous, and always in the mix.',
+};
+
+const roleLabels = {
+  leader:   'LEADER',
+  coleader: 'CO-LEADER',
+  member:   'MEMBER',
+};
+
+/* Escape any value before inserting it into HTML — protects against
+   stored XSS if a name/bio/link ever contains malicious markup
+   (e.g. from a compromised or misconfigured Firebase write). */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+// Only allow http(s) URLs through to href/data-href on links — blocks
+// javascript: and other dangerous URL schemes.
+function safeUrl(url){
+  if(!url) return '';
+  try{
+    const u = new URL(url, window.location.href);
+    return (u.protocol === 'http:' || u.protocol === 'https:') ? u.href : '';
+  }catch(e){
+    return '';
+  }
+}
+// Photos specifically: allow http(s) URLs OR base64 image data URIs (the
+// admin panel's photo uploader stores compressed photos this way). A
+// data: URI is safe here because it only ever ends up in an <img src>,
+// which the browser can only decode as pixels — not execute as script,
+// unlike putting one in a clickable link.
+function safePhotoSrc(src){
+  if(!src) return '';
+  if(/^data:image\/(png|jpe?g|gif|webp|avif);base64,/i.test(src)) return src;
+  return safeUrl(src);
+}
+
+function makeCard(p){
+  const div = document.createElement('div');
+  div.className = 'pcard';
+  div.dataset.role = p.role;
+  div.dataset.name = p.name.toLowerCase();
+  div.dataset.rosterId = p.id || '';
+  div.dataset.gang = p.gang || 'rz7';
+  div.dataset.yt   = p.yt   || '#';
+  div.dataset.kick = p.kick || '#';
+
+  const safeName = escapeHtml(p.name);
+  const dlxBio = p.gang === 'dlx' ? roleBios.dlx : null;
+  const bio   = escapeHtml(p.bio   || dlxBio || roleBios[p.role]  || '');
+  const label = escapeHtml(roleLabels[p.role] || p.badge || '');
+  // Each player has their own photo; onerror hides broken img so CSS gradient shows
+  const photo = safePhotoSrc(p.photo || '');
+  // Focus point controls where the image is centered/cropped inside the banner (set from admin panel)
+  const focus = escapeHtml(p.focus || 'center 20%');
+
+  // Only build a social button if the player has that link
+  function socBtn(href, cls, icon, label){
+    const safeHref = safeUrl(href);
+    if(!safeHref) return '';
+    return `<a data-href="${escapeHtml(safeHref)}" class="pc-soc ${cls}" title="${escapeHtml(label)}"><i class="${icon}"></i></a>`;
+  }
+  const socials = [
+    socBtn(p.yt,      'yt-soc',      'fa-brands fa-youtube',       'YouTube'),
+    socBtn(p.kick,    'kick-soc',    'fa-brands fa-kickstarter-k', 'Kick'),
+    socBtn(p.ig,      'ig-soc',      'fa-brands fa-instagram',     'Instagram'),
+    socBtn(p.discord, 'discord-soc', 'fa-brands fa-discord',       'Discord'),
+  ].filter(Boolean).join('');
+
+  const isDlx = p.gang === 'dlx';
+  const nameId = p.name.replace(/\s+/g,'_');
+
+  div.innerHTML = `
+    <div class="pc-banner">
+      <div class="pc-banner-inner">
+        ${photo ? `<img src="${photo}" alt="${safeName}" loading="lazy" style="object-position:${focus}" onerror="this.style.display='none'">` : ''}
+      </div>
+      <div class="pc-badge">${label}</div>
+      ${isDlx ? '' : `<a class="pc-watch-btn" id="watch-${nameId}" href="#" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-play"></i>Watch Live</a>`}
+    </div>
+    <div class="pc-content">
+      <div class="pc-name">${safeName}</div>
+      ${isDlx ? '' : `<div class="pc-status-row">
+        <span class="pc-status-label">Status</span>
+        <div class="pc-status offline" id="status-${nameId}">
+          <div class="pc-sdot"></div>
+          <span class="status-txt">OFFLINE</span>
+        </div>
+      </div>`}
+      <div class="pc-vl-row">
+        <div class="pc-role-label">${bio}</div>
+      </div>
+      ${isDlx ? '' : `<div class="pc-points-row" id="pts-${nameId}">
+        <span class="pc-points-label">Points</span>
+        <div class="pc-points-val">
+          <div class="pc-points-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2L14.9 8.6L22 9.3L16.8 13.8L18.2 21L12 17.3L5.8 21L7.2 13.8L2 9.3L9.1 8.6L12 2Z" fill="#7a1a24" stroke="#a8323f" stroke-width=".8"/></svg></div>
+          <span class="pc-points-num">0</span>
+        </div>
+      </div>`}
+      <div class="pc-socials">${socials}</div>
+    </div>`;
+  return div;
+}
+
+/* ── FIREBASE CONFIG ── */
+let rosterRef = null;
+try{
+  const firebaseConfig = {
+    apiKey: "AIzaSyB3E3vdJvjB88p-aTWLIw9Z6_HhYVA9EQM",
+    authDomain: "mrz-war-table.firebaseapp.com",
+    databaseURL: "https://mrz-war-table-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "mrz-war-table",
+    storageBucket: "mrz-war-table.firebasestorage.app",
+    messagingSenderId: "427955707558",
+    appId: "1:427955707558:web:fbb9eff081478179881e67"
+  };
+  if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+  const db  = _db || firebase.database();
+  rosterRef = db.ref('roster');
+}catch(err){
+  console.warn('Firebase (roster) failed to initialize — showing static roster only.', err);
+}
+
+/* ── DLX ROSTER (separate Firebase node) ── */
+let dlxRosterRef = null;
+let dlxPlayers = [];
+try{
+  const dlxDb = _db || firebase.database();
+  dlxRosterRef = dlxDb.ref('dlx_roster');
+}catch(err){
+  console.warn('Firebase (DLX roster) failed:', err);
+}
+
+/* ── RENDER FUNCTION (called on every Firebase update) ── */
+function renderAllCards(){
+  const rowTop      = document.getElementById('rowTop');
+  const rowColeader = document.getElementById('rowColeader');
+  const rowMembers  = document.getElementById('rowMembers');
+  const rowDlx      = document.getElementById('rowDlx');
+  rowTop.innerHTML = '';
+  rowColeader.innerHTML = '';
+  rowMembers.innerHTML = '';
+  if(rowDlx) rowDlx.innerHTML = '';
+
+  players.forEach(p => {
+    const card = makeCard(p);
+    card.dataset.playerKey = (p.name||'').toLowerCase().trim();
+    card.dataset.gang = 'rz7';
+    if(p.role === 'leader')        rowTop.appendChild(card);
+    else if(p.role === 'coleader') rowColeader.appendChild(card);
+    else                           rowMembers.appendChild(card);
+  });
+
+  // Render DLX members
+  if(rowDlx){
+    dlxPlayers.forEach(p => {
+      const card = makeCard(p);
+      card.dataset.playerKey = (p.name||'').toLowerCase().trim();
+      card.dataset.gang = 'dlx';
+      rowDlx.appendChild(card);
+    });
+  }
+
+  // Show/hide DLX divider
+  const dlxDiv = document.getElementById('dlxDivider');
+  if(dlxDiv) dlxDiv.style.display = dlxPlayers.length > 0 ? '' : 'none';
+
+  // Reapply live state dots + scoreboard after re-render
+  applyLiveState();
+  applyScoreboard();
+  filterCards();
+
+  // Update member count label
+  const countEl = document.getElementById('memberCount');
+  const total = players.length + dlxPlayers.length;
+  if(countEl) countEl.textContent = total + ' MEMBERS';
+}
+
+/* ── SEARCH + FILTER STATE (must be declared before any render — filterCards() runs during renderAllCards()) ── */
+let activeFilter = 'all';
+
+// Loading placeholder instead of rendering an empty/blank grid while the
+// real roster is still in flight from Firebase — avoids the confusing
+// "blank page, then cards suddenly pop in" flash on first load. Whatever
+// runs next (the roster arriving, a Firebase error, or Firebase failing
+// to initialize at all) calls renderAllCards() and replaces this.
+(function showLoadingPlaceholder(){
+  const rowMembers = document.getElementById('rowMembers');
+  if(rowMembers) rowMembers.innerHTML = '<div class="no-results" style="display:block"><i class="fa fa-satellite-dish"></i><p>Loading roster…</p></div>';
+})();
+
+/* ── FIREBASE ROSTER LISTENER ── */
+if(rosterRef){
+  rosterRef.on('value', snap => {
+    const raw = snap.val();
+    if(raw && Object.keys(raw).length > 0){
+      const ord = {leader:0, coleader:1, member:2};
+      players = Object.values(raw).sort((a,b) => (ord[a.role]??2)-(ord[b.role]??2) || (a.name||'').localeCompare(b.name||''));
+    } else {
+      // No Firebase data yet — keep the static fallback array
+    }
+    renderAllCards();
+  }, err => {
+    console.warn('Roster Firebase error:', err.message, '— using static roster.');
+    renderAllCards(); // render with existing static array
+  });
+} else {
+  // Firebase itself failed to initialize — clear the loading placeholder
+  // so it doesn't sit there forever with nothing to replace it.
+  renderAllCards();
+}
+
+/* ── DLX ROSTER LISTENER ── */
+if(dlxRosterRef){
+  dlxRosterRef.on('value', snap => {
+    const raw = snap.val();
+    if(raw && typeof raw === 'object'){
+      dlxPlayers = Object.entries(raw).map(([k,v]) => ({...v, id:k, gang:'dlx'}))
+        .sort((a,b) => (a.name||'').localeCompare(b.name||''));
+    } else {
+      dlxPlayers = [];
+    }
+    renderAllCards();
+  });
+}
+
+/* ── SEARCH + FILTER ── */
+
+function filterCards(){
+  const searchInput = document.getElementById('searchInput');
+  const q = searchInput ? searchInput.value.toLowerCase().trim() : '';
+  const allCards = document.querySelectorAll('.pcard');
+  let visible = 0;
+
+  allCards.forEach(card => {
+    const name     = (card.dataset.name || '').toLowerCase();
+    const gang     = card.dataset.gang || 'rz7';
+    const isLive   = card.classList.contains('is-live');
+    const matchSearch = !q || name.includes(q);
+
+    let matchFilter = true;
+    if(activeFilter === 'live')      matchFilter = isLive;
+    else if(activeFilter === 'dlx')  matchFilter = gang === 'dlx';
+    else if(activeFilter === 'all')  matchFilter = true;
+
+    const show = matchSearch && matchFilter;
+    card.classList.toggle('hidden', !show);
+    if(show) visible++;
+  });
+
+  const noResults = document.getElementById('noResults');
+  if(noResults){
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+    if(visible === 0){
+      const icon = noResults.querySelector('i');
+      const text = noResults.querySelector('p');
+      if(activeFilter === 'live' && !q){
+        if(icon) icon.className = 'fa-solid fa-satellite-dish';
+        if(text) text.textContent = "No one's live right now — check back soon.";
+      } else if(activeFilter === 'dlx' && !q){
+        if(icon) icon.className = 'fa-solid fa-users';
+        if(text) text.textContent = 'No DLX members added yet.';
+      } else {
+        if(icon) icon.className = 'fa fa-search';
+        if(text) text.textContent = 'No players found';
+      }
+    }
+  }
+
+  const rowTop      = document.getElementById('rowTop');
+  const rowColeader = document.getElementById('rowColeader');
+  const rowMembers  = document.getElementById('rowMembers');
+  const rowDlx      = document.getElementById('rowDlx');
+  const divTop      = document.querySelector('.section-divider');
+  const divCo       = document.getElementById('coleaderDivider');
+  const divMem      = document.getElementById('memberDivider');
+  const divDlx      = document.getElementById('dlxDivider');
+
+  if(divTop)  divTop.style.display  = rowTop      && rowTop.querySelector('.pcard:not(.hidden)')      ? '' : 'none';
+  if(divCo)   divCo.style.display   = rowColeader && rowColeader.querySelector('.pcard:not(.hidden)') ? '' : 'none';
+  if(divMem)  divMem.style.display  = rowMembers  && rowMembers.querySelector('.pcard:not(.hidden)')  ? '' : 'none';
+  if(divDlx)  divDlx.style.display  = rowDlx      && rowDlx.querySelector('.pcard:not(.hidden)')     ? '' : 'none';
+}
+
+document.getElementById('searchInput').addEventListener('input', filterCards);
+
+document.querySelectorAll('.pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+    pill.classList.add('active');
+    activeFilter = pill.dataset.filter;
+    filterCards();
+  });
+});
+
+/* ══════════════════════════════════════════════
+   YOUTUBE + KICK LIVE STATUS
+   ──────────────────────────
+   As of the "scalable & efficient" setup, this page no longer checks
+   YouTube/Kick itself. A Cloudflare Worker running on a CRON schedule
+   (every 1–2 minutes, independent of how many people are on the site)
+   checks every player's YouTube + Kick status server-to-server and
+   writes the results straight into Firebase, at:
+     live_players/{playerName}  -> 'yt' | 'kick' | 'admin'
+     live_viewers/{playerName}  -> number
+   This page just listens to those two Firebase paths in real time (see
+   the liveRef/viewersRef listeners above) — no polling, no direct calls
+   to YouTube/Kick from the browser, and the platform-check volume stays
+   flat (~600/hour) no matter how many users are viewing the site.
+   Deploy live-status-worker.js to Cloudflare to power this — see the
+   setup notes at the top of that file.
+══════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════
+   BACKGROUND ANIMATION — cinematic grid + particles
+══════════════════════════════════════════════ */
+(function(){
+ try{
+  const canvas = document.getElementById('particle-canvas');
+  const ctx    = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  /* ── LAYER 1: slow drifting radial glow orbs ── */
+  const ORBS = [
+    {ox:0.15, oy:0.3,  r:380, speed:0.00008, phase:0.0,  cr:'122,26,36'},
+    {ox:0.82, oy:0.65, r:340, speed:0.00006, phase:2.4,  cr:'140,100,0'},
+    {ox:0.5,  oy:0.1,  r:300, speed:0.0001,  phase:4.1,  cr:'160,80,5'},
+    {ox:0.08, oy:0.85, r:280, speed:0.00007, phase:1.8,  cr:'200,130,20'},
+    {ox:0.92, oy:0.18, r:320, speed:0.00005, phase:3.5,  cr:'120,60,0'},
+  ].map(o=>({...o,x:0,y:0}));
+
+  function drawOrbs(){
+    ORBS.forEach((o,i)=>{
+      o.x = W*o.ox + Math.sin(t*o.speed*1000 + o.phase)*W*0.05;
+      o.y = H*o.oy + Math.cos(t*o.speed*1000*0.7 + o.phase)*H*0.05;
+      const pulse = Math.sin(t*0.4 + i*1.4)*0.5+0.5;
+      const g = ctx.createRadialGradient(o.x,o.y,0, o.x,o.y, o.r+pulse*30);
+      g.addColorStop(0,   `rgba(${o.cr},${0.05+pulse*0.03})`);
+      g.addColorStop(0.5, `rgba(${o.cr},${0.02+pulse*0.01})`);
+      g.addColorStop(1,   `rgba(${o.cr},0)`);
+      ctx.save();
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(o.x,o.y,o.r+pulse*30,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  /* ── LAYER 2: tiny floating gold dust particles ── */
+  const DUST = Array.from({length:60},()=>({
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    r: Math.random()*1.6+0.4,
+    vy: -(Math.random()*0.35+0.08),
+    vx: (Math.random()-0.5)*0.12,
+    a: Math.random()*0.35+0.1,
+    phase: Math.random()*Math.PI*2,
+  }));
+
+  function drawDust(){
+    DUST.forEach(p=>{
+      p.y += p.vy; p.x += p.vx; p.phase += 0.02;
+      if(p.y < -10){ p.y = H+10; p.x = Math.random()*W; }
+      const alpha = p.a*(0.7 + Math.sin(p.phase)*0.3);
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = `rgba(122,26,36,1)`;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  /* ── LAYER 3: thin shooting streaks ── */
+  const streaks = [];
+  let nextStreak = 0;
+  function spawnStreak(){
+    const ang = (Math.random()*40+15)*Math.PI/180;
+    streaks.push({
+      x: Math.random()*W*1.2 - W*0.1, y:-20,
+      vx: Math.cos(ang)*(4+Math.random()*5),
+      vy: Math.sin(ang)*(4+Math.random()*5),
+      len: 80+Math.random()*140,
+      alpha: 0.4+Math.random()*0.35,
+      width: 0.8+Math.random(),
+      life: 1,
+    });
+  }
+  function drawStreaks(){
+    if(t > nextStreak){ spawnStreak(); nextStreak = t + 3+Math.random()*7; }
+    for(let i=streaks.length-1;i>=0;i--){
+      const s=streaks[i];
+      s.x+=s.vx; s.y+=s.vy; s.life-=0.014;
+      if(s.life<=0||s.y>H+60||s.x>W+60){streaks.splice(i,1);continue;}
+      const tx=s.x-s.vx*s.len*0.06, ty=s.y-s.vy*s.len*0.06;
+      const g=ctx.createLinearGradient(s.x,s.y,tx,ty);
+      g.addColorStop(0,  `rgba(255,255,255,${s.alpha*s.life})`);
+      g.addColorStop(0.4,`rgba(122,26,36,${s.alpha*s.life*0.5})`);
+      g.addColorStop(1,  'rgba(122,26,36,0)');
+      ctx.save();
+      ctx.strokeStyle=g; ctx.lineWidth=s.width;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(tx,ty); ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  /* ── MAIN LOOP ── */
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    t += 0.016;
+    drawOrbs();
+    drawDust();
+    drawStreaks();
+    requestAnimationFrame(draw);
+  }
+  draw();
+ }catch(err){
+   console.warn('Particle background effect failed to start — decorative only, safe to ignore.', err);
+ }
+})();
+
+/* ── NAV LINKS ── */
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('navLinks').classList.remove('open');
+}));
+</script>
+
+
+<!-- LINK EXPIRED POPUP -->
+<div id="link-expired-popup">
+  <div class="lep-box">
+    <span class="lep-icon">🔗</span>
+    <div class="lep-title">Link Unavailable</div>
+    <p class="lep-msg">This link has expired or hasn't been added yet.<br>Check back soon — it may be updated shortly!</p>
+    <button class="lep-close" id="lepCloseBtn">Got It</button>
+  </div>
+</div>
+
+<script>
+/* ── SOCIAL BUTTON CLICK HANDLER ── */
+(function(){
+  const popup    = document.getElementById('link-expired-popup');
+  const closeBtn = document.getElementById('lepCloseBtn');
+
+  function closePopup(){ popup.classList.remove('show'); }
+  closeBtn.addEventListener('click', closePopup);
+  popup.addEventListener('click', e => { if(e.target === popup) closePopup(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closePopup(); });
+
+  // Delegate clicks on all .pc-soc buttons
+  document.addEventListener('click', function(e){
+    const btn = e.target.closest('.pc-soc');
+    if(!btn) return;
+    e.preventDefault();
+    const href = btn.dataset.href || '#';
+    if(!href || href === '#'){
+      popup.classList.add('show');
+    } else {
+      window.open(href, '_blank', 'noopener,noreferrer');
+    }
+  });
+})();
+</script>
+
+
+<div id="loader">
+  <!-- Corner decorations -->
+  <!-- sweeping beams -->
+  <div class="beam-left"></div>
+  <div class="beam-right"></div>
+
+  <!-- pulse rings -->
+  <div class="pulse-ring"></div>
+  <div class="pulse-ring"></div>
+  <div class="pulse-ring"></div>
+
+  <!-- scanlines -->
+  <div class="siren-scanlines"></div>
+
+  <!-- GTA light bar -->
+  <div class="siren-bar">
+    <div class="lamp dim"></div>
+    <div class="lamp amber"></div>
+    <div class="lamp gold"></div>
+    <div class="lamp-sep"></div>
+    <div class="lamp gold"></div>
+    <div class="lamp-sep"></div>
+    <div class="lamp gold"></div>
+    <div class="lamp amber"></div>
+    <div class="lamp dim"></div>
+  </div>
+
+  <div class="loader-title">RAZEUS 7</div>
+  <div class="loader-sub">Loading Your Roster</div>
+
+  <div class="loader-progress-wrap">
+    <div class="loader-progress-bar" id="loaderBar"></div>
+  </div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<script>
+/* ══ LOADING SCREEN — 6 SECOND INTRO ══ */
+(function(){
+  const loader  = document.getElementById('loader');
+  const bar     = document.getElementById('loaderBar');
+  const pctEl   = document.getElementById('loaderPct');
+  const DURATION = 6000; // ms
+  let start = null;
+
+  /* ── PROGRESS BAR ── */
+  // Eased fill: fast at start, slows near end
+  function easeInOut(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function tick(ts){
+    if(!start) start = ts;
+    const elapsed = ts - start;
+    const raw  = Math.min(elapsed / DURATION, 1);
+    const pct  = Math.round(easeInOut(raw) * 100);
+    bar.style.width  = pct + '%';
+    pctEl.textContent = pct + '%';
+
+    if(raw < 1){
+      requestAnimationFrame(tick);
+    } else {
+      // Hide loader
+      loader.classList.add('hide');
+      loader.addEventListener('transitionend', ()=>{ loader.style.display='none'; }, {once:true});
+    }
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
+
+
+
+<script>
+/* ══ EYE PUPIL MOVEMENT ══
+   Desktop: follows cursor. Mobile/idle: each eye drifts independently
+   with its own random target, speed, and timing — no two eyes ever
+   look at the same point or move in sync. */
+(function(){
+  var MAX_X = 3, MAX_Y = 1.5;
+  var RAMP_PX = 200;
+  var IDLE_MS = 2000;
+
+  var mouseX = 0, mouseY = 0;
+  var haveMouse = false;
+  var lastMoveTime = 0;
+
+  // Per-eye state stored in a WeakMap so it survives DOM changes
+  var eyeStates = new WeakMap();
+
+  function getState(el){
+    if(!eyeStates.has(el)){
+      eyeStates.set(el, {
+        tx: 0, ty: 0,       // current target
+        cx: 0, cy: 0,       // current position
+        speed: 0.03 + Math.random() * 0.05,  // each eye drifts at its own speed
+        nextTime: 0          // when to pick next target
+      });
+      pickFor(eyeStates.get(el));
+    }
+    return eyeStates.get(el);
+  }
+
+  function pickFor(s){
+    var strength = 0.15 + Math.random() * 0.7;
+    var angle = Math.random() * Math.PI * 2;
+    s.tx = Math.cos(angle) * MAX_X * strength;
+    s.ty = Math.sin(angle) * MAX_Y * strength;
+    // Each eye holds its gaze for a different duration
+    s.nextTime = Date.now() + 800 + Math.random() * 3000;
+  }
+
+  function tick(){
+    requestAnimationFrame(tick);
+    var eyes = document.querySelectorAll('.live-eye .eye-look');
+    if(eyes.length === 0) return;
+
+    var now = Date.now();
+    var idle = !haveMouse || (now - lastMoveTime > IDLE_MS);
+
+    for(var i = 0; i < eyes.length; i++){
+      var el = eyes[i];
+
+      if(idle){
+        var s = getState(el);
+        if(now > s.nextTime) pickFor(s);
+        s.cx += (s.tx - s.cx) * s.speed;
+        s.cy += (s.ty - s.cy) * s.speed;
+        el.setAttribute('transform', 'translate(' + s.cx.toFixed(2) + ' ' + s.cy.toFixed(2) + ')');
+      } else {
+        var svg = el.closest('svg');
+        if(!svg) continue;
+        var rect = svg.getBoundingClientRect();
+        if(rect.width === 0) continue;
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = mouseX - cx, dy = mouseY - cy;
+        var dist = Math.hypot(dx, dy);
+        var a = Math.atan2(dy, dx);
+        var str = Math.min(1, dist / RAMP_PX);
+        var tx = Math.cos(a) * MAX_X * str;
+        var ty = Math.sin(a) * MAX_Y * str;
+        el.setAttribute('transform', 'translate(' + tx.toFixed(2) + ' ' + ty.toFixed(2) + ')');
+        // Reset drift state so it starts fresh when going idle
+        var st = getState(el);
+        st.cx = 0; st.cy = 0;
+      }
+    }
+  }
+  requestAnimationFrame(tick);
+
+  window.addEventListener('pointermove', function(e){
+    mouseX = e.clientX; mouseY = e.clientY;
+    lastMoveTime = Date.now();
+    if(!haveMouse){ haveMouse = true; }
+  }, {passive:true});
+  window.addEventListener('mousemove', function(e){
+    mouseX = e.clientX; mouseY = e.clientY;
+    lastMoveTime = Date.now();
+    if(!haveMouse){ haveMouse = true; }
+  }, {passive:true});
+})();
+</script>
+
+<script src="shield.js"></script>
+</body>
+</html>

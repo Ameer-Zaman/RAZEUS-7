@@ -1,0 +1,25 @@
+{
+  "name": "RAZEUS 7 — GTA RP Official",
+  "short_name": "RAZEUS 7",
+  "description": "Official site for RAZEUS 7 GTA RP.",
+  "start_url": "players.html",
+  "scope": ".",
+  "display": "standalone",
+  "background_color": "#07060a",
+  "theme_color": "#07060a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/logo/rz7_logo.jpeg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "images/logo/rz7_logo.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

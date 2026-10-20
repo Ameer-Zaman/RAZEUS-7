@@ -1,0 +1,13 @@
+{
+  "name": "rz7-functions",
+  "description": "Cloud Functions for RZ7 — sends a push notification when a player goes live.",
+  "engines": {
+    "node": "20"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.0"
+  },
+  "private": true
+}
